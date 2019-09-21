@@ -9,24 +9,25 @@ router.get("/register", (req, res) => {
 
 router.post("/register", (req, res) => {
     console.log(req.body);
-    const { name, email, password, passwordConfirm } = req.body;
-    let errors = [];
-
+    let { email, password, passwordConfirm, nama, nomor_hp, alamat, foto, saldo } = req.body;
+    let errors = {};
     // res.send(name+"\n"+email+"\n"+password+"\n"+passwordConfirm);
 
     // Cek Semua terisi
-    if (!name || !email || !password || !passwordConfirm) {
-        errors.push({ message: "Silakan isi semua-nya!" })
+    if (!email || !password || !passwordConfirm || !nama || !nomor_hp || !alamat || !foto || !saldo.toString()) {
+        errors = {
+            message: "Silakan isi semua-nya!"
+        }
     }
 
     // Cek Password Sama
     if (password !== passwordConfirm) {
-        errors.push({ message: "Password tidak sama!" })
+        errors = { message: "Password tidak sama!" }
     }
 
     // Cek Panjang Password
     if (password.length > 6) {
-        error.push({ message: "Password harus lebih dari 6 karakter" })
+        errors = { message: "Password harus lebih dari 6 karakter" }
     }
 
     // Cek Error
@@ -35,16 +36,19 @@ router.post("/register", (req, res) => {
         res.json({ errors });
     } else {
         // Memasukan kedalam table_user
-        connection.query("SELECT * FROM table_user WHERE email=?", email, (err, results) => {
+        connection.query("SELECT * FROM user WHERE email=?", email, (err, results) => {
             if (err) {
-                return console.log(err);
+                console.log(err);
+                errors = { message: err }
+                return res.json(errors)
             } else if (results && results.length > 0) {
-                errors.push({ message: "Email sudah terdaftar!" });
-                return res.json({ errors });
+                errors = { message: "Email sudah terdaftar!" }
+                return res.json({ errors })
             } else {
-                connection.query("INSERT INTO table_user SET ?", { name, email, password }, (err) => {
+                connection.query("INSERT INTO user SET ?", { email, password, nama, nomor_hp, alamat, foto, saldo }, (err) => {
                     if (err) {
-                        return console.log(err);
+                        errors = { message: err }
+                        return res.json(errors)
                     } else {
                         return res.json({ data: { name, email, password } })
                     }
@@ -62,7 +66,7 @@ router.get("/login", (req, res) => {
 router.post("/login", (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
-    const errors = [];
+    let errors = {};
 
     // Cek Email dan Password sama dengan salah satu row didalam table_user
     connection.query("SELECT email,password FROM table_user WHERE email=? AND password=?", [email, password], (err, results) => {
@@ -74,7 +78,7 @@ router.post("/login", (req, res) => {
                 return res.json({ data: { results } });
             } else {
                 // Jika tidak cocok
-                errors.push({ message: "Check kembali email dan password!" });
+                errors = { message: "Check kembali email dan password!" }
                 return res.json({ errors });
             }
         }
