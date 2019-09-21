@@ -8,6 +8,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 app.use(cors());
 
-app.use("/", require("./routes/users"));
+app.use("/user", require("./routes/user"));
+app.use("/print/", require("./routes/print"))
 
 app.listen(PORT, () => console.log("server port at localhost:" + PORT))
