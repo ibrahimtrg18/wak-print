@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/user", require("./routes/user"));
-app.use("/print/", require("./routes/print"))
+app.use("/foto", require("./routes/foto"));
+app.use("/print", require("./routes/print"));
 
 app.listen(PORT, () => console.log("server port at localhost:" + PORT))

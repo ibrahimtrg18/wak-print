@@ -24,7 +24,7 @@ router.post("/register", (req, res) => {
 
     // Cek Semua terisi
     if (!email || !password || !passwordConfirm || !nama || !nomor_hp || !alamat || !foto || !saldo.toString()) {
-        errors = {message: "Silakan isi semua-nya!"}
+        errors = { message: "Silakan isi semua-nya!" }
     }
 
 
