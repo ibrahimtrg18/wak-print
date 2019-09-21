@@ -11,7 +11,6 @@ router.post("/register", (req, res) => {
     console.log(req.body);
     let { email, password, passwordConfirm, nama, nomor_hp, alamat, foto, saldo } = req.body;
     let errors = {};
-    // res.send(name+"\n"+email+"\n"+password+"\n"+passwordConfirm);
 
     // Cek Semua terisi
     if (!email || !password || !passwordConfirm || !nama || !nomor_hp || !alamat || !foto || !saldo.toString()) {
@@ -31,7 +30,7 @@ router.post("/register", (req, res) => {
     }
 
     // Cek Error
-    if (errors.length > 0) {
+    if (errors) {
         // Jika ada respon error ke client
         res.json({ errors });
     } else {
@@ -50,7 +49,7 @@ router.post("/register", (req, res) => {
                         errors = { message: err }
                         return res.json(errors)
                     } else {
-                        return res.json({ data: { name, email, password } })
+                        return res.json({ data: { nama, email, password } })
                     }
                 });
             }
