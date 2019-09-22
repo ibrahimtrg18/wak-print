@@ -1,7 +1,7 @@
 import React from "react";
-import Sider from "../layout/Sider"
+import Sider from "../layout/Sider";
 
-const Pesanan = () => {
+const Pesanan = (props) => {
     return (
         <div className="container-full" style={{ height: "100vh" }} >
             <div className="flex">

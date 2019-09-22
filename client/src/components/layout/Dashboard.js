@@ -1,11 +1,5 @@
-import React,{useState,useEffect} from "react";
-
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-import Navbar from "./Navbar";
-import Sider from "./Sider";
-import Pesanan from "../dashboard/Pesanan";
-import Riwayat from "../dashboard/Riwayat";
+import React from "react";
+import Sider from "./Sider"
 
 const Dashboard = (props) => {
     return (
@@ -13,6 +7,7 @@ const Dashboard = (props) => {
             <div className="flex">
                 <Sider></Sider>
                 <div className="w-5/6 bg-purple-500">
+                    Dashboard
                 </div>
             </div>
         </div>
