@@ -1,5 +1,5 @@
 import React from "react";
-import Sider from "./Sider"
+import Sider from "../layout/Sider"
 
 const Dashboard = (props) => {
     return (
