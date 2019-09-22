@@ -1,28 +1,18 @@
 import React from "react";
 import Navbar from "./Navbar";
+import Sider from "./Sider";
+import Octicon, { Home, File, History } from "@githubprimer/octicons-react"
 
 const Dashboard = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <div className="container-fluid">
-                <div className="row">
-                    <nav className="col-md-2 d-none d-md-block bg-light sidebar" style={{ width: "100vh", height: "100vh" }}>
-                        <ul className="nav flex-column">
-                            <li className="nav-item d-flex align-items-center">
-                                <i class="far fa-home" style={{width:"18px"}}></i>
-                                <a href="#" className="col-sm nav-link">
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li className="nav-item d-flex align-items-center">
-                                <i class="far fa-file d-flex justify-content-center" style={{width:"18px"}}></i>
-                                <a href="#" className="col-sm nav-link">
-                                    Pesanan
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+            <div className="container-full" style={{ height: "100vh" }} >
+                <div className="flex">
+                    <Sider></Sider>
+                    <div className="w-5/6 bg-purple-500">
+                        
+                    </div>
                 </div>
             </div>
         </div>
