@@ -4,7 +4,7 @@ const path = require("path");
 const router = express.Router();
 
 const storage = multer.diskStorage({
-    destination: "./storage/print/",
+    destination: "./storage/pesanan/",
     filename: (req, file, cb) => {
         cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
     }
@@ -34,7 +34,7 @@ isProfile = (file, cb) => {
 
 }
 
-router.post("/", upload.single("print"), (req, res) => {
+router.post("/", upload.single("pesanan"), (req, res) => {
     let errors = {};
     const file = req.file
     if (!file) {
@@ -45,7 +45,7 @@ router.post("/", upload.single("print"), (req, res) => {
 })
 
 router.get('/download', (req, res) => {
-    res.download(path.join(__dirname, "../storage/print/print-1569044374731.docx"), err => {
+    res.download(path.join( "../storage/pesanan/pesanan-1569044374731.docx"), err => {
         if (err)
             console.log(err)
     })

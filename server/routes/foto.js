@@ -37,9 +37,9 @@ isPrintType = (file, cb) => {
 router.post("/", upload.single("foto"), (req, res) => {
     let errors;
     const file = req.file;
-    if(!file){
-        errors = {message: "Please Put your Image"};
-        return res.json({errors})
+    if (!file) {
+        errors = { message: "Please Put your Image" };
+        return res.json({ errors })
     }
     res.json(file)
 })

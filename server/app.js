@@ -10,6 +10,6 @@ app.use(cors());
 
 app.use("/user", require("./routes/user"));
 app.use("/foto", require("./routes/foto"));
-app.use("/print", require("./routes/print"));
+app.use("/pesanan", require("./routes/pesanan"));
 
 app.listen(PORT, () => console.log("server port at localhost:" + PORT))
