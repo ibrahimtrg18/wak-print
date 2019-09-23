@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "wakprint"
+    database: "print_online"
 })
 
 // Connect to Mysql
