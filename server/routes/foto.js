@@ -15,11 +15,11 @@ const upload = multer({
     storage: storage,
     limits: { fileSize: 10000000 },
     fileFilter: (req, file, cb) => {
-        isPrintType(file, cb)
+        isFotoProfileType(file, cb)
     }
 })
 
-isPrintType = (file, cb) => {
+isFotoProfileType = (file, cb) => {
     // type allowed
     const fileType = /jpg|jpeg|png/;
     // check file extname after . == type allowed
