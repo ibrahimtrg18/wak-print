@@ -9,21 +9,21 @@ router.get("/register", (req, res) => {
 
 router.post("/register", (req, res) => {
     console.log(req.body);
-    let { email, password, passwordConfirm, nama, nomor_hp, alamat, foto, saldo } = req.body;
+    let { email_user, password_user, password_confirm_user, nama_user, nomor_hp_user, alamat_user, foto_user } = req.body;
     let errors;
 
     // Cek Panjang Password
-    if (password.length < 6) {
+    if (password_user && password_user.length < 6) {
         errors = { message: "Password harus lebih dari 6 karakter" }
     }
 
     // Cek Password Sama
-    if (password !== passwordConfirm) {
+    if (password_user !== password_confirm_user) {
         errors = { message: "Password tidak sama!" }
     }
 
     // Cek Semua terisi
-    if (!email || !password || !passwordConfirm || !nama || !nomor_hp || !alamat || !foto || !saldo.toString()) {
+    if (!email_user || !password_user || !password_confirm_user || !nama_user || !nomor_hp_user || !alamat_user) {
         errors = { message: "Silakan isi semua-nya!" }
     }
 
@@ -34,7 +34,7 @@ router.post("/register", (req, res) => {
         res.json({ errors });
     } else {
         // Memasukan kedalam table_user
-        connection.query("SELECT * FROM user WHERE email=?", email, (err, results) => {
+        connection.query("SELECT * FROM user WHERE email_user=?", email_user, (err, results) => {
             if (err) {
                 console.log(err);
                 errors = { message: err }
@@ -43,12 +43,12 @@ router.post("/register", (req, res) => {
                 errors = { message: "Email sudah terdaftar!" }
                 return res.json({ errors })
             } else {
-                connection.query("INSERT INTO user SET ?", { email, password, nama, nomor_hp, alamat, foto, saldo }, (err) => {
+                connection.query("INSERT INTO user SET ?", { email_user, password_user, nama_user, nomor_hp_user, alamat_user, foto_user }, (err) => {
                     if (err) {
                         errors = { message: err }
                         return res.json(errors)
                     } else {
-                        return res.json({ data: { email, password, nama, nomor_hp, alamat, foto, saldo } })
+                        return res.json({ data: { email_user, password_user, nama_user, nomor_hp_user, alamat_user, foto_user } })
                     }
                 });
             }
