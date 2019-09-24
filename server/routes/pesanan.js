@@ -1,7 +1,10 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+
 const router = express.Router();
+
+const connection = require("../config/db")
 
 const storage = multer.diskStorage({
     destination: "./storage/pesanan/",
@@ -14,11 +17,11 @@ const upload = multer({
     storage: storage,
     limits: { fileSize: 10000000 },
     fileFilter: (req, file, cb) => {
-        isProfile(file, cb)
+        isPrintType(file, cb)
     }
 })
 
-isProfile = (file, cb) => {
+isPrintType = (file, cb) => {
     // type allowed
     const fileType = /doc|docx|pdf/;
     // check file extname after . == type allowed
@@ -37,11 +40,50 @@ isProfile = (file, cb) => {
 router.post("/", upload.single("pesanan"), (req, res) => {
     let errors = {};
     const file = req.file
+    const {
+        id_user,
+        id_wak_print,
+        jumlah_halaman_pesanan,
+        jumlah_rangkap_pesanan,
+        timbal_balik_pesanan,
+        orientasi_halaman_pesanan,
+        jenis_kertas_pesanan,
+        total_harga_pesanan,
+        metode_pengambilan_pesanan,
+        metode_pembayaran_pesanan,
+        status_pesanan,
+        status_pembayaran
+    } = req.body;
+
     if (!file) {
         errors = { message: "Please Put your File" }
         return res.json({ errors })
     }
-    res.json(file)
+    // res.json(file.filename)
+    const dokumen_user = file.filename
+
+    connection.query("INSERT INTO pesanan SET ?",
+    {
+        id_user,
+        id_wak_print,
+        dokumen_user,
+        jumlah_halaman_pesanan,
+        jumlah_rangkap_pesanan,
+        timbal_balik_pesanan,
+        orientasi_halaman_pesanan,
+        jenis_kertas_pesanan,
+        total_harga_pesanan,
+        metode_pengambilan_pesanan,
+        metode_pembayaran_pesanan,
+        status_pesanan,
+        status_pembayaran        
+    },(err,results)=>{
+        if(err){
+            return console.log(err);
+        }else{
+            return console.log(results);
+        }
+    })
 })
 
 router.get('/download', (req, res) => {
