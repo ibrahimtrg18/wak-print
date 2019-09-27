@@ -13,7 +13,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 10000000 },
+    limits: {
+        fileSize: 10000000
+    },
     fileFilter: (req, file, cb) => {
         isFotoProfileType(file, cb)
     }
@@ -38,8 +40,12 @@ router.post("/", upload.single("foto"), (req, res) => {
     let errors;
     const file = req.file;
     if (!file) {
-        errors = { message: "Please Put your Image" };
-        return res.json({ errors })
+        errors = {
+            message: "Please Put your Image"
+        };
+        return res.json({
+            errors
+        })
     }
     res.json(file)
 })
@@ -49,7 +55,9 @@ router.get('/', (req, res) => {
         if (err) {
             return res.json(err);
         } else {
-            res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+            res.writeHead(200, {
+                'Content-Type': 'image/jpeg'
+            });
             res.send(data)
         }
     })
