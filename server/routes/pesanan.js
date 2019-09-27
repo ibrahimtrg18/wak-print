@@ -15,7 +15,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 10000000 },
+    limits: {
+        fileSize: 10000000
+    },
     fileFilter: (req, file, cb) => {
         isPrintType(file, cb)
     }
@@ -55,26 +57,30 @@ router.post("/", upload.single("pesanan"), (req, res) => {
     } = req.body;
 
     if (!req.file) {
-        errors = { message: "Please Put your File" }
-        return res.json({ errors })
+        errors = {
+            message: "Please Put your File"
+        }
+        return res.json({
+            errors
+        })
     }
     // res.json(file.filename)
     const dokumenUser = req.file.filename
 
     connection.query("INSERT INTO pesanan SET ?", {
-        id_user : idUser,
-        id_wak_print : idWakPrint,
-        dokumen_user : dokumenUser,
-        jumlah_halaman_pesanan : jumlahHalamanPesanan,
-        jumlah_rangkap_pesanan : jumlahRangkapPesanan,
-        timbal_balik_pesanan : timbalBalikPesanan,
-        orientasi_halaman_pesanan : orientasiHalamanPesanan,
-        jenis_kertas_pesanan : jenisKertasPesanan,
-        total_harga_pesanan : totalHargaPesanan,
-        metode_pengambilan_pesanan :metodePengambilanPesanan,
-        metode_pembayaran_pesanan : metodePembayaranPesanan,
-        status_pesanan : statusPesanan,
-        status_pembayaran : statusPembayaran
+        id_user: idUser,
+        id_wak_print: idWakPrint,
+        dokumen_user: dokumenUser,
+        jumlah_halaman_pesanan: jumlahHalamanPesanan,
+        jumlah_rangkap_pesanan: jumlahRangkapPesanan,
+        timbal_balik_pesanan: timbalBalikPesanan,
+        orientasi_halaman_pesanan: orientasiHalamanPesanan,
+        jenis_kertas_pesanan: jenisKertasPesanan,
+        total_harga_pesanan: totalHargaPesanan,
+        metode_pengambilan_pesanan: metodePengambilanPesanan,
+        metode_pembayaran_pesanan: metodePembayaranPesanan,
+        status_pesanan: statusPesanan,
+        status_pembayaran: statusPembayaran
     }, (err, results) => {
         if (err) {
             return console.log(err);
