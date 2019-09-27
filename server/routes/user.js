@@ -98,7 +98,7 @@ router.post("/login", (req, res) => {
     let errors = {};
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT email_user, password_user FROM user WHERE email_user=? AND password_user=?", [emailUser, passwordUser], (err, results) => {
+    connection.query("SELECT * FROM user WHERE email_user=? AND password_user=?", [emailUser, passwordUser], (err, results) => {
         if (err) {
             return console.log(err);
         } else {
