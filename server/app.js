@@ -11,8 +11,9 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cors());
 
-app.use("/user", require("./routes/user"));
-app.use("/foto", require("./routes/foto"));
-app.use("/pesanan", require("./routes/pesanan"));
+app.use("/user", require("./routes/user")); //user
+app.use("/wakprint", require("./routes/wakprint")); // wakprint
+app.use("/foto", require("./routes/foto")); //user & wakprint
+app.use("/pesanan", require("./routes/pesanan")); //user & wakprint
 
 app.listen(PORT, () => console.log("server port at localhost:" + PORT))
