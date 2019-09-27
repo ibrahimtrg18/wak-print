@@ -1,4 +1,3 @@
-
 const mysql = require("mysql");
 
 // Create Connection to Mysql
