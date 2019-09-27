@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const connection = require("../config/db");
+
 router.post("/register", (req, res) => {
     const {
         emailWakPrint,
@@ -13,6 +15,17 @@ router.post("/register", (req, res) => {
         fotoWakPrint,
     } = req.body;
     let errors;
+
+    console.log({
+        emailWakPrint,
+        passwordWakPrint,
+        passwordConfirmWakPrint,
+        namaWakPrint,
+        nomorHpWakPrint,
+        alamatWakPrint,
+        hargaWakPrint,
+        fotoWakPrint
+    })
 
     if (passwordWakPrint && passwordWakPrint.length < 6) {
         errors = {
@@ -90,7 +103,36 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-    res.json("login");
+    console.log(req.body);
+    const {
+        emailWakPrint,
+        passwordWakPrint
+    } = req.body;
+    let errors = {};
+
+    // Cek Email dan Password sama dengan salah satu row didalam tableWakPrint
+    connection.query("SELECT * FROM wak_print WHERE email_wak_print=? AND password_wak_print=?", [emailWakPrint, passwordWakPrint], (err, results) => {
+        if (err) {
+            return console.log(err);
+        } else {
+            if (results && results.length > 0) {
+                // Jika cocok
+                return res.json({
+                    data: {
+                        results
+                    }
+                });
+            } else {
+                // Jika tidak cocok
+                errors = {
+                    message: "Check kembali email dan password!"
+                }
+                return res.json({
+                    errors
+                });
+            }
+        }
+    });
 });
 
 module.exports = router;
