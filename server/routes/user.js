@@ -1,6 +1,7 @@
 const express = require('express');
+const passport = require("passport");
 const router = express.Router();
-
+const passportSetup = require("../config/passport-setup")
 const connection = require("../config/db")
 
 router.post("/register", (req, res) => {
@@ -122,5 +123,14 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.get("/auth/google",
+    passport.authenticate("google", {
+        scope: ["profile"]
+    })
+)
+
+router.get("/auth/google/redirect",
+    passport.authenticate("google")
+)
 
 module.exports = router;
