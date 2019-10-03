@@ -26,4 +26,4 @@ yarn-error.log*
 /storage
 
 # keys api
-.keys.js
+!/config/keys.js
