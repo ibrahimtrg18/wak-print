@@ -127,9 +127,16 @@ router.get("/auth/google", passport.authenticate("google", {
     scope: ["email", "profile"]
 }));
 
+router.get("/logout", (req, res) => {
+    req.logout();
+})
+
 router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) => {
-    console.log(req.user)
-    connection.query("SELECT * FROM user WHERE id_user = ?", req.user, (err, result) => {
+    res.redirect("/user/auth")
+})
+
+router.get("/auth", (req, res) => {
+    connection.query("SELECT * FROM user WHERE id_user = ?", req.user[0].id_user, (err, result) => {
         if (err) {
             return res.json(err)
         } else {
@@ -137,5 +144,6 @@ router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) 
         }
     })
 })
+
 
 module.exports = router;
