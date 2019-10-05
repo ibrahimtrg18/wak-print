@@ -4,16 +4,15 @@ const key = require("./keys")
 const connection = require("./db");
 
 passport.serializeUser((id, done) => {
-    done(null, id);
+    return done(null, id);
 });
 
 passport.deserializeUser((id, done) => {
     connection.query("SELECT * FROM user WHERE id_user = ?", id, (err, result) => {
         if (err) {
-            done(err, null);
-        } else {
-            done(null, result[0]);
+            return done(err, null);
         }
+        return done(null, result);
     })
 });
 
