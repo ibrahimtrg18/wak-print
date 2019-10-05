@@ -123,14 +123,19 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.get("/auth/google",
-    passport.authenticate("google", {
-        scope: ["profile"]
-    })
-)
+router.get("/auth/google", passport.authenticate("google", {
+    scope: ["email", "profile"]
+}));
 
-router.get("/auth/google/redirect",
-    passport.authenticate("google")
-)
+router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) => {
+    console.log(req.user)
+    connection.query("SELECT * FROM user WHERE id_user = ?", req.user, (err, result) => {
+        if (err) {
+            return res.json(err)
+        } else {
+            return res.json(result[0])
+        }
+    })
+})
 
 module.exports = router;
