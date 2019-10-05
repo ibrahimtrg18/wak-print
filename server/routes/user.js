@@ -132,11 +132,11 @@ router.get("/logout", (req, res) => {
 })
 
 router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) => {
-    res.redirect("/user/auth")
+    res.redirect("/user/auth/"+req.user)
 })
 
-router.get("/auth", (req, res) => {
-    connection.query("SELECT * FROM user WHERE id_user = ?", req.user[0].id_user, (err, result) => {
+router.get("/auth/:idUser", (req, res) => {
+    connection.query("SELECT * FROM user WHERE id_user = ?", req.params.idUser, (err, result) => {
         if (err) {
             return res.json(err)
         } else {
