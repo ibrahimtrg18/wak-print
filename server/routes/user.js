@@ -127,12 +127,12 @@ router.get("/auth/google", passport.authenticate("google", {
     scope: ["email", "profile"]
 }));
 
-router.get("/logout", (req, res) => {
-    req.logout();
-})
+// router.get("/logout", (req, res) => {
+//     req.logout();
+// })
 
 router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) => {
-    res.redirect("/user/auth/"+req.user)
+    res.redirect("/user/auth/" + req.user)
 })
 
 router.get("/auth/:idUser", (req, res) => {
