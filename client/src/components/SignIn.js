@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Wak Print
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -47,12 +47,44 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 2),
   },
 }));
 
 export default function SignIn() {
   const classes = useStyles();
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+  });
+
+  const login = async () => {
+    const res = await fetch("http://localhost:4000/user/login", {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        emailUser: values.email,
+        passwordUser: values.password
+      })
+    })
+    const data = await res.json();
+    console.log(data);
+  }
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    login();
+  }
+
+  const HandleClick = () => {
+
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -64,7 +96,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={(event) => handleSubmit(event)}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -75,6 +107,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(event) => handleChange(event)}
           />
           <TextField
             variant="outlined"
@@ -86,20 +119,37 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(event) => handleChange(event)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                style={{ marginBottom: 4 }}
+              >
+                Sign In
+              </Button>
+            </Grid>
+            <Box m={1}></Box>
+            <Grid item xs>
+              <Button
+                fullWidth
+                variant="contained"
+                color="secondary"
+                onClick={() => HandleClick()}
+              >
+                Google
+              </Button>
+            </Grid>
+          </Grid>
+          <Box mt={1}></Box>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">

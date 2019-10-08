@@ -5,6 +5,7 @@ const passportSetup = require("../config/passport-setup")
 const connection = require("../config/db")
 
 router.post("/register", (req, res) => {
+    console.log(req.body);
     const {
         emailUser,
         passwordUser,
@@ -97,6 +98,15 @@ router.post("/login", (req, res) => {
         passwordUser
     } = req.body;
     let errors = {};
+
+    if (!emailUser || !passwordUser) {
+        errors = {
+            message: "Tolong isi email dan password anda!"
+        }
+        return res.json({
+            errors
+        });
+    }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
     connection.query("SELECT * FROM user WHERE email_user=? AND password_user=?", [emailUser, passwordUser], (err, results) => {
