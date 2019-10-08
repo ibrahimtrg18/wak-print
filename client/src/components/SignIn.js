@@ -10,8 +10,10 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { ThemeProvider } from '@material-ui/styles';
+import purple from '@material-ui/core/colors/purple';
 
 function Copyright() {
   return (
@@ -61,7 +63,7 @@ export default function SignIn() {
   const login = async () => {
     const res = await fetch("http://localhost:4000/user/login", {
       method: "POST",
-      headers:{
+      headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -85,6 +87,14 @@ export default function SignIn() {
   const HandleClick = () => {
 
   }
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main : purple[900],
+      },
+    },
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -139,14 +149,16 @@ export default function SignIn() {
             </Grid>
             <Box m={1}></Box>
             <Grid item xs>
-              <Button
-                fullWidth
-                variant="contained"
-                color="secondary"
-                onClick={() => HandleClick()}
-              >
-                Google
+              <ThemeProvider theme={theme}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => HandleClick()}
+                >
+                  Google
               </Button>
+              </ThemeProvider>
             </Grid>
           </Grid>
           <Box mt={1}></Box>

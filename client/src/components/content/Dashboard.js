@@ -1,7 +1,9 @@
-import React from 'react'
-import Navbar from './Navbar'
-import Sider from './Sider'
-import {Typography, makeStyles} from '@material-ui/core'
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import Sider from '../layout/Sider';
+import Navbar from '../layout/Navbar';
 
 const drawerWidth = 240;
 
@@ -9,13 +11,25 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
+  appBar: {
+    marginLeft: drawerWidth,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
   },
@@ -23,16 +37,22 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-  toolbar: theme.mixins.toolbar,
 }));
 
+function Dashboard(props) {
+  const { container } = props;
+  const classes = useStyles();
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-const Dashboard = () => {
-  const classes = useStyles()
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     <div className={classes.root}>
-      <Navbar></Navbar>
-      <Sider></Sider>
+      <Navbar handleDrawerToggle={() => handleDrawerToggle()}></Navbar>
+      <Sider mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()}></Sider>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
@@ -60,7 +80,7 @@ const Dashboard = () => {
         </Typography>
       </main>
     </div>
-  )
+  );
 }
 
 export default Dashboard;
