@@ -7,8 +7,6 @@ const initState = {
     ]
 }
 
-const pesananReducer = (state = initState, action) => {
+export const pesananReducer = (state = initState, action) => {
     return state
 }
-
-export default pesananReducer

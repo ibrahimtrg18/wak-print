@@ -15,6 +15,10 @@ import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
 import purple from '@material-ui/core/colors/purple';
 
+import { connect } from 'react-redux';
+
+import * as authAction from './redux/actions/authAction'
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -53,27 +57,30 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+const SignIn = (props) => {
   const classes = useStyles();
   const [values, setValues] = useState({
     email: '',
     password: '',
   });
+  const [auth, setAuth] = useState({
 
-  const login = async () => {
+  })
+
+  const fetchLogin = async () => {
     const res = await fetch("http://localhost:4000/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        emailUser: values.email,
-        passwordUser: values.password
+        email_user: values.email,
+        password_user: values.password
       })
     })
     const data = await res.json();
-    console.log(data);
-  }
+    await props.authLogin(data.data);
+  };
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -81,7 +88,8 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    login();
+    fetchLogin();
+    setAuth(props.auth)
   }
 
   const HandleClick = () => {
@@ -91,10 +99,16 @@ export default function SignIn() {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main : purple[900],
+        main: purple[900],
       },
     },
   });
+
+  useEffect(()=>{
+    if(!auth.data){
+      props.history.push('/')
+    }
+  })
 
   return (
     <Container component="main" maxWidth="xs">
@@ -144,7 +158,7 @@ export default function SignIn() {
                 color="primary"
                 style={{ marginBottom: 4 }}
               >
-                Sign In
+                User
               </Button>
             </Grid>
             <Box m={1}></Box>
@@ -156,7 +170,7 @@ export default function SignIn() {
                   color="secondary"
                   onClick={() => HandleClick()}
                 >
-                  Google
+                  Wak Print
               </Button>
               </ThemeProvider>
             </Grid>
@@ -182,3 +196,17 @@ export default function SignIn() {
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  }
+}
+
+const mapDispathToProps = (dispatch) => {
+  return {
+    authLogin: (data) => { dispatch(authAction.authLogin(data)) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispathToProps)(SignIn);

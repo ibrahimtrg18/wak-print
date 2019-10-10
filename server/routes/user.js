@@ -106,10 +106,11 @@ router.post("/login", (req, res) => {
         } else {
             if (results && results.length > 0) {
                 // Jika cocok
+                user = results[0]
                 return res.json({
                     status: "success",
                     data: {
-                        results
+                        user
                     }
                 });
             } else {

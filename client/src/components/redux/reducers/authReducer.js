@@ -1,7 +1,17 @@
+import * as authAction from '../actions/authAction'
+
 const initState = {}
 
-const authReducer = (state= initState,action) =>{
-    return state
+export const authReducer = (state = initState, action) => {
+    switch (action.type) {
+        case authAction.AUTH_LOGIN:
+            return {
+                ...state,
+                data: action.payload
+            }
+        case authAction.AUTH_LOGOUT:
+            state = initState
+        default:
+            return state;
+    }
 }
-
-export default authReducer
