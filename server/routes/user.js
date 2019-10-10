@@ -45,7 +45,7 @@ router.post("/register", (req, res) => {
         if (err) {
             return res.json({
                 status: "error",
-                message: "ada kesalah didalam database"
+                message: "ada kesalah didalam query database"
             })
         } else if (results && results.length > 0) {
             return res.json({
@@ -65,7 +65,7 @@ router.post("/register", (req, res) => {
                     console.log(err)
                     return res.json({
                         status: "error",
-                        message: "ada kesalah didalam database2"
+                        message: "ada kesalah didalam query database"
                     })
                 } else {
                     return res.json({
@@ -116,9 +116,7 @@ router.post("/login", (req, res) => {
                 // Jika tidak cocok
                 return res.json({
                     status: "fail",
-                    data: {
-                        message: "Email dan Password salah!"
-                    }
+                    message: "Email dan Password salah!"
                 });
             }
         }

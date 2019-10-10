@@ -5,131 +5,113 @@ const connection = require("../config/db");
 
 router.post("/register", (req, res) => {
     const {
-        emailWakPrint,
-        passwordWakPrint,
-        passwordConfirmWakPrint,
-        namaWakPrint,
-        nomorHpWakPrint,
-        alamatWakPrint,
-        hargaWakPrint,
-        fotoWakPrint,
+        email_wak_print,
+        password_wak_print,
+        password_confirm_wak_print,
+        nama_wak_print,
+        nomor_hp_wak_print,
+        alamat_wak_print,
+        harga_wak_print,
+        foto_wak_print,
     } = req.body;
-    let errors;
 
-    console.log({
-        emailWakPrint,
-        passwordWakPrint,
-        passwordConfirmWakPrint,
-        namaWakPrint,
-        nomorHpWakPrint,
-        alamatWakPrint,
-        hargaWakPrint,
-        fotoWakPrint
-    })
+    // Cek Semua terisi
+    if (!email_wak_print || !password_wak_print || !password_confirm_wak_print || !nama_wak_print || !nomor_hp_wak_print || !alamat_wak_print) {
+        return res.json({
+            status: "fail",
+            message: "tolong isi semua data!"
+        })
+    }
 
-    if (passwordWakPrint && passwordWakPrint.length < 6) {
-        errors = {
-            message: "Password harus lebih dari 6 karakter"
-        }
+    if (password_wak_print && password_wak_print.length < 6) {
+        return res.json({
+            status: "fail",
+            message: "password harus lebih dari 6!"
+        })
     }
 
     // Cek Password Sama
-    if (passwordWakPrint !== passwordConfirmWakPrint) {
-        errors = {
-            message: "Password tidak sama!"
-        }
+    if (password_wak_print !== password_confirm_wak_print) {
+        return res.json({
+            status: "fail",
+            message: "password tidak sama!"
+        })
     }
 
-    // Cek Semua terisi
-    if (!emailWakPrint || !passwordWakPrint || !passwordConfirmWakPrint || !namaWakPrint || !nomorHpWakPrint || !alamatWakPrint) {
-        errors = {
-            message: "Silakan isi semua-nya!"
-        }
-    }
-
-    // Cek Error
-    if (errors) {
-        // Jika ada error dari client
-        res.json({
-            errors
-        });
-    } else {
-        // Memasukan kedalam table WakPrint
-        connection.query("SELECT * FROM wak_print WHERE email_wak_print = ?", emailWakPrint, (err, results) => {
-            if (err) {
-                errors = {
-                    message: err
-                }
-                return res.json(errors)
-            } else if (results && results.length > 0) {
-                errors = {
-                    message: "Email sudah terdaftar!"
-                }
-                return res.json({
-                    errors
-                })
-            } else {
-                connection.query("INSERT INTO wak_print SET ?", {
-                    email_wak_print: emailWakPrint,
-                    password_wak_print: passwordWakPrint,
-                    nama_wak_print: namaWakPrint,
-                    nomor_hp_wak_print: nomorHpWakPrint,
-                    alamat_wak_print: alamatWakPrint,
-                    harga_wak_print: hargaWakPrint,
-                    foto_wak_print: fotoWakPrint
-                }, (err) => {
-                    if (err) {
-                        errors = {
-                            message: err
+    // Memasukan kedalam table WakPrint
+    connection.query("SELECT * FROM wak_print WHERE email_wak_print = ?", email_wak_print, (err, results) => {
+        if (err) {
+            return res.json({
+                status: "error",
+                message: "ada kesalah didalam query database!"
+            })
+        } else if (results && results.length > 0) {
+            return res.json({
+                status: "fail",
+                message: "email sudah terdaftar!"
+            })
+        } else {
+            connection.query("INSERT INTO wak_print SET ?", {
+                email_wak_print,
+                password_wak_prin,
+                nama_wak_print,
+                nomor_hp_wak_print,
+                alamat_wak_print,
+                harga_wak_print,
+                foto_wak_print
+            }, (err) => {
+                if (err) {
+                    return res.json({
+                        status: "error",
+                        message: "ada kesalah didalam query database!"
+                    })
+                } else {
+                    return res.json({
+                        status: "success",
+                        data: {
+                            email_wak_print,
+                            password_wak_print,
+                            nama_wak_print,
+                            nomor_hp_wak_print,
+                            alamat_wak_print,
+                            harga_wak_print,
+                            foto_wak_print
                         }
-                        return res.json(errors)
-                    } else {
-                        return res.json({
-                            data: {
-                                emailWakPrint,
-                                passwordWakPrint,
-                                namaWakPrint,
-                                nomorHpWakPrint,
-                                alamatWakPrint,
-                                hargaWakPrint,
-                                fotoWakPrint
-                            }
-                        })
-                    }
-                });
-            }
-        });
-    }
+                    })
+                }
+            });
+        }
+    });
 });
 
 router.post("/login", (req, res) => {
-    console.log(req.body);
     const {
-        emailWakPrint,
-        passwordWakPrint
+        email_wak_print,
+        password_wak_print
     } = req.body;
-    let errors = {};
 
     // Cek Email dan Password sama dengan salah satu row didalam tableWakPrint
-    connection.query("SELECT * FROM wak_print WHERE email_wak_print=? AND password_wak_print=?", [emailWakPrint, passwordWakPrint], (err, results) => {
+    connection.query("SELECT * FROM wak_print WHERE email_wak_print=? AND password_wak_print=?", [email_wak_print, password_wak_print], (err, results) => {
         if (err) {
-            return console.log(err);
+            return res.json({
+                status: "error",
+                message: "ada kesalah didalam query database!"
+            })
         } else {
             if (results && results.length > 0) {
                 // Jika cocok
                 return res.json({
+                    status:"success",
                     data: {
                         results
                     }
                 });
             } else {
                 // Jika tidak cocok
-                errors = {
-                    message: "Check kembali email dan password!"
-                }
                 return res.json({
-                    errors
-                });
+                    status: "fail",
+                    message: "email dan password salah!"
+                })
             }
         }
     });
