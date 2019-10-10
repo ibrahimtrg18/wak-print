@@ -9,8 +9,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
+import { connect } from 'react-redux';
+
 import Sider from '../layout/Sider';
 import Navbar from '../layout/Navbar';
+import { Paper } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -52,27 +55,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const pesanan = [
-  {
-    user: "ibrahim",
-    page: "200",
-    rangkap: "2",
-    date: "10:00, 12 Jun 2019"
-  },
-  {
-    user: "ibrahim",
-    page: "200",
-    rangkap: "2",
-    date: "10:00, 12 Jun 2019"
-  },
-  {
-    user: "ibrahim",
-    page: "200",
-    rangkap: "2",
-    date: "10:00, 12 Jun 2019"
-  },
-]
-
 function Dashboard(props) {
   const { container } = props;
   const classes = useStyles();
@@ -83,6 +65,8 @@ function Dashboard(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const {pesanan} = props
+  
   return (
     <div className={classes.root}>
       <Navbar handleDrawerToggle={() => handleDrawerToggle()}></Navbar>
@@ -104,6 +88,9 @@ function Dashboard(props) {
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.cardAction}>
+                  <Paper variant="body2" color="textSecondary" component="p" color="primary" style={{padding:3,backgroundColor:"#A839d9",color:"#fff"}}>
+                      Ongoing
+                    </Paper>
                     <Button size="small" color="primary">
                       Detail
                     </Button>
@@ -116,10 +103,15 @@ function Dashboard(props) {
             )
           })}
         </Grid>
-
       </main>
     </div>
   );
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    pesanan: state.pesanan.pesanan
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard);

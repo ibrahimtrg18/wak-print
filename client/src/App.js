@@ -17,7 +17,6 @@ function App() {
           <Route path="/pesanan" component={Pesanan}></Route>
           <Route path="/riwayat"  component={Riwayat}></Route>
           <Route path="/" exact component={Dashboard}></Route>
-
         </Switch>
       </div>
     </Router>

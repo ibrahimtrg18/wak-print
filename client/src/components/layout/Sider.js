@@ -11,6 +11,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import InsertDriveFile from '@material-ui/icons/InsertDriveFile';
 import History from '@material-ui/icons/History';
 import Dashboard from '@material-ui/icons/Dashboard';
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
 
 const drawerWidth = 240;
@@ -57,6 +58,11 @@ const router = [
     route: "/riwayat",
     title: "Riwayat",
     icon: <History></History>
+  },
+  {
+    route: "/profile",
+    title: "Profile",
+    icon: <AccountCircle></AccountCircle>
   },
 ]
 
