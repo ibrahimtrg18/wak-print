@@ -11,7 +11,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import InsertDriveFile from '@material-ui/icons/InsertDriveFile';
 import History from '@material-ui/icons/History';
 import Dashboard from '@material-ui/icons/Dashboard';
-import AccountCircle from '@material-ui/icons/AccountCircle'
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import ExitToApp from '@material-ui/icons/ExitToApp'
 import { Link } from 'react-router-dom'
 
 const drawerWidth = 240;
@@ -52,16 +53,19 @@ const router = [
   {
     route: "/pesanan",
     title: "Pesanan",
+    key: "pesanan",
     icon: <InsertDriveFile></InsertDriveFile>
   },
   {
     route: "/riwayat",
     title: "Riwayat",
+    key: "riwayat",
     icon: <History></History>
   },
   {
     route: "/profile",
     title: "Profile",
+    key: "profile",
     icon: <AccountCircle></AccountCircle>
   },
 ]
@@ -92,12 +96,10 @@ function Sider(props) {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InsertDriveFile /> : <History />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button key="logout">
+          <ListItemIcon><ExitToApp></ExitToApp></ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
       </List>
     </div>
   );
