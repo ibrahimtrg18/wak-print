@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffe, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -53,6 +53,11 @@ const useStyles = makeStyles(theme => ({
   cardAction: {
     float: "right",
   },
+  tag: {
+    padding: theme.spacing(0.5, 0.5),
+    color: "white",
+    background: "#aaf"
+  }
 }));
 
 function Dashboard(props) {
@@ -60,21 +65,23 @@ function Dashboard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const [pesanan, setPesanan] = useState()
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const {pesanan} = props
-  
+  useEffect(() =>
+    setPesanan(props.pesanan)
+  )
+
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <Navbar handleDrawerToggle={() => handleDrawerToggle()}></Navbar>
       <Sider mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()}></Sider>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Grid container spacing={1}>
-          {pesanan.map((value, index) => {
+          {pesanan ? pesanan.map((value) => {
             return (
               <Grid item xs={12} sm={6}>
                 <Card className={classes.card}>
@@ -88,23 +95,23 @@ function Dashboard(props) {
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.cardAction}>
-                  <Paper variant="body2" color="textSecondary" component="p" color="primary" style={{padding:3,backgroundColor:"#A839d9",color:"#fff"}}>
+                    <Paper className={classes.tag} variant="p" color="textSecondary" component="p">
                       Ongoing
-                    </Paper>
+                      </Paper>
                     <Button size="small" color="primary">
                       Detail
-                    </Button>
+                      </Button>
                     <Button size="small" color="secondary">
                       Hapus
-                    </Button>
+                      </Button>
                   </CardActions>
                 </Card>
               </Grid>
             )
-          })}
+          }) : "Loading"}
         </Grid>
       </main>
-    </div>
+    </div >
   );
 }
 
