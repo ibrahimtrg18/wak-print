@@ -4,7 +4,7 @@ import * as pesananReducer from './pesananReducer';
 
 const rootReducer = combineReducers({
     auth: authReducer.authReducer,
-    pesanan: pesananReducer
+    pesanan: pesananReducer.pesananReducer
 })
 
 export default rootReducer;
