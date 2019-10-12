@@ -6,6 +6,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Pesanan from './components/content/Pesanan';
 import Riwayat from './components/content/Riwayat';
+import Profile from './components/content/Profile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/register" component={SignUp}></Route>
           <Route path="/pesanan" component={Pesanan}></Route>
           <Route path="/riwayat"  component={Riwayat}></Route>
+          <Route path="/profile"  component={Profile}></Route>
           <Route path="/" exact component={Dashboard}></Route>
         </Switch>
       </div>
