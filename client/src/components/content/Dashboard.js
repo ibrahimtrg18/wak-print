@@ -6,18 +6,20 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableBody from '@material-ui/core/TableBody'
+import Paper from '@material-ui/core/Paper'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import Sider from '../layout/Sider';
 import Navbar from '../layout/Navbar';
-import { Paper, Box, Divider } from '@material-ui/core';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    [theme.breakpoints.up('sm')]: {
+      display: "flex"
+    },
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -45,13 +47,20 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  paper: {
+    padding: theme.spacing(2)
+  },
   rootPesanan: {
     width: '100%',
-    marginTop: theme.spacing(1),
+  },
+  paperPesanan: {
+    marginTop: theme.spacing(3),
+    width: '100%',
     overflowX: 'auto',
+    marginBottom: theme.spacing(2),
   },
   tablePesanan: {
-    minWidth: 450,
+    minWidth: 650,
   },
 }));
 
@@ -83,74 +92,50 @@ function Dashboard(props) {
       <Sider mobileOpen={mobileOpen} handleDrawerToggle={() => handleDrawerToggle()}></Sider>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Grid container spacing={3}>
-          <Grid item xs={6} sm={3}>
-            <Paper>
-              <Typography variant="h6">
-                E-Wallet
-              </Typography>
-              <Typography variant="h6">
-                E-Wallet
+        <Grid container spacing={3} wrap="wrap">
+          <Grid item xs={12} sm={12} md={8}>
+            <Paper className={classes.paper}>
+              <Typography component="h4" variant="p">
+                Today
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper>
-              <Typography variant="h6">
-                E-Wallet
-              </Typography>
-              <Typography variant="h6">
-                E-Wallet
+          <Grid item xs={12} sm={12} md={4}>
+            <Paper className={classes.paper}>
+              <Typography component="h4" variant="p">
+                Saldo
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper>
-              <Typography variant="h6">
-                E-Wallet
-              </Typography>
-              <Typography variant="h6">
-                E-Wallet
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper>
-              <Typography variant="h6">
-                E-Wallet
-              </Typography>
-              <Typography variant="h6">
-                E-Wallet
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Divider />
-            <Typography variant="h6" component="h6">
-              Pesanan
-              </Typography>
-            <Paper className={classes.rootPesanan}>
-              <Table className={classes.tablePesanan}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Jumlah Halaman</TableCell>
-                    <TableCell align="right">Jumlah Rangkap</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map(row => (
-                    <TableRow key={row.name}>
-                      <TableCell component="th" scope="row">
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
+          <Grid item xs={12} md={12}>
+            <div className={classes.rootPesanan}>
+              <Paper className={classes.paperPesanan}>
+                <Table className={classes.tablePesanan} size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Dessert (100g serving)</TableCell>
+                      <TableCell align="right">Calories</TableCell>
+                      <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                      <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                      <TableCell align="right">Protein&nbsp;(g)</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Paper>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map(row => (
+                      <TableRow key={row.name}>
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.calories}</TableCell>
+                        <TableCell align="right">{row.fat}</TableCell>
+                        <TableCell align="right">{row.carbs}</TableCell>
+                        <TableCell align="right">{row.protein}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Paper>
+            </div>
           </Grid>
         </Grid>
       </main>
