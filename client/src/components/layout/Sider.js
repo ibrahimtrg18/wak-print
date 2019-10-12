@@ -51,6 +51,12 @@ const useStyles = makeStyles(theme => ({
 
 const router = [
   {
+    route: "/",
+    title: "Dashboard",
+    key: "dashboard",
+    icon: <Dashboard></Dashboard>
+  },
+  {
     route: "/pesanan",
     title: "Pesanan",
     key: "pesanan",
