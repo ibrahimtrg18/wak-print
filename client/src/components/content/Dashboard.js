@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid'
 import Table from '@material-ui/core/Table'
@@ -9,6 +9,8 @@ import TableBody from '@material-ui/core/TableBody'
 import Paper from '@material-ui/core/Paper'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import { connect } from 'react-redux';
 
 import Sider from '../layout/Sider';
 import Navbar from '../layout/Navbar';
@@ -82,9 +84,16 @@ function Dashboard(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   console.log(createData('Frozen yoghurt', 159, 6.0, 24, 4.0))
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  useEffect(() => {
+    if (!props.auth) {
+      props.history.push('/login')
+    }
+  })
 
   return (
     <div className={classes.root}>
@@ -143,4 +152,10 @@ function Dashboard(props) {
   );
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return ({
+    auth: state.auth
+  })
+}
+
+export default connect(mapStateToProps)(Dashboard);

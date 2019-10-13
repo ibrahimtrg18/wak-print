@@ -15,6 +15,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExitToApp from '@material-ui/icons/ExitToApp'
 import { Link } from 'react-router-dom'
 
+import * as authAction from '../redux/actions/authAction'
+import { connect } from 'react-redux';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -102,7 +105,7 @@ function Sider(props) {
       </List>
       <Divider />
       <List>
-        <ListItem button key="logout">
+        <ListItem button key="logout" component={Link} to={"/login"} onClick={()=>props.authLogout()}>
           <ListItemIcon><ExitToApp></ExitToApp></ListItemIcon>
           <ListItemText primary="Logout" />
         </ListItem>
@@ -147,4 +150,10 @@ function Sider(props) {
   );
 }
 
-export default Sider;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authLogout: (data) => { dispatch(authAction.authLogout(data)) }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Sider);

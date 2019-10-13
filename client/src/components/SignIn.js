@@ -63,9 +63,7 @@ const SignIn = (props) => {
     email: '',
     password: '',
   });
-  const [auth, setAuth] = useState({
-
-  })
+  const [auth, setAuth] = useState({})
 
   const fetchLogin = async () => {
     const res = await fetch("http://localhost:4000/user/login", {
@@ -89,7 +87,6 @@ const SignIn = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     fetchLogin();
-    setAuth(props.auth)
   }
 
   const HandleClick = () => {
@@ -104,8 +101,9 @@ const SignIn = (props) => {
     },
   });
 
-  useEffect(()=>{
-    if(!auth.data){
+  useEffect(() => {
+    if (props.auth) {
+      console.log(props.auth)
       props.history.push('/')
     }
   })

@@ -1,6 +1,6 @@
 import * as authAction from '../actions/authAction'
 
-const initState = {}
+const initState = null
 
 export const authReducer = (state = initState, action) => {
     switch (action.type) {
@@ -10,7 +10,7 @@ export const authReducer = (state = initState, action) => {
                 data: action.payload
             }
         case authAction.AUTH_LOGOUT:
-            state = initState
+            return state = initState
         default:
             return state;
     }
