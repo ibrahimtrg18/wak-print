@@ -77,7 +77,8 @@ const SignIn = (props) => {
       })
     })
     const data = await res.json();
-    await props.authLogin(data.data);
+    if (data.status == "success")
+      await props.authLogin(data.data);
   };
 
   const handleChange = (event) => {
@@ -103,7 +104,6 @@ const SignIn = (props) => {
 
   useEffect(() => {
     if (props.auth) {
-      console.log(props.auth)
       props.history.push('/')
     }
   })
