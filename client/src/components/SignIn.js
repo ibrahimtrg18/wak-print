@@ -63,7 +63,8 @@ const SignIn = (props) => {
     email: '',
     password: '',
   });
-  const [auth, setAuth] = useState({})
+  const [auth, setAuth] = useState()
+  const [message, setMessage] = useState()
 
   const fetchLogin = async () => {
     const res = await fetch("http://localhost:4000/user/login", {
@@ -79,6 +80,9 @@ const SignIn = (props) => {
     const data = await res.json();
     if (data.status == "success")
       await props.authLogin(data.data);
+    else{
+      await setMessage(data.message)
+    }
   };
 
   const handleChange = (event) => {
@@ -118,6 +122,7 @@ const SignIn = (props) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        {message ? <Typography component="body2" variant="caption" color="error" style={{marginTop:16}}>{message}</Typography> : ""}
         <form className={classes.form} noValidate onSubmit={(event) => handleSubmit(event)}>
           <TextField
             variant="outlined"
