@@ -18,7 +18,7 @@ router.post("/register", (req, res) => {
 
     // Cek Semua terisi
     if (!email_user || !password_user || !password_confirm_user || !nama_lengkap_user || !nomor_hp_user || !alamat_user) {
-        return res.json({
+        return res.status(400).json({
             status: "fail",
             message: "tolong isi data anda!"
         })
@@ -26,7 +26,7 @@ router.post("/register", (req, res) => {
 
     // Cek Panjang Password
     if (password_user && password_user.length < 6) {
-        return res.json({
+        return res.status(400).json({
             status: "fail",
             message: "password harus lebih dari 6!"
         })
@@ -34,7 +34,7 @@ router.post("/register", (req, res) => {
 
     // Cek Password Sama
     if (password_user !== password_confirm_user) {
-        return res.json({
+        return res.status(400).json({
             status: "fail",
             message: "password tidak sama!"
         })
@@ -43,12 +43,12 @@ router.post("/register", (req, res) => {
     // Memasukan kedalam tableUser
     connection.query("SELECT * FROM user WHERE email_user = ?", email_user, (err, results) => {
         if (err) {
-            return res.json({
+            return res.status(500).json({
                 status: "error",
                 message: "ada kesalah didalam query database"
             })
         } else if (results && results.length > 0) {
-            return res.json({
+            return res.status(409).json({
                 status: "fail",
                 message: "email anda sudah terdaftar!"
             })
@@ -63,12 +63,12 @@ router.post("/register", (req, res) => {
             }, (err) => {
                 if (err) {
                     console.log(err)
-                    return res.json({
+                    return res.status(500).json({
                         status: "error",
                         message: "ada kesalah didalam query database"
                     })
                 } else {
-                    return res.json({
+                    return res.status(200).json({
                         status: "success",
                         data: {
                             email_user,
@@ -93,7 +93,7 @@ router.post("/login", (req, res) => {
     } = req.body;
 
     if (!email_user || !password_user) {
-        return res.json({
+        return res.status(400).json({
             status: "error",
             message: "Tolong isi email dan password anda!"
         });
@@ -102,12 +102,15 @@ router.post("/login", (req, res) => {
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
     connection.query("SELECT * FROM user WHERE email_user=? AND password_user=?", [email_user, password_user], (err, results) => {
         if (err) {
-            return console.log(err);
+            return res.status(500).json({
+                status: "error",
+                message: "ada kesalah didalam query database"
+            })
         } else {
             if (results && results.length > 0) {
                 // Jika cocok
                 user = results[0]
-                return res.json({
+                return res.status(200).json({
                     status: "success",
                     data: {
                         user
@@ -115,7 +118,7 @@ router.post("/login", (req, res) => {
                 });
             } else {
                 // Jika tidak cocok
-                return res.json({
+                return res.status(401).json({
                     status: "fail",
                     message: "Email dan Password salah!"
                 });
