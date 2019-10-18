@@ -17,14 +17,14 @@ router.post("/register", (req, res) => {
 
     // Cek Semua terisi
     if (!email_wak_print || !password_wak_print || !password_confirm_wak_print || !nama_wak_print || !nomor_hp_wak_print || !alamat_wak_print) {
-        return res.json({
+        return res.status(400).json({
             status: "fail",
             message: "tolong isi semua data!"
         })
     }
 
     if (password_wak_print && password_wak_print.length < 6) {
-        return res.json({
+        return res.status(400).json({
             status: "fail",
             message: "password harus lebih dari 6!"
         })
@@ -32,7 +32,7 @@ router.post("/register", (req, res) => {
 
     // Cek Password Sama
     if (password_wak_print !== password_confirm_wak_print) {
-        return res.json({
+        return res.status(400).json({
             status: "fail",
             message: "password tidak sama!"
         })
@@ -41,14 +41,15 @@ router.post("/register", (req, res) => {
     // Memasukan kedalam table WakPrint
     connection.query("SELECT * FROM wak_print WHERE email_wak_print = ?", email_wak_print, (err, results) => {
         if (err) {
-            return res.json({
+            console.log(err);
+            return res.status(500).json({
                 status: "error",
                 message: "ada kesalah didalam query database!"
             })
         } else if (results && results.length > 0) {
-            return res.json({
+            return res.status(409).json({
                 status: "fail",
-                message: "email sudah terdaftar!"
+                message: "email anda sudah terdaftar!"
             })
         } else {
             connection.query("INSERT INTO wak_print SET ?", {
@@ -61,12 +62,12 @@ router.post("/register", (req, res) => {
                 foto_wak_print
             }, (err) => {
                 if (err) {
-                    return res.json({
+                    return res.status(500).json({
                         status: "error",
                         message: "ada kesalah didalam query database!"
                     })
                 } else {
-                    return res.json({
+                    return res.status(200).json({
                         status: "success",
                         data: {
                             email_wak_print,
@@ -91,30 +92,51 @@ router.post("/login", (req, res) => {
     } = req.body;
 
     // Cek Email dan Password sama dengan salah satu row didalam tableWakPrint
-    connection.query("SELECT * FROM wak_print WHERE email_wak_print=? AND password_wak_print=?", [email_wak_print, password_wak_print], (err, results) => {
+    connection.query("SELEcT * FROM wak_print WHERE email_wak_print=?", [email_wak_print], (err, results) => {
         if (err) {
-            return res.json({
+            console.log(err);
+            return res.status(500).json({
                 status: "error",
                 message: "ada kesalah didalam query database!"
             })
         } else {
             if (results && results.length > 0) {
-                // Jika cocok
-                return res.json({
-                    status:"success",
-                    data: {
-                        results
+                connection.query("SELECT * FROM wak_print WHERE email_wak_print=? AND password_wak_print=?", [email_wak_print, password_wak_print], (err, results) => {
+                    if (err) {
+                        console.log(err);
+                        return res.status(500).json({
+                            status: "error",
+                            message: "ada kesalah didalam query database!"
+                        })
+                    } else {
+                        if (results && results.length > 0) {
+                            // Jika cocok
+                            wak_print = results[0]
+                            return res.status(200).json({
+                                status: "success",
+                                data: {
+                                    wak_print
+                                }
+                            });
+                        } else {
+                            // Jika tidak cocok
+                            return res.status(401).json({
+                                status: "fail",
+                                message: "Email dan Password salah!"
+                            })
+                        }
                     }
                 });
-            } else {
-                // Jika tidak cocok
-                return res.json({
+            }
+            else {
+                return res.status(401).json({
                     status: "fail",
-                    message: "email dan password salah!"
+                    message: "Email anda belum terdaftar"
                 })
             }
         }
-    });
+    })
+
 });
 
 module.exports = router;
