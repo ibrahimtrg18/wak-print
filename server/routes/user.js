@@ -100,7 +100,7 @@ router.post("/login", (req, res) => {
     }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM user WHERE email_user=? AND password_user=?", [email_user, password_user], (err, results) => {
+    connection.query("SELECT * FROM user WHERE email_user=?", [email_user], (err, results) => {
         if (err) {
             return res.status(500).json({
                 status: "error",
@@ -108,23 +108,39 @@ router.post("/login", (req, res) => {
             })
         } else {
             if (results && results.length > 0) {
-                // Jika cocok
-                user = results[0]
-                return res.status(200).json({
-                    status: "success",
-                    data: {
-                        user
+                connection.query("SELECT * FROM user WHERE email_user=? AND password_user=?", [email_user, password_user], (err, results) => {
+                    if (err) {
+                        return res.status(500).json({
+                            status: "error",
+                            message: "ada kesalah didalam query database"
+                        })
+                    } else {
+                        if (results && results.length > 0) {
+                            // Jika cocok
+                            user = results[0]
+                            return res.status(200).json({
+                                status: "success",
+                                data: {
+                                    user
+                                }
+                            });
+                        } else {
+                            // Jika tidak cocok
+                            return res.status(401).json({
+                                status: "fail",
+                                message: "Email dan Password salah!"
+                            });
+                        }
                     }
                 });
-            } else {
-                // Jika tidak cocok
+            }else{
                 return res.status(401).json({
                     status: "fail",
-                    message: "Email dan Password salah!"
-                });
+                    message: "email anda belum terdaftar"
+                })
             }
         }
-    });
+    })
 });
 
 router.get("/auth/google", passport.authenticate("google", {
