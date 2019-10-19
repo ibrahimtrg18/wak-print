@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './Navbar'
 import { Redirect } from 'react-router-dom'
 
 const Register = (props) => {
+  const [values, setValues] = useState({
+    nama_usaha: '',
+    nama_pemilik_usaha: '',
+    alamat_lokasi: '',
+    jumlah_printer: '',
+    deskripsi: '',
+    email: '',
+    kata_sandi: '',
+    nomor_telepon: ''
+  })
   const goToRedirect = () => {
     props.history.push("/")
   }
+
+  const handleChange = (event) =>{
+    setValues({...values, [event.target.name]: event.target.value})
+    console.log(values)
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
+    console.log(values)
     console.log("submit register")
   }
   return (
@@ -16,7 +33,7 @@ const Register = (props) => {
         goTo="Masuk Disini"
         goToRedirect={() => goToRedirect()}></Navbar>
       <div className="flex pt-24">
-        <div className="w-full sm:px-64 px-8 mt-8">
+        <div className="w-full md:px-64 px-8 mt-8">
           <div className="text-2xl font-medium text-gray-800 text-center">
             Daftar Mitra WakPrint
           </div>
@@ -28,6 +45,7 @@ const Register = (props) => {
                 type="text"
                 name="nama_usaha"
                 id="nama_usaha"
+                onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
             <label
@@ -37,6 +55,7 @@ const Register = (props) => {
                 type="text"
                 name="nama_pemilik_usaha"
                 id="nama_pemilik_usaha"
+                onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
             <label
@@ -46,6 +65,7 @@ const Register = (props) => {
                 type="text"
                 name="alamat_lokasi"
                 id="alamat_lokasi"
+                onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3 h-32" />
             </label>
             <label
@@ -55,6 +75,7 @@ const Register = (props) => {
                 type="text"
                 name="jumlah_printer"
                 id="jumlah_printer"
+                onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
             <label
@@ -64,6 +85,7 @@ const Register = (props) => {
                 type="text"
                 name="deskripsi"
                 id="deskripsi"
+                onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
             <label
@@ -73,6 +95,7 @@ const Register = (props) => {
                 type="text"
                 name="email"
                 id="email"
+                onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
             <label
@@ -82,6 +105,7 @@ const Register = (props) => {
                 type="password"
                 name="kata_sandi"
                 id="kata_sandi"
+                onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
             <label
@@ -91,6 +115,7 @@ const Register = (props) => {
                 type="text"
                 name="nomor_telepon"
                 id="nomor_telepon"
+                onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
             <div className="block text-xs font-base text-gray-800 justify-center my-3">
