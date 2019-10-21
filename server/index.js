@@ -24,9 +24,6 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/user", require("./routes/user")); //user
-app.use("/wakprint", require("./routes/wakprint")); // wakprint
-app.use("/foto", require("./routes/foto")); //user & wakprint
-app.use("/pesanan", require("./routes/pesanan")); //user & wakprint
+app.use("/api",require('./routes/index'));
 
 app.listen(PORT, () => console.log("server port at localhost:" + PORT))
