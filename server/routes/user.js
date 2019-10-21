@@ -133,7 +133,7 @@ router.post("/login", (req, res) => {
                         }
                     }
                 });
-            }else{
+            } else {
                 return res.status(401).json({
                     status: "fail",
                     message: "email anda belum terdaftar"
@@ -155,15 +155,25 @@ router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) 
     res.redirect("/user/auth/" + req.user)
 })
 
-router.get("/auth/:idUser", (req, res) => {
-    connection.query("SELECT * FROM user WHERE id_user = ?", req.params.idUser, (err, result) => {
+router.get("/:idUser", (req, res) => {
+    connection.query("SELECT * FROM user WHERE id_user = ?", req.params.idUser, (err, results) => {
         if (err) {
             return res.json(err)
+        } else if (results && results.length > 0) {
+            user = results[0]
+            return res.status(200).json({
+                status: "success",
+                data: {
+                    user
+                }
+            });
         } else {
-            return res.json(result[0])
+            return res.status(404).json({
+                status: "fail",
+                message: "user not found"
+            })
         }
     })
 })
-
 
 module.exports = router;
