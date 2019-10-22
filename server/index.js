@@ -24,6 +24,6 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/api",require('./routes/index'));
+app.use("/api",require('./app'));
 
 app.listen(PORT, () => console.log("server port at localhost:" + PORT))
