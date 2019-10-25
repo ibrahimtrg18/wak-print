@@ -10,11 +10,9 @@ function App() {
     <Router>
       <div className="App" style={{ margin: 0 }}>
         <Switch>
-          <header className="App-header">
-            <Route path="/register" component={Register}></Route>
-            <Route path="/beranda" component={Beranda}></Route>
-            <Route path="/" exact component={Login}></Route>
-          </header>
+          <Route path="/register" component={Register}></Route>
+          <Route path="/login" exact component={Login}></Route>
+          <Route path="/" component={Beranda}></Route>
         </Switch>
       </div>
     </Router>
