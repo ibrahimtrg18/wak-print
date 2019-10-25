@@ -1,32 +1,52 @@
 import React, { useState } from 'react'
 import Navbar from './Navbar'
-import { Redirect } from 'react-router-dom'
 
 const Register = (props) => {
   const [values, setValues] = useState({
-    nama_usaha: '',
-    nama_pemilik_usaha: '',
-    alamat_lokasi: '',
-    jumlah_printer: '',
-    deskripsi: '',
-    email: '',
-    kata_sandi: '',
-    nomor_telepon: ''
+    nama_usaha: null,
+    nama_pemilik_usaha: null,
+    alamat_lokasi: null,
+    jumlah_printer: null,
+    deskripsi: null,
+    email: null,
+    kata_sandi: null,
+    nomor_telepon: null
   })
+
   const goToRedirect = () => {
     props.history.push("/")
   }
 
-  const handleChange = (event) =>{
-    setValues({...values, [event.target.name]: event.target.value})
-    console.log(values)
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value })
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(values)
-    console.log("submit register")
+    authRegister();
   }
+
+  const authRegister = async () => {
+    const res = await fetch("http://localhost:4000/api/wakprint/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        nama_usaha_wak_print: values.nama_usaha,
+        nama_pemilik_usaha_wak_print: values.nama_pemilik_usaha,
+        alamat_wak_print: values.alamat_lokasi,
+        jumlah_printer_wak_print: values.jumlah_printer,
+        deskripsi_wak_print: values.deskripsi,
+        email_wak_print: values.email,
+        password_wak_print: values.kata_sandi,
+        no_telp_wak_print: values.nomor_telepon
+      })
+    });
+    const data = await res.json();
+    console.log(data);
+  }
+
   return (
     <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar

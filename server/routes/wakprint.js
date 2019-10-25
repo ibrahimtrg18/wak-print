@@ -5,36 +5,30 @@ const connection = require("../config/db");
 
 router.post("/register", (req, res) => {
     const {
+        nama_usaha_wak_print,
+        nama_pemilik_usaha_wak_print,
+        alamat_wak_print,
+        jumlah_printer_wak_print,
+        deskripsi_wak_print,
         email_wak_print,
         password_wak_print,
-        password_confirm_wak_print,
-        nama_wak_print,
-        nomor_hp_wak_print,
-        alamat_wak_print,
-        harga_wak_print,
-        foto_wak_print,
+        no_telp_wak_print,
     } = req.body;
 
+    console.log(req.body)
+
     // Cek Semua terisi
-    if (!email_wak_print || !password_wak_print || !password_confirm_wak_print || !nama_wak_print || !nomor_hp_wak_print || !alamat_wak_print) {
+    if (!nama_usaha_wak_print ||
+        !nama_pemilik_usaha_wak_print ||
+        !alamat_wak_print ||
+        !jumlah_printer_wak_print ||
+        !deskripsi_wak_print ||
+        !email_wak_print ||
+        !password_wak_print ||
+        !no_telp_wak_print) {
         return res.status(400).json({
             status: "fail",
             message: "tolong isi semua data!"
-        })
-    }
-
-    if (password_wak_print && password_wak_print.length < 6) {
-        return res.status(400).json({
-            status: "fail",
-            message: "password harus lebih dari 6!"
-        })
-    }
-
-    // Cek Password Sama
-    if (password_wak_print !== password_confirm_wak_print) {
-        return res.status(400).json({
-            status: "fail",
-            message: "password tidak sama!"
         })
     }
 
@@ -53,13 +47,14 @@ router.post("/register", (req, res) => {
             })
         } else {
             connection.query("INSERT INTO wak_print SET ?", {
-                email_wak_print,
-                password_wak_prin,
-                nama_wak_print,
-                nomor_hp_wak_print,
+                nama_usaha_wak_print,
+                nama_pemilik_usaha_wak_print,
                 alamat_wak_print,
-                harga_wak_print,
-                foto_wak_print
+                jumlah_printer_wak_print,
+                deskripsi_wak_print,
+                email_wak_print,
+                password_wak_print,
+                no_telp_wak_print,
             }, (err) => {
                 if (err) {
                     return res.status(500).json({
@@ -70,13 +65,14 @@ router.post("/register", (req, res) => {
                     return res.status(200).json({
                         status: "success",
                         data: {
+                            nama_usaha_wak_print,
+                            nama_pemilik_usaha_wak_print,
+                            alamat_wak_print,
+                            jumlah_printer_wak_print,
+                            deskripsi_wak_print,
                             email_wak_print,
                             password_wak_print,
-                            nama_wak_print,
-                            nomor_hp_wak_print,
-                            alamat_wak_print,
-                            harga_wak_print,
-                            foto_wak_print
+                            no_telp_wak_print,
                         }
                     })
                 }

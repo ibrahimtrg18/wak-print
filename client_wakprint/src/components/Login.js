@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux';
+
 import Navbar from './Navbar'
-import { Redirect } from 'react-router-dom'
+import { authLogin } from '../redux/actions/authActions';
 
 const Login = (props) => {
-
   const [values, setValues] = useState({
     email: null,
     password: null,
@@ -19,11 +20,11 @@ const Login = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    // postLogin()
+    postLogin()
   }
 
   const postLogin = async () => {
-    const response = await fetch("http://localhost:4000/wakprint/login", {
+    const response = await fetch("http://localhost:4000/api/wakprint/login", {
       method: "POST",
       headers: {
         "Content-Type": 'application/json'
@@ -34,15 +35,22 @@ const Login = (props) => {
       })
     })
     const data = await response.json();
-    console.log(data);
-    
+    if (data.status === "success") {
+      await props.authLogin(data);
+    }
   }
+
+  useEffect(() => {
+    if(props.auth){
+      props.history.push("/")
+    }
+  })
 
   return (
     <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Daftar Disini"
-        goToRedirect={() => goToRedirect()}></Navbar>
+        goToRedirect={() => goToRedirect()}/>
       <div className="sm:flex sm:pt-32 pt-24">
         <div className="sm:w-1/2 px-8 invisible sm:invisible md:visible">Img</div>
         <div className="sm:w-1/2 px-8">
@@ -84,4 +92,16 @@ const Login = (props) => {
   )
 }
 
-export default Login
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authLogin: (data) => { dispatch(authLogin(data)) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
