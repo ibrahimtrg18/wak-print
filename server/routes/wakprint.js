@@ -143,27 +143,55 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/:idWakPrint", (req, res) => {
-    const idWakPrint = req.params.idWakPrint
-    connection.query("SELECT * FROM wak_print WHERE id = ?", [idWakPrint], (err, results) => {
-        if (err) {
-            return res.status(500).json({
-                success: false,
-                message: "error from server/database"
-            })
-        } else if (results && results.length > 0) {
-            return res.status(200).json({
-                success: true,
-                data: {
-                    user: results[0]
-                }
-            })
-        } else {
-            return res.status(404).json({
-                success: false,
-                message: "user not found"
-            })
-        }
-    })
+    connection.query(
+        `SELECT wp.*, AVG(r.number_rating) AS rating, h.*
+        FROM wak_print wp 
+        JOIN rating r 
+            ON r.id_wak_print = wp.id_wak_print 
+        JOIN harga h 
+            ON h.id_wak_print = wp.id_wak_print
+        WHERE wp.id_wak_print = ${req.params.idWakPrint}
+        GROUP BY wp.id_wak_print, h.id_harga`,
+        (err, results) => {
+            if (err) {
+                console.log(err)
+                return res.status(500).json({
+                    success: false,
+                    message: "error from server/database"
+                })
+            } else if (results && results.length > 0) {
+                return res.status(200).json({
+                    success: true,
+                    data: {
+                        user: {
+                            info: {
+                                id: results[0].id_wak_print,
+                                namaUsaha: results[0].nama_usaha_wak_print,
+                                namaPemilik: results[0].nama_pemilik_usaha_wak_print,
+                                alamat: results[0].alamat_wak_print,
+                                jumlahPrinter: results[0].jumlah_printer_wak_print,
+                                deskripsi: results[0].deskripsi_wak_print,
+                                email: results[0].email_wak_print,
+                                password: results[0].password_wak_print,
+                                noTelp: results[0].no_telp_wak_print,
+                            },
+                            rating: results[0].rating,
+                            harga: results.map(result => {
+                                return ({
+                                    jenis_harga: result.jenis_harga,
+                                    nominal_harga: result.nominal_harga
+                                })
+                            })
+                        },
+                    }
+                })
+            } else {
+                return res.status(404).json({
+                    success: false,
+                    message: "user not found"
+                })
+            }
+        })
 })
 
 module.exports = router;
