@@ -9,15 +9,15 @@ const connection = require("../config/db");
 router.post("/register", (req, res) => {
     console.log(req.body);
     const {
-        email_user,
-        password_user,
-        nama_lengkap_user,
-        nomor_hp_user,
-        alamat_user,
+        email,
+        password,
+        full_name,
+        phone_number,
+        address,
     } = req.body;
 
     // Cek Semua terisi
-    if (!email_user || !password_user || !nama_lengkap_user || !nomor_hp_user || !alamat_user) {
+    if (!email || !password || !full_name || !phone_number || !address) {
         return res.status(400).json({
             success: false,
             message: "tolong isi data anda!"
@@ -25,7 +25,7 @@ router.post("/register", (req, res) => {
     }
 
     // Cek Panjang Password
-    if (password_user && password_user.length < 6) {
+    if (password && password.length < 6) {
         return res.status(400).json({
             success: false,
             message: "password harus lebih dari 6!"
@@ -33,7 +33,7 @@ router.post("/register", (req, res) => {
     }
 
     // Memasukan kedalam tableUser
-    connection.query("SELECT * FROM user WHERE email_user = ?", email_user, (err, results) => {
+    connection.query("SELECT * FROM user WHERE email = ?", [email], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -45,13 +45,17 @@ router.post("/register", (req, res) => {
                 message: "email anda sudah terdaftar!"
             })
         } else {
-            bcrypt.hash(password_user, 10, (err, passwordHashed) => {
+            bcrypt.hash(password, 10, (err, passwordHashed) => {
+                if(err){
+                    console.log(err)
+                    return res.status(500).send()
+                }
                 connection.query("INSERT INTO user SET ?", {
-                    email_user,
-                    password_user: passwordHashed,
-                    nama_lengkap_user,
-                    nomor_hp_user,
-                    alamat_user
+                    email,
+                    password: passwordHashed,
+                    full_name,
+                    phone_number,
+                    address
                 }, (err) => {
                     if (err) {
                         console.log(err)
@@ -64,11 +68,11 @@ router.post("/register", (req, res) => {
                             success: true,
                             message: "Berhasil membuat account Wak Print",
                             data: {
-                                email_user,
-                                password_user,
-                                nama_lengkap_user,
-                                nomor_hp_user,
-                                alamat_user
+                                email,
+                                password,
+                                full_name,
+                                phone_number,
+                                address
                             }
                         })
                     }
@@ -81,11 +85,11 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
     console.log(req.body);
     const {
-        email_user,
-        password_user
+        email,
+        password
     } = req.body;
 
-    if (!email_user || !password_user) {
+    if (!email || !password) {
         return res.status(400).json({
             success: false,
             message: "Tolong isi email dan password anda!"
@@ -93,7 +97,7 @@ router.post("/login", (req, res) => {
     }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM user WHERE email_user=?", [email_user], (err, results) => {
+    connection.query("SELECT * FROM user WHERE email=?", [email], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -101,7 +105,11 @@ router.post("/login", (req, res) => {
             })
         } else {
             if (results && results.length > 0) {
-                bcrypt.compare(password_user, results[0].password_user, (err, result) => {
+                bcrypt.compare(password, results[0].password, (err, result) => {
+                    if(err){
+                        console.log(err)
+                        return res.status(500).send()
+                    }
                     if (result) {
                         return res.status(200).json({
                             success: true,
