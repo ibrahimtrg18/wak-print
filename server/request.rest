@@ -1,5 +1,47 @@
+GET http":"//localhost:4000/api/user/16
+###
 GET http://localhost:4000/api/wakprint/1
 ###
 GET http://localhost:4000/api/wakprint/4
 ###
 GET http://localhost:4000/api/toko/search?s=tes
+###
+POST http://localhost:4000/api/user/register
+Content-Type: application/json
+{
+    "email_user":"hello1",
+    "password_user":"helloa1",
+    "nama_lengkap_user":"hello",
+    "nomor_hp_user":"hello",
+    "alamat_user":"hello"
+}
+###
+POST http://localhost:4000/api/user/login
+Content-Type: application/json
+
+{
+    "email_user":"hello1",
+    "password_user":"helloa1"
+}
+###
+POST http://localhost:4000/api/wakprint/register
+Content-Type: application/json
+
+{
+    "nama_usaha_wak_print":"hello",
+    "nama_pemilik_usaha_wak_print":"hello",
+    "alamat_wak_print":"hello",
+    "jumlah_printer_wak_print":"hello",
+    "deskripsi_wak_print":"hello",
+    "email_wak_print":"hello123",
+    "password_wak_print":"hello123",
+    "no_telp_wak_print":"hello"
+}
+###
+POST http://localhost:4000/api/wakprint/login
+Content-Type: application/json
+
+{
+    "email_wak_print":"hello",
+    "password_wak_print":"hello123"
+}
