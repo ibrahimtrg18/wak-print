@@ -69,8 +69,9 @@ router.post("/register", (req, res) => {
                         message: "ada kesalah didalam query database!"
                     })
                 } else {
-                    return res.status(200).json({
+                    return res.status(201).json({
                         success: true,
+                        message: "Succes to create User Wak Print",
                         data: {
                             nama_usaha_wak_print,
                             nama_pemilik_usaha_wak_print,
@@ -146,10 +147,10 @@ router.get("/:idWakPrint", (req, res) => {
     connection.query(
         `SELECT wp.*, AVG(r.number_rating) AS rating, h.*
         FROM wak_print wp 
-        JOIN rating r 
-            ON r.id_wak_print = wp.id_wak_print 
-        JOIN harga h 
-            ON h.id_wak_print = wp.id_wak_print
+            JOIN rating r 
+                ON r.id_wak_print = wp.id_wak_print 
+            JOIN harga h 
+                ON h.id_id_wak_print = wp.id_wak_print
         WHERE wp.id_wak_print = ${req.params.idWakPrint}
         GROUP BY wp.id_wak_print, h.id_harga`,
         (err, results) => {
@@ -178,8 +179,8 @@ router.get("/:idWakPrint", (req, res) => {
                             rating: results[0].rating,
                             harga: results.map(result => {
                                 return ({
-                                    jenis_harga: result.jenis_harga,
-                                    nominal_harga: result.nominal_harga
+                                    jenisHarga: result.jenis_harga,
+                                    nominalHarga: result.nominal_harga
                                 })
                             })
                         },
