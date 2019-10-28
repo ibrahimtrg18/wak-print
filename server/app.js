@@ -8,6 +8,6 @@ router.use("/pesanan", require("./routes/pesanan")); //user & wakprint
 router.use("/saldo", require("./routes/saldo")); //user & wakprint
 router.use("/toko", require("./routes/toko")); // search
 router.use("/user", require("./routes/user")); //user
-router.use("/wakprint", require("./routes/wakprint")); // wakprint
+router.use("/partner", require("./routes/partner")); // wakprint
 
 module.exports = router

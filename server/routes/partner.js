@@ -6,47 +6,33 @@ const connection = require("../config/db");
 
 router.post("/register", (req, res) => {
     const {
-        nama_usaha_wak_print,
-        nama_pemilik_usaha_wak_print,
-        alamat_wak_print,
-        jumlah_printer_wak_print,
-        deskripsi_wak_print,
-        email_wak_print,
-        password_wak_print,
-        no_telp_wak_print,
+        email,
+        password,
+        full_name,
+        business_name,
+        phone_number,
+        address,
+        description,
     } = req.body;
 
     console.log(req.body)
 
-    // Cek Semua terisi
-    if (!nama_usaha_wak_print ||
-        !nama_pemilik_usaha_wak_print ||
-        !alamat_wak_print ||
-        !jumlah_printer_wak_print ||
-        !deskripsi_wak_print ||
-        !email_wak_print ||
-        !password_wak_print ||
-        !no_telp_wak_print) {
+    if (!email || !password || !full_name || !business_name || !phone_number || !address || !description) {
         return res.status(400).json({
             success: false,
             message: "tolong isi semua data!"
         })
     }
 
-    if (password_wak_print && password_wak_print.length < 6) {
+    if (password && password.length < 6) {
         return res.status(400).json({
             success: false,
             message: "password harus lebih dari 6!"
         })
     }
 
-    // Memasukan kedalam table WakPrint
-    connection.query(
-        `SELECT * 
-        FROM wak_print 
-        WHERE email_wak_print = ?`, [email_wak_print], (err, results) => {
+    connection.query("SELECT * FROM partner WHERE email = ?", [email], (err, results) => {
         if (err) {
-            console.log(err);
             return res.status(500).json({
                 success: false,
                 message: "ada kesalah didalam query database!"
@@ -57,16 +43,15 @@ router.post("/register", (req, res) => {
                 message: "email anda sudah terdaftar!"
             })
         } else {
-            bcrypt.hash(password_wak_print, 10, (err, passwordHashed) => {
-                connection.query("INSERT INTO wak_print SET ?", {
-                    nama_usaha_wak_print,
-                    nama_pemilik_usaha_wak_print,
-                    alamat_wak_print,
-                    jumlah_printer_wak_print,
-                    deskripsi_wak_print,
-                    email_wak_print,
-                    password_wak_print: passwordHashed,
-                    no_telp_wak_print,
+            bcrypt.hash(password, 10, (err, passwordHashed) => {
+                connection.query("INSERT INTO partner SET ?", {
+                    email,
+                    password: passwordHashed,
+                    full_name,
+                    business_name,
+                    phone_number,
+                    address,
+                    description
                 }, (err) => {
                     if (err) {
                         return res.status(500).json({
@@ -77,16 +62,15 @@ router.post("/register", (req, res) => {
                         return res.status(201).json({
                             success: true,
                             message: "Succes to create User Wak Print",
-                            data: {
-                                nama_usaha_wak_print,
-                                nama_pemilik_usaha_wak_print,
-                                alamat_wak_print,
-                                jumlah_printer_wak_print,
-                                deskripsi_wak_print,
-                                email_wak_print,
-                                password_wak_print,
-                                no_telp_wak_print,
-                            }
+                            // data: {
+                            //     email,
+                            //     password,
+                            //     full_name,
+                            //     business_name,
+                            //     phone_number,
+                            //     address,
+                            //     description,
+                            // }
                         })
                     }
                 });
@@ -97,12 +81,19 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
     const {
-        email_wak_print,
-        password_wak_print
+        email,
+        password
     } = req.body;
 
+    if (!email || !password) {
+        return res.status(400).json({
+            success: false,
+            message: "tolong isi semua data!"
+        })
+    }
+
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM wak_print WHERE email_wak_print=?", [email_wak_print], (err, results) => {
+    connection.query("SELECT * FROM partner WHERE email=?", [email], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -110,8 +101,7 @@ router.post("/login", (req, res) => {
             })
         } else {
             if (results && results.length > 0) {
-                console.log(results[0].password_wak_print)
-                bcrypt.compare(password_wak_print, results[0].password_wak_print, (err, result) => {
+                bcrypt.compare(password, results[0].password, (err, result) => {
                     if (result) {
                         return res.status(200).json({
                             success: true,
@@ -157,14 +147,14 @@ router.get("/:idWakPrint", (req, res) => {
                         user: {
                             info: {
                                 id: results[0].id_wak_print,
-                                namaUsaha: results[0].nama_usaha_wak_print,
-                                namaPemilik: results[0].nama_pemilik_usaha_wak_print,
-                                alamat: results[0].alamat_wak_print,
+                                namaUsaha: results[0].full_name,
+                                namaPemilik: results[0].business_name,
+                                alamat: results[0].address,
                                 jumlahPrinter: results[0].jumlah_printer_wak_print,
-                                deskripsi: results[0].deskripsi_wak_print,
-                                email: results[0].email_wak_print,
-                                password: results[0].password_wak_print,
-                                noTelp: results[0].no_telp_wak_print,
+                                deskripsi: results[0].description,
+                                email: results[0].email,
+                                password: results[0].password,
+                                noTelp: results[0].phone_number,
                             },
                             rating: results[0].rating,
                             harga: results.map(result => {
