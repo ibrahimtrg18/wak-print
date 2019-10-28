@@ -44,6 +44,10 @@ router.post("/register", (req, res) => {
             })
         } else {
             bcrypt.hash(password, 10, (err, passwordHashed) => {
+                if(err){
+                    console.log(err)
+                    return res.status(500).send()
+                }
                 connection.query("INSERT INTO partner SET ?", {
                     email,
                     password: passwordHashed,
@@ -102,6 +106,10 @@ router.post("/login", (req, res) => {
         } else {
             if (results && results.length > 0) {
                 bcrypt.compare(password, results[0].password, (err, result) => {
+                    if(err){
+                        console.log(err)
+                        return res.status(500).send()
+                    }
                     if (result) {
                         return res.status(200).json({
                             success: true,
