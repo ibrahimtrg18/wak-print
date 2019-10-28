@@ -28,7 +28,7 @@ router.get("/search", (req, res) => {
                 return res.status(200).json({
                     success: true,
                     data: {
-                        user: results.map(result => {
+                        toko: results.map(result => {
                             return ({
                                 info: {
                                     id: result.id_wak_print,
