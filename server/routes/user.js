@@ -1,8 +1,10 @@
 const express = require('express');
 const passport = require("passport");
+const bcrypt = require("bcrypt");
+
 const router = express.Router();
-const passportSetup = require("../config/passport-setup")
-const connection = require("../config/db")
+const passportSetup = require("../config/passport-setup");
+const connection = require("../config/db");
 
 router.post("/register", (req, res) => {
     console.log(req.body);
@@ -43,31 +45,34 @@ router.post("/register", (req, res) => {
                 message: "email anda sudah terdaftar!"
             })
         } else {
-            connection.query("INSERT INTO user SET ?", {
-                email_user,
-                password_user,
-                nama_lengkap_user,
-                nomor_hp_user,
-                alamat_user
-            }, (err) => {
-                if (err) {
-                    console.log(err)
-                    return res.status(500).json({
-                        success: false,
-                        message: "ada kesalah didalam query database"
-                    })
-                } else {
-                    return res.status(200).json({
-                        success: true,
-                        data: {
-                            email_user,
-                            password_user,
-                            nama_lengkap_user,
-                            nomor_hp_user,
-                            alamat_user
-                        }
-                    })
-                }
+            bcrypt.hash(password_user, 10, (err, passwordHashed) => {
+                connection.query("INSERT INTO user SET ?", {
+                    email_user,
+                    password_user: passwordHashed,
+                    nama_lengkap_user,
+                    nomor_hp_user,
+                    alamat_user
+                }, (err) => {
+                    if (err) {
+                        console.log(err)
+                        return res.status(500).json({
+                            success: false,
+                            message: "ada kesalah didalam query database"
+                        })
+                    } else {
+                        return res.status(201).json({
+                            success: true,
+                            message: "Berhasil membuat account Wak Print",
+                            data: {
+                                email_user,
+                                password_user,
+                                nama_lengkap_user,
+                                nomor_hp_user,
+                                alamat_user
+                            }
+                        })
+                    }
+                });
             });
         }
     });
@@ -96,31 +101,18 @@ router.post("/login", (req, res) => {
             })
         } else {
             if (results && results.length > 0) {
-                connection.query("SELECT * FROM user WHERE email_user=? AND password_user=?", [email_user, password_user], (err, results) => {
-                    if (err) {
-                        return res.status(500).json({
-                            success: false,
-                            message: "ada kesalah didalam query database"
-                        })
-                    } else {
-                        if (results && results.length > 0) {
-                            // Jika cocok
-                            user = results[0]
-                            return res.status(200).json({
-                                success: true,
-                                data: {
-                                    user
-                                }
-                            });
-                        } else {
-                            // Jika tidak cocok
-                            return res.status(401).json({
-                                success: false,
-                                message: "Email dan Password salah!"
-                            });
-                        }
+                bcrypt.compare(password_user, results[0].password_user, (err, result) => {
+                    if (result) {
+                        return res.status(200).json({
+                            success: true,
+                            data: results[0]
+                        });
                     }
-                });
+                    return res.status(401).json({
+                        succes: false,
+                        message: "Email dan Password anda salah!"
+                    })
+                })
             } else {
                 return res.status(401).json({
                     success: false,
@@ -144,23 +136,25 @@ router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) 
 })
 
 router.get("/:idUser", (req, res) => {
-    connection.query("SELECT * FROM user WHERE id_user = ?", req.params.idUser, (err, results) => {
-        if (err) {
-            return res.json(err)
-        } else if (results && results.length > 0) {
-            return res.status(200).json({
-                success: true,
-                data: {
-                    user : results[0]
-                }
-            });
-        } else {
-            return res.status(404).json({
-                success: false,
-                message: "user not found"
-            })
-        }
-    })
+    connection.query(
+        `SELECT * FROM user WHERE id_user = ${req.params.idUser}`,
+        (err, results) => {
+            if (err) {
+                return res.json(err)
+            } else if (results && results.length > 0) {
+                return res.status(200).json({
+                    success: true,
+                    data: {
+                        user: results[0]
+                    }
+                });
+            } else {
+                return res.status(404).json({
+                    success: false,
+                    message: "user not found"
+                })
+            }
+        })
 })
 
 module.exports = router;

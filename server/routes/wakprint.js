@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
 const connection = require("../config/db");
 
@@ -40,7 +41,10 @@ router.post("/register", (req, res) => {
     }
 
     // Memasukan kedalam table WakPrint
-    connection.query("SELECT * FROM wak_print WHERE email_wak_print = ?", email_wak_print, (err, results) => {
+    connection.query(
+        `SELECT * 
+        FROM wak_print 
+        WHERE email_wak_print = ?`, [email_wak_print], (err, results) => {
         if (err) {
             console.log(err);
             return res.status(500).json({
@@ -53,38 +57,40 @@ router.post("/register", (req, res) => {
                 message: "email anda sudah terdaftar!"
             })
         } else {
-            connection.query("INSERT INTO wak_print SET ?", {
-                nama_usaha_wak_print,
-                nama_pemilik_usaha_wak_print,
-                alamat_wak_print,
-                jumlah_printer_wak_print,
-                deskripsi_wak_print,
-                email_wak_print,
-                password_wak_print,
-                no_telp_wak_print,
-            }, (err) => {
-                if (err) {
-                    return res.status(500).json({
-                        success: false,
-                        message: "ada kesalah didalam query database!"
-                    })
-                } else {
-                    return res.status(201).json({
-                        success: true,
-                        message: "Succes to create User Wak Print",
-                        data: {
-                            nama_usaha_wak_print,
-                            nama_pemilik_usaha_wak_print,
-                            alamat_wak_print,
-                            jumlah_printer_wak_print,
-                            deskripsi_wak_print,
-                            email_wak_print,
-                            password_wak_print,
-                            no_telp_wak_print,
-                        }
-                    })
-                }
-            });
+            bcrypt.hash(password_wak_print, 10, (err, passwordHashed) => {
+                connection.query("INSERT INTO wak_print SET ?", {
+                    nama_usaha_wak_print,
+                    nama_pemilik_usaha_wak_print,
+                    alamat_wak_print,
+                    jumlah_printer_wak_print,
+                    deskripsi_wak_print,
+                    email_wak_print,
+                    password_wak_print: passwordHashed,
+                    no_telp_wak_print,
+                }, (err) => {
+                    if (err) {
+                        return res.status(500).json({
+                            success: false,
+                            message: "ada kesalah didalam query database!"
+                        })
+                    } else {
+                        return res.status(201).json({
+                            success: true,
+                            message: "Succes to create User Wak Print",
+                            data: {
+                                nama_usaha_wak_print,
+                                nama_pemilik_usaha_wak_print,
+                                alamat_wak_print,
+                                jumlah_printer_wak_print,
+                                deskripsi_wak_print,
+                                email_wak_print,
+                                password_wak_print,
+                                no_telp_wak_print,
+                            }
+                        })
+                    }
+                });
+            })
         }
     });
 });
@@ -95,52 +101,36 @@ router.post("/login", (req, res) => {
         password_wak_print
     } = req.body;
 
-    // Cek Email dan Password sama dengan salah satu row didalam tableWakPrint
-    connection.query("SELEcT * FROM wak_print WHERE email_wak_print=?", [email_wak_print], (err, results) => {
+    // Cek Email dan Password sama dengan salah satu row didalam tableUser
+    connection.query("SELECT * FROM wak_print WHERE email_wak_print=?", [email_wak_print], (err, results) => {
         if (err) {
-            console.log(err);
             return res.status(500).json({
                 success: false,
-                message: "ada kesalah didalam query database!"
+                message: "ada kesalah didalam query database"
             })
         } else {
             if (results && results.length > 0) {
-                connection.query("SELECT * FROM wak_print WHERE email_wak_print=? AND password_wak_print=?", [email_wak_print, password_wak_print], (err, results) => {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).json({
-                            success: false,
-                            message: "ada kesalah didalam query database!"
-                        })
-                    } else {
-                        if (results && results.length > 0) {
-                            // Jika cocok
-                            wak_print = results[0]
-                            return res.status(200).json({
-                                success: true,
-                                data: {
-                                    wak_print
-                                }
-                            });
-                        } else {
-                            // Jika tidak cocok
-                            return res.status(401).json({
-                                success: false,
-                                message: "Email dan Password salah!"
-                            })
-                        }
+                console.log(results[0].password_wak_print)
+                bcrypt.compare(password_wak_print, results[0].password_wak_print, (err, result) => {
+                    if (result) {
+                        return res.status(200).json({
+                            success: true,
+                            data: results[0]
+                        });
                     }
-                });
-            }
-            else {
+                    return res.status(401).json({
+                        succes: false,
+                        message: "Email dan Password anda salah!"
+                    })
+                })
+            } else {
                 return res.status(401).json({
                     success: false,
-                    message: "Email anda belum terdaftar"
+                    message: "email anda belum terdaftar"
                 })
             }
         }
     })
-
 });
 
 router.get("/:idWakPrint", (req, res) => {
