@@ -1,23 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-
 const connection = require("../config/db");
 
 router.post("/register", (req, res) => {
     const {
         email,
         password,
-        full_name,
-        business_name,
-        phone_number,
+        fullName,
+        businessName,
+        phoneNumber,
         address,
         description,
     } = req.body;
 
-    console.log(req.body)
-
-    if (!email || !password || !full_name || !business_name || !phone_number || !address || !description) {
+    if (!email || !password || !fullName || !businessName || !phoneNumber || !address || !description) {
         return res.status(400).json({
             success: false,
             message: "tolong isi semua data!"
@@ -44,16 +41,16 @@ router.post("/register", (req, res) => {
             })
         } else {
             bcrypt.hash(password, 10, (err, passwordHashed) => {
-                if(err){
+                if (err) {
                     console.log(err)
                     return res.status(500).send()
                 }
                 connection.query("INSERT INTO partner SET ?", {
                     email,
                     password: passwordHashed,
-                    full_name,
-                    business_name,
-                    phone_number,
+                    full_name: fullName,
+                    business_name: businessName,
+                    phone_number: phoneNumber,
                     address,
                     description
                 }, (err) => {
@@ -106,7 +103,7 @@ router.post("/login", (req, res) => {
         } else {
             if (results && results.length > 0) {
                 bcrypt.compare(password, results[0].password, (err, result) => {
-                    if(err){
+                    if (err) {
                         console.log(err)
                         return res.status(500).send()
                     }
@@ -131,16 +128,17 @@ router.post("/login", (req, res) => {
     })
 });
 
-router.get("/:idWakPrint", (req, res) => {
+router.get("/:idPartner", (req, res) => {
+    const idPartner = req.params.idPartner
     connection.query(
-        `SELECT wp.*, AVG(r.number_rating) AS rating, h.*
-        FROM wak_print wp 
-            JOIN rating r 
-                ON r.id_wak_print = wp.id_wak_print 
-            JOIN harga h 
-                ON h.id_id_wak_print = wp.id_wak_print
-        WHERE wp.id_wak_print = ${req.params.idWakPrint}
-        GROUP BY wp.id_wak_print, h.id_harga`,
+        `SELECT p.*, AVG(r.rate) AS rating, s.*
+        FROM partner p 
+            LEFT JOIN rating r 
+                ON r.partner_id = p.id 
+            LEFT JOIN selling s
+                ON s.partner_id = p.id
+        WHERE p.id = ${idPartner}
+        GROUP BY p.id, s.id`,
         (err, results) => {
             if (err) {
                 console.log(err)
@@ -167,8 +165,8 @@ router.get("/:idWakPrint", (req, res) => {
                             rating: results[0].rating,
                             harga: results.map(result => {
                                 return ({
-                                    jenisHarga: result.jenis_harga,
-                                    nominalHarga: result.nominal_harga
+                                    jenisHarga: result.name,
+                                    nominalHarga: result.nominal
                                 })
                             })
                         },

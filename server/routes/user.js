@@ -1,18 +1,16 @@
 const express = require('express');
-const passport = require("passport");
-const bcrypt = require("bcrypt");
-
 const router = express.Router();
-const passportSetup = require("../config/passport-setup");
+const bcrypt = require("bcrypt");
 const connection = require("../config/db");
+// const passportSetup = require("../config/passport-setup");
+// const passport = require("passport");
 
 router.post("/register", (req, res) => {
-    console.log(req.body);
     const {
         email,
         password,
-        full_name,
-        phone_number,
+        fullName,
+        phoneNumber,
         address,
     } = req.body;
 
@@ -33,28 +31,28 @@ router.post("/register", (req, res) => {
     }
 
     // Memasukan kedalam tableUser
-    connection.query("SELECT * FROM user WHERE email = ?", [email], (err, results) => {
+    connection.query("SELECT * FROM user WHERE email = ?", [email], (err, rows) => {
         if (err) {
             return res.status(500).json({
                 success: false,
                 message: "ada kesalah didalam query database"
             })
-        } else if (results && results.length > 0) {
+        } else if (rows && rows.length > 0) {
             return res.status(409).json({
                 success: false,
                 message: "email anda sudah terdaftar!"
             })
         } else {
             bcrypt.hash(password, 10, (err, passwordHashed) => {
-                if(err){
+                if (err) {
                     console.log(err)
                     return res.status(500).send()
                 }
                 connection.query("INSERT INTO user SET ?", {
                     email,
                     password: passwordHashed,
-                    full_name,
-                    phone_number,
+                    full_name: fullName,
+                    phone_number: phoneNumber,
                     address
                 }, (err) => {
                     if (err) {
@@ -67,13 +65,13 @@ router.post("/register", (req, res) => {
                         return res.status(201).json({
                             success: true,
                             message: "Berhasil membuat account Wak Print",
-                            data: {
-                                email,
-                                password,
-                                full_name,
-                                phone_number,
-                                address
-                            }
+                            // data: {
+                            //     email,
+                            //     password,
+                            //     full_name,
+                            //     phone_number,
+                            //     address
+                            // }
                         })
                     }
                 });
@@ -97,23 +95,23 @@ router.post("/login", (req, res) => {
     }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM user WHERE email=?", [email], (err, results) => {
+    connection.query("SELECT * FROM user WHERE email=?", [email], (err, rows) => {
         if (err) {
             return res.status(500).json({
                 success: false,
                 message: "ada kesalah didalam query database"
             })
         } else {
-            if (results && results.length > 0) {
-                bcrypt.compare(password, results[0].password, (err, result) => {
-                    if(err){
+            if (rows && rows.length > 0) {
+                bcrypt.compare(password, rows[0].password, (err, result) => {
+                    if (err) {
                         console.log(err)
                         return res.status(500).send()
                     }
                     if (result) {
                         return res.status(200).json({
                             success: true,
-                            data: results[0]
+                            data: rows[0]
                         });
                     }
                     return res.status(401).json({
@@ -131,38 +129,38 @@ router.post("/login", (req, res) => {
     })
 });
 
-router.get("/auth/google", passport.authenticate("google", {
-    scope: ["email", "profile"]
-}));
+router.get("/:idUser", (req, res) => {
+    const idUser = req.params.idUser;
+
+    connection.query("SELECT * FROM user WHERE id = ?", [idUser], (err, rows) => {
+        if (err) {
+            return res.json(err)
+        } else if (rows && rows.length > 0) {
+            return res.status(200).json({
+                success: true,
+                data: {
+                    user: rows[0]
+                }
+            });
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "user not found"
+            })
+        }
+    })
+});
+
+// router.get("/auth/google", passport.authenticate("google", {
+//     scope: ["email", "profile"]
+// }));
 
 // router.get("/logout", (req, res) => {
 //     req.logout();
 // })
 
-router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) => {
-    res.redirect("/user/auth/" + req.user)
-})
-
-router.get("/:idUser", (req, res) => {
-    connection.query(
-        `SELECT * FROM user WHERE id_user = ${req.params.idUser}`,
-        (err, results) => {
-            if (err) {
-                return res.json(err)
-            } else if (results && results.length > 0) {
-                return res.status(200).json({
-                    success: true,
-                    data: {
-                        user: results[0]
-                    }
-                });
-            } else {
-                return res.status(404).json({
-                    success: false,
-                    message: "user not found"
-                })
-            }
-        })
-})
+// router.get("/auth/google/redirect", passport.authenticate("google"), (req, res) => {
+//     res.redirect("/user/auth/" + req.user)
+// })
 
 module.exports = router;
