@@ -3,16 +3,23 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Login from './components/Login'
 import Register from './components/Register';
-import Beranda from './components/Beranda';
+import Home from './components/Home';
+import Order from './components/Order';
+import Profile from './components/Profile';
+import History from './components/History';
 
 function App() {
   return (
     <Router>
       <div className="App" style={{ margin: 0 }}>
         <Switch>
+          <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
-          <Route path="/login" exact component={Login}></Route>
-          <Route path="/" component={Beranda}></Route>
+          <Route path="/profile" component={Profile}></Route>
+          <Route path="/history" component={History}></Route>
+          <Route path="/order" component={Order}></Route>
+          <Route path="/home" component={Home}></Route>
+          <Route path="/" exact component={Home}></Route>
         </Switch>
       </div>
     </Router>
