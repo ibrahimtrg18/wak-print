@@ -9,7 +9,7 @@ body{
 }
 
 .btn {
-    @apply py-2 px-4 rounded;
+    @apply py-2 px-6 rounded;
 }
 
 .btn-primary {
@@ -18,9 +18,9 @@ body{
 }
 
 .text-primary {
-    color: #8E44AD
+    color: #8E44AD;
 }
 
 .border-primary{
-    border: 1px solid #8E44AD;
+    border: 2px solid #8E44AD;
 }

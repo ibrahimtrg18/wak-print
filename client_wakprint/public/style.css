@@ -11394,8 +11394,8 @@ body{
 .btn {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   border-radius: 0.25rem;
 }
 
@@ -11405,11 +11405,11 @@ body{
 }
 
 .text-primary {
-  color: #8E44AD
+  color: #8E44AD;
 }
 
 .border-primary{
-  border: 1px solid #8E44AD;
+  border: 2px solid #8E44AD;
 }
 
 @media (min-width: 640px) {
