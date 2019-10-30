@@ -14,7 +14,7 @@ const Register = (props) => {
   })
 
   const goToRedirect = () => {
-    props.history.push("/")
+    props.history.push("/login")
   }
 
   const handleChange = (event) => {
