@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const connection = require("../config/db");
 
 router.get("/all", (req, res) => {

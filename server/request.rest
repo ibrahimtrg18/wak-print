@@ -1,8 +1,8 @@
 GET http":"//localhost:4000/api/user/16
 ###
-GET http://localhost:4000/api/wakprint/1
+GET http://localhost:4000/api/partner/1
 ###
-GET http://localhost:4000/api/wakprint/4
+GET http://localhost:4000/api/partner/2
 ###
 GET http://localhost:4000/api/toko/search?s=tes
 ###
@@ -29,11 +29,11 @@ POST http://localhost:4000/api/partner/register
 Content-Type: application/json
 
 {
-    "email":"hello@gmail.com",
+    "email":"hello2@gmail.com",
     "password":"hello123",
-    "full_name":"hello",
-    "business_name":"hello",
-    "phone_number":"hello",
+    "fullName":"hello",
+    "businessName":"hello",
+    "phoneNumber":"hello",
     "address":"hello",
     "description":"hello"
 }
