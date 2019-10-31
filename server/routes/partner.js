@@ -86,6 +86,8 @@ router.post("/login", (req, res) => {
         password
     } = req.body;
 
+    console.log(req.body)
+
     if (!email || !password) {
         return res.status(400).json({
             success: false,
@@ -112,11 +114,12 @@ router.post("/login", (req, res) => {
                             success: true,
                             data: results[0]
                         });
+                    } else {
+                        return res.status(401).json({
+                            success: false,
+                            message: "Email dan Password anda salah!"
+                        })
                     }
-                    return res.status(401).json({
-                        succes: false,
-                        message: "Email dan Password anda salah!"
-                    })
                 })
             } else {
                 return res.status(401).json({
@@ -150,26 +153,24 @@ router.get("/:idPartner", (req, res) => {
                 return res.status(200).json({
                     success: true,
                     data: {
-                        user: {
-                            info: {
-                                id: results[0].id_wak_print,
-                                namaUsaha: results[0].full_name,
-                                namaPemilik: results[0].business_name,
-                                alamat: results[0].address,
-                                jumlahPrinter: results[0].jumlah_printer_wak_print,
-                                deskripsi: results[0].description,
-                                email: results[0].email,
-                                password: results[0].password,
-                                noTelp: results[0].phone_number,
-                            },
-                            rating: results[0].rating,
-                            harga: results.map(result => {
-                                return ({
-                                    jenisHarga: result.name,
-                                    nominalHarga: result.nominal
-                                })
-                            })
+                        info: {
+                            id: results[0].id_wak_print,
+                            namaUsaha: results[0].full_name,
+                            namaPemilik: results[0].business_name,
+                            alamat: results[0].address,
+                            jumlahPrinter: results[0].jumlah_printer_wak_print,
+                            deskripsi: results[0].description,
+                            email: results[0].email,
+                            password: results[0].password,
+                            noTelp: results[0].phone_number,
                         },
+                        rating: results[0].rating,
+                        harga: results.map(result => {
+                            return ({
+                                jenisHarga: result.name,
+                                nominalHarga: result.nominal
+                            })
+                        })
                     }
                 })
             } else {

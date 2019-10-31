@@ -5,12 +5,11 @@ import Navbar from './Navbar'
 
 const Beranda = (props) => {
 
-	// useEffect(() => {
-	// 	console.log(props.auth)
-	// 	if (!props.auth) {
-	// 		props.history.push("/login");
-	// 	}
-	// })
+	useEffect(() => {
+		if (!props.auth) {
+			props.history.push("/login");
+		}
+	})
 
 	return (
 		<div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>

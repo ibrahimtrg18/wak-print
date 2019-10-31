@@ -18,25 +18,23 @@ const Login = (props) => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    postLogin()
-  }
-
-  const postLogin = async () => {
-    const response = await fetch("http://localhost:4000/api/wakprint/login", {
+    const response = await fetch("http://localhost:4000/api/partner/login", {
       method: "POST",
       headers: {
         "Content-Type": 'application/json'
       },
       body: JSON.stringify({
-        email_wak_print: values.email,
-        password_wak_print: values.password
+        email: values.email,
+        password: values.password
       })
     })
     const data = await response.json();
-    if (data.status === "success") {
-      await props.authLogin(data);
+    if(data.success){
+      props.authLogin(data.data);
+    }else{
+      setValues({email: "", password:""})
     }
   }
 
@@ -64,6 +62,7 @@ const Login = (props) => {
                 type="text"
                 name="email"
                 id="email"
+                value={values.email}
                 onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
@@ -74,12 +73,13 @@ const Login = (props) => {
                 type="password"
                 name="password"
                 id="password"
+                value={values.password}
                 onChange={(event) => handleChange(event)}
                 className="w-full border-primary rounded-lg py-2 px-3" />
             </label>
             <div className="flex text-xs font-base text-gray-800 justify-center my-3">
               <p>Belum punya akun?</p>
-              <a className="ml-1 text-primary"> Daftar</a>
+              <a className="ml-1 text-primary">Daftar</a>
             </div>
             <input
               type="submit"
