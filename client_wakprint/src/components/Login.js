@@ -31,15 +31,15 @@ const Login = (props) => {
       })
     })
     const data = await response.json();
-    if(data.success){
+    if (data.success) {
       props.authLogin(data.data);
-    }else{
-      setValues({email: "", password:""})
+    } else {
+      setValues({ email: "", password: "" })
     }
   }
 
   useEffect(() => {
-    if(props.auth){
+    if (props.auth) {
       props.history.push("/")
     }
   })
@@ -48,9 +48,14 @@ const Login = (props) => {
     <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Daftar Disini"
-        goToRedirect={() => goToRegister()}/>
-      <div className="sm:flex sm:pt-32 pt-24">
-        <div className="sm:w-1/2 px-8 invisible sm:invisible md:visible">Img</div>
+        goToRedirect={() => goToRegister()} />
+      <div className="sm:flex sm:pt-32 pt-32">
+        <div className="sm:w-1/2 px-4 sm:block hidden">
+          <img
+            src={process.env.PUBLIC_URL + "/images/wak-print-login.png"}
+            className="mx-auto"
+            style={{ height: "520px" }} />
+        </div>
         <div className="sm:w-1/2 px-8">
           <div className="text-2xl font-medium text-gray-800 text-center">
             Masuk Mitra WakPrint
@@ -64,7 +69,7 @@ const Login = (props) => {
                 id="email"
                 value={values.email}
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <label
               className="block text-md uppercase font-base text-gray-700 py-2">
@@ -75,7 +80,7 @@ const Login = (props) => {
                 id="password"
                 value={values.password}
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <div className="flex text-xs font-base text-gray-800 justify-center my-3">
               <p>Belum punya akun?</p>
@@ -84,7 +89,7 @@ const Login = (props) => {
             <input
               type="submit"
               value="masuk"
-              className="btn btn-primary uppercase text-lg text-medium w-full" />
+              className="btn btn-primary uppercase text-lg text-medium w-full focus:shadow-outline-primary" />
           </form>
         </div>
       </div>

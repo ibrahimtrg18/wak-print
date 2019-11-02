@@ -66,7 +66,7 @@ const Register = (props) => {
                 name="nama_usaha"
                 id="nama_usaha"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <label
               className="block text-md uppercase font-base text-gray-700 py-2">
@@ -76,7 +76,7 @@ const Register = (props) => {
                 name="nama_pemilik_usaha"
                 id="nama_pemilik_usaha"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <label
               className="block text-md uppercase font-base text-gray-700 py-2">
@@ -86,7 +86,7 @@ const Register = (props) => {
                 name="alamat_lokasi"
                 id="alamat_lokasi"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3 h-32" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary h-32" />
             </label>
             <label
               className="block text-md uppercase font-base text-gray-700 py-2">
@@ -96,7 +96,7 @@ const Register = (props) => {
                 name="jumlah_printer"
                 id="jumlah_printer"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <label
               className="block text-md uppercase font-base text-gray-700 py-2">
@@ -106,7 +106,7 @@ const Register = (props) => {
                 name="deskripsi"
                 id="deskripsi"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <label
               className="block text-md uppercase font-base text-gray-700 py-2">
@@ -116,7 +116,7 @@ const Register = (props) => {
                 name="email"
                 id="email"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <label
               className="block text-md uppercase font-base text-gray-700 py-2">
@@ -126,7 +126,7 @@ const Register = (props) => {
                 name="kata_sandi"
                 id="kata_sandi"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <label
               className="block text-md uppercase font-base text-gray-700 py-2">
@@ -136,7 +136,7 @@ const Register = (props) => {
                 name="nomor_telepon"
                 id="nomor_telepon"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3" />
+                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
             </label>
             <div className="block text-xs font-base text-gray-800 justify-center my-3">
               <label className="flex items-center justify-center text-base">
@@ -148,7 +148,7 @@ const Register = (props) => {
             <input
               type="submit"
               value="daftar"
-              className="btn btn-primary uppercase text-lg text-medium w-full mb-8" />
+              className="btn btn-primary uppercase text-lg text-medium w-full mb-8 focus:shadow-outline-primary" />
           </form>
         </div>
       </div>

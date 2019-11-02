@@ -13,34 +13,34 @@ const Beranda = (props) => {
 
 	if (props.auth) {
 		return (
-			<div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
+			<div className="bg-gray-100 h-screen">
 				<Navbar goTo={"LogOut"} authLogout={() => props.authLogout()}></Navbar>
-				<div className="sm:flex sm:pt-32 pt-32">
-					<div className="lg:w-1/2 px-8">
+				<div className="sm:flex sm:pt-40 pt-40">
+					<div className="lg:w-1/2 md:px-8 px-4">
 						<p className="text-2xl font-medium mb-2 text-center">
 							Analisis Usaha printer Anda
-          </p>
+          	</p>
 						<div className="lg:px-12">
-							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 px-10 py-4 bg-white">
+							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 sm:px-16 px-10 py-4 bg-white">
 								<div class="flex-grow font-medium text-5xl">
 									6
-              </div>
+              	</div>
 								<div class="text-base font-medium self-end pb-2">
 									Orderan
-              </div>
+              	</div>
 							</div>
-							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 px-10 py-4 bg-white">
+							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 sm:px-16 px-10 py-4 bg-white">
 								<div class="flex-grow font-medium text-5xl">
 									1
-              </div>
+              	</div>
 								<div class="text-base font-medium self-end pb-2">
 									Proses
-              </div>
+              	</div>
 							</div>
-							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 px-10 py-4 bg-white">
+							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 sm:px-16 px-10 py-4 bg-white">
 								<div class="flex-grow font-medium text-5xl">
 									0
-              </div>
+              	</div>
 								<div class="text-base font-medium self-end pb-2">
 									Selesai
               </div>
@@ -48,14 +48,15 @@ const Beranda = (props) => {
 						</div>
 					</div>
 					<div className="lg:w-1/2 px-8">
-						<div className="p">
-							<p className="text-2xl font-medium">img</p>
-						</div>
+						<img
+							src={process.env.PUBLIC_URL + "/images/wak-print-home.png"}
+							className="mx-auto"
+							style={{ height: "410px" }} />
 					</div>
 				</div>
 			</div>
 		)
-	}else{
+	} else {
 		return null;
 	}
 }
