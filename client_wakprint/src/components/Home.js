@@ -15,7 +15,7 @@ const Beranda = (props) => {
 		return (
 			<div className="bg-gray-100 h-screen">
 				<Navbar goTo={"LogOut"} authLogout={() => props.authLogout()}></Navbar>
-				<div className="sm:flex sm:pt-40 pt-40">
+				<div className="sm:flex sm:pt-40 pt-48">
 					<div className="lg:w-1/2 md:px-8 px-4">
 						<p className="text-2xl font-medium mb-2 text-center">
 							Analisis Usaha printer Anda
@@ -47,7 +47,7 @@ const Beranda = (props) => {
 							</div>
 						</div>
 					</div>
-					<div className="lg:w-1/2 px-8">
+					<div className="lg:w-1/2 px-8 sm:block hidden">
 						<img
 							src={process.env.PUBLIC_URL + "/images/wak-print-home.png"}
 							className="mx-auto"
