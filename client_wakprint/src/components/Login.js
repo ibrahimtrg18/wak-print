@@ -20,7 +20,7 @@ const Login = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const response = await fetch("http://localhost:4000/api/partner/login", {
+    const response = await fetch("/api/partner/login", {
       method: "POST",
       headers: {
         "Content-Type": 'application/json'
