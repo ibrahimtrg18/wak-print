@@ -131,8 +131,8 @@ router.post("/login", (req, res) => {
     })
 });
 
-router.get("/:idPartner", (req, res) => {
-    const idPartner = req.params.idPartner
+router.get("/:partnerId", (req, res) => {
+    const partnerId = req.params.partnerId
     connection.query(
         `SELECT p.*, AVG(r.rate) AS rating, s.*
         FROM partner p 
@@ -140,7 +140,7 @@ router.get("/:idPartner", (req, res) => {
                 ON r.partner_id = p.id 
             LEFT JOIN selling s
                 ON s.partner_id = p.id
-        WHERE p.id = ${idPartner}
+        WHERE p.id = ${partnerId}
         GROUP BY p.id, s.id`,
         (err, results) => {
             if (err) {

@@ -10,7 +10,7 @@ const Login = (props) => {
     password: null,
   })
 
-  const goToRedirect = () => {
+  const goToRegister = () => {
     props.history.push("/register")
   }
 
@@ -48,7 +48,7 @@ const Login = (props) => {
     <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Daftar Disini"
-        goToRedirect={() => goToRedirect()}/>
+        goToRedirect={() => goToRegister()}/>
       <div className="sm:flex sm:pt-32 pt-24">
         <div className="sm:w-1/2 px-8 invisible sm:invisible md:visible">Img</div>
         <div className="sm:w-1/2 px-8">

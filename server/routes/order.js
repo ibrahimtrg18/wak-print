@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
-const connection = require("../config/db")
+const connection = require("../config/db");
 
 const storage = multer.diskStorage({
-    destination: "./storage/pesanan/",
+    destination: "./storage/order/",
     filename: (req, file, cb) => {
         cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
     }
@@ -32,60 +32,56 @@ isPrintType = (file, cb) => {
     if (extname && mimetype) {
         return cb(null, true);
     } else {
-        return cb("ERROR: DOC, DOCX & PDF Only")
+        return cb("ERROR: DOC, DOCX & PDF Only");
     }
 
 }
 
-router.post("/", upload.single("pesanan"), (req, res) => {
-    let errors = {};
+router.post("/", upload.single("order"), (req, res) => {
     const {
-        idUser,
-        idWakPrint,
-        jumlahHalamanPesanan,
-        jumlahRangkapPesanan,
-        timbalBalikPesanan,
-        orientasiHalamanPesanan,
-        jenisKertasPesanan,
-        totalHargaPesanan,
-        metodePengambilanPesanan,
-        metodePembayaranPesanan,
-        statusPesanan,
-        statusPembayaran
+        userId,
+        partnerId,
+        pages,
+        copies,
+        layout,
+        paper,
+        takingMethod,
+        paymentMethod,
+        orderStatus,
+        paymentStatus
     } = req.body;
 
     if (!req.file) {
-        errors = {
-            message: "Please Put your File"
-        }
-        return res.json({
-            errors
+        return res.status(400).json({
+            success: false,
+            message: "Put File Please!"
         })
     }
     // res.json(file.filename)
-    const dokumenUser = req.file.filename
+    const document = req.file.filename
 
-    connection.query("INSERT INTO pesanan SET ?", {
-        id_user: idUser,
-        id_wak_print: idWakPrint,
-        dokumen_user: dokumenUser,
-        jumlah_halaman_pesanan: jumlahHalamanPesanan,
-        jumlah_rangkap_pesanan: jumlahRangkapPesanan,
-        timbal_balik_pesanan: timbalBalikPesanan,
-        orientasi_halaman_pesanan: orientasiHalamanPesanan,
-        jenis_kertas_pesanan: jenisKertasPesanan,
-        total_harga_pesanan: totalHargaPesanan,
-        metode_pengambilan_pesanan: metodePengambilanPesanan,
-        metode_pembayaran_pesanan: metodePembayaranPesanan,
-        status_pesanan: statusPesanan,
-        status_pembayaran: statusPembayaran
-    }, (err, results) => {
-        if (err) {
-            return console.log(err);
-        } else {
-            return console.log(results);
-        }
-    })
+    return res.status(200).send(document);
+
+    // connection.query("INSERT INTO order SET ?", {
+    //     user_id: userId,
+    //     partner_id: partnerId,
+    //     document,
+    //     pages,
+    //     copies,
+    //     layout,
+    //     paper,
+    //     takingMethod,
+    //     paymentMethod,
+    //     orderStatus,
+    //     paymentStatus,
+    //     create_at
+    // }, (err, results) => {
+    //     if (err) {
+    //         return console.log(err);
+    //     } else {
+    //         return console.log(results);
+    //     }
+    // })
 })
 
 router.get("/:idPesanan/", (req, res) => {
@@ -100,7 +96,7 @@ router.get("/:idPesanan/", (req, res) => {
 })
 
 router.get('/download', (req, res) => {
-    res.download(path.join(__dirname, "../storage/pesanan/pesanan-1569239197083.docx"), err => {
+    res.download(path.join(__dirname, "../storage/pesanan/pesanan-1569239197083.docx"), (err) => {
         if (err)
             console.log(err)
     })

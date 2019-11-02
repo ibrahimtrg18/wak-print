@@ -129,10 +129,10 @@ router.post("/login", (req, res) => {
     })
 });
 
-router.get("/:idUser", (req, res) => {
-    const idUser = req.params.idUser;
+router.get("/:userId", (req, res) => {
+    const userId = req.params.userId;
 
-    connection.query("SELECT * FROM user WHERE id = ?", [idUser], (err, rows) => {
+    connection.query("SELECT * FROM user WHERE id = ?", [userId], (err, rows) => {
         if (err) {
             return res.json(err)
         } else if (rows && rows.length > 0) {

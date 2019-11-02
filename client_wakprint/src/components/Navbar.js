@@ -12,7 +12,7 @@ const Navbar = (props) => {
           </div>
           <div>
             <button
-              onClick={() => props.goToRedirect()}
+              onClick={() => props.authLogout()}
               className="btn btn-primary text-lg text-medium px-12">
               {props.goTo}
             </button>

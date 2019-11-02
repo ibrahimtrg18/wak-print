@@ -13,7 +13,7 @@ const Register = (props) => {
     nomor_telepon: null
   })
 
-  const goToRedirect = () => {
+  const goToLogin = () => {
     props.history.push("/login")
   }
 
@@ -51,7 +51,7 @@ const Register = (props) => {
     <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Masuk Disini"
-        goToRedirect={() => goToRedirect()}></Navbar>
+        goToRedirect={() => goToLogin()}></Navbar>
       <div className="flex pt-24">
         <div className="w-full md:px-64 px-8 mt-8">
           <div className="text-2xl font-medium text-gray-800 text-center">

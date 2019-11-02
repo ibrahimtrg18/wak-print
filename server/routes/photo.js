@@ -5,7 +5,7 @@ const path = require("path");
 const fs = require("fs");
 
 const storage = multer.diskStorage({
-    destination: "./storage/foto/",
+    destination: "./storage/photo/",
     filename: (req, file, cb) => {
         cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
     }
@@ -36,7 +36,7 @@ isFotoProfileType = (file, cb) => {
     }
 }
 
-router.post("/", upload.single("foto"), (req, res) => {
+router.post("/", upload.single("photo"), (req, res) => {
     let errors;
     const file = req.file;
     if (!file) {
