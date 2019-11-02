@@ -21,7 +21,7 @@ const Beranda = (props) => {
 							Analisis Usaha printer Anda
           	</p>
 						<div className="lg:px-12">
-							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 sm:px-16 px-10 py-4 bg-white">
+							<div className="flex max-w-full rounded overflow-hidden shadow-2xl mb-2 sm:px-16 px-10 py-4 bg-white">
 								<div class="flex-grow font-medium text-5xl">
 									6
               	</div>
@@ -29,7 +29,7 @@ const Beranda = (props) => {
 									Orderan
               	</div>
 							</div>
-							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 sm:px-16 px-10 py-4 bg-white">
+							<div className="flex max-w-full rounded overflow-hidden shadow-2xl mb-2 sm:px-16 px-10 py-4 bg-white">
 								<div class="flex-grow font-medium text-5xl">
 									1
               	</div>
@@ -37,7 +37,7 @@ const Beranda = (props) => {
 									Proses
               	</div>
 							</div>
-							<div className="flex max-w-full rounded overflow-hidden shadow-xl mb-2 sm:px-16 px-10 py-4 bg-white">
+							<div className="flex max-w-full rounded overflow-hidden shadow-2xl mb-2 sm:px-16 px-10 py-4 bg-white">
 								<div class="flex-grow font-medium text-5xl">
 									0
               	</div>

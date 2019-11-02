@@ -26,7 +26,7 @@ const Navbar = (props) => {
             <div>
               <button
                 onClick={() => props.authLogout()}
-                className="btn btn-primary text-lg text-medium px-12">
+                className="btn btn-primary text-lg text-medium md:px-8 mt-3">
                 {props.goTo}
               </button>
             </div>
