@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const Navbar = (props) => {
-  if (props.auth) {
+  if (props.auth.data) {
     return (
       <nav className="flex fixed top-0 left-0 right-0 justify-between flex-wrap bg-white py-6 px-4 sm:px-10 shadow-md">
         <div className="flex items-center" style={{ width: "100%" }}>

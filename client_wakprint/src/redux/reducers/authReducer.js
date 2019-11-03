@@ -1,7 +1,9 @@
 import { AUTH_LOGIN } from '../actions/authActions'
 import { AUTH_LOGOUT } from '../actions/authActions'
 
-export const authReducer = (state = null, action) => {
+const initialState = {};
+
+export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTH_LOGIN:
       return {
@@ -9,7 +11,7 @@ export const authReducer = (state = null, action) => {
         data: action.payload
       }
     case AUTH_LOGOUT:
-      return state = null
+      return state = initialState
     default:
       return state
   }

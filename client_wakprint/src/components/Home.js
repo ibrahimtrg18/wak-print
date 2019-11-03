@@ -6,7 +6,7 @@ import Navbar from './Navbar'
 const Beranda = (props) => {
 
 	useEffect(() => {
-		if (!props.auth) {
+		if (!props.auth.data) {
 			props.history.push("/login");
 		}
 	})
@@ -22,26 +22,26 @@ const Beranda = (props) => {
           	</p>
 						<div className="lg:px-12">
 							<div className="flex max-w-full rounded overflow-hidden shadow-2xl mb-2 sm:px-16 px-10 py-4 bg-white">
-								<div class="flex-grow font-medium text-5xl">
+								<div className="flex-grow font-medium text-5xl">
 									6
               	</div>
-								<div class="text-base font-medium self-end pb-2">
+								<div className="text-base font-medium self-end pb-2">
 									Orderan
               	</div>
 							</div>
 							<div className="flex max-w-full rounded overflow-hidden shadow-2xl mb-2 sm:px-16 px-10 py-4 bg-white">
-								<div class="flex-grow font-medium text-5xl">
+								<div className="flex-grow font-medium text-5xl">
 									1
               	</div>
-								<div class="text-base font-medium self-end pb-2">
+								<div className="text-base font-medium self-end pb-2">
 									Proses
               	</div>
 							</div>
 							<div className="flex max-w-full rounded overflow-hidden shadow-2xl mb-2 sm:px-16 px-10 py-4 bg-white">
-								<div class="flex-grow font-medium text-5xl">
+								<div className="flex-grow font-medium text-5xl">
 									0
               	</div>
-								<div class="text-base font-medium self-end pb-2">
+								<div className="text-base font-medium self-end pb-2">
 									Selesai
               </div>
 							</div>

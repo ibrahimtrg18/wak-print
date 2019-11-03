@@ -10,6 +10,12 @@ const Login = (props) => {
     password: null,
   })
 
+  useEffect(() => {
+    if (props.auth.data) {
+      props.history.push("/")
+    }
+  })
+
   const goToRegister = () => {
     props.history.push("/register")
   }
@@ -37,12 +43,6 @@ const Login = (props) => {
       setValues({ email: "", password: "" })
     }
   }
-
-  useEffect(() => {
-    if (props.auth) {
-      props.history.push("/")
-    }
-  })
 
   return (
     <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
