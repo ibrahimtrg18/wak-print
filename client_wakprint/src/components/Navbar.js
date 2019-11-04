@@ -24,11 +24,23 @@ const Navbar = (props) => {
               </div>
             </div>
             <div>
-              <button
-                onClick={() => props.authLogout()}
-                className="btn btn-primary text-lg text-medium md:px-8 mt-3">
-                {props.goTo}
-              </button>
+              <div className="block px-2">
+                <div className="flex">
+                  <div className="block text-primary text-base font-bold">Hai {props.auth.data.full_name},&nbsp;</div>
+                  <div
+                    className="text-secondary text-base font-bold cursor-pointer"
+                    onClick={() => props.authLogout()}>
+                    Logout?
+                </div>
+                </div>
+                <div className="flex items-center float-right">
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/icon_saldo.png"}
+                    className="mr-1"
+                    style={{ height: "18px" }} />
+                  <div className="block text-black text-base font-bold">Rp. {props.auth.data.balance ? props.auth.data.balance : "0"}</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
