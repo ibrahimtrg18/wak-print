@@ -10,6 +10,8 @@ const Login = (props) => {
     password: null,
   })
 
+  const [message, setMessage] = useState(null);
+
   useEffect(() => {
     if (props.auth.data) {
       props.history.push("/")
@@ -41,6 +43,7 @@ const Login = (props) => {
       props.authLogin(data.data);
     } else {
       setValues({ email: "", password: "" })
+      setMessage(data.message)
     }
   }
 
@@ -60,6 +63,7 @@ const Login = (props) => {
           <div className="text-2xl font-medium text-gray-800 text-center">
             Masuk Mitra WakPrint
           </div>
+          <p className="text-base font-medium text-red-400 text-center">{message}</p>
           <form className="items-center" onSubmit={(event) => handleSubmit(event)}>
             <label className="block text-md uppercase font-base text-gray-700 py-2">
               E-Mail
@@ -84,12 +88,14 @@ const Login = (props) => {
             </label>
             <div className="flex text-xs font-base text-gray-800 justify-center my-3">
               <p>Belum punya akun?</p>
-              <a className="ml-1 text-primary">Daftar</a>
+              <div
+                onClick={() => goToRegister()}
+                className="ml-1 text-primary cursor-pointer">Daftar</div>
             </div>
             <input
               type="submit"
               value="masuk"
-              className="btn btn-primary uppercase text-lg text-medium w-full focus:shadow-outline-primary" />
+              className="btn btn-primary uppercase text-lg text-medium w-full focus:shadow-outline-primary cursor-pointer" />
           </form>
         </div>
       </div>
