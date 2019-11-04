@@ -1,7 +1,9 @@
 import { AUTH_LOGIN } from '../actions/authActions'
 import { AUTH_LOGOUT } from '../actions/authActions'
 
-const initialState = {};
+const initialState = {
+  data: null
+};
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {

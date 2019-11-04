@@ -23,7 +23,7 @@ const Register = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    authRegister();
+    // authRegister();
   }
 
   const authRegister = async () => {

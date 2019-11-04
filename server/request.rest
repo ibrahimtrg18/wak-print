@@ -27,13 +27,13 @@ POST http://localhost:4000/api/partner/register
 Content-Type: application/json
 
 {
-    "email":"hello2@gmail.com",
-    "password":"hello123",
-    "fullName":"hello",
-    "businessName":"hello",
-    "phoneNumber":"hello",
-    "address":"hello",
-    "description":"hello"
+    "email":"bambang@gmail.com",
+    "password":"test123",
+    "fullName":"bambang",
+    "businessName":"tokoPrint",
+    "phoneNumber":"0989898374632",
+    "address":"alamat",
+    "description":"jelasin"
 }
 ###
 POST http://localhost:4000/api/partner/login
@@ -41,7 +41,7 @@ Content-Type: application/json
 
 {
     "email":"hello@gmail.com",
-    "password":"hello123"
+    "password":"hello12"
 }
 ###
 GET http://localhost:4000/api/home/search?s=h
