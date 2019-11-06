@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const moment = require("moment");
 const path = require("path");
 const connection = require("../config/db");
 
@@ -42,66 +43,94 @@ router.post("/", upload.single("order"), (req, res) => {
         userId,
         partnerId,
         pages,
-        copies,
-        layout,
-        paper,
-        takingMethod,
-        paymentMethod,
-        orderStatus,
-        paymentStatus
+        copies, // null default "1"
+        productName,
+        productPrice,
+        methodPickup,
+        methodPayment,
     } = req.body;
 
     if (!req.file) {
         return res.status(400).json({
             success: false,
-            message: "Put File Please!"
+            message: "Please, fill in File!"
         })
     }
     // res.json(file.filename)
-    const document = req.file.filename
+    const documentName = req.file.filename
 
-    return res.status(200).send(document);
-
-    // connection.query("INSERT INTO order SET ?", {
-    //     user_id: userId,
-    //     partner_id: partnerId,
-    //     document,
-    //     pages,
-    //     copies,
-    //     layout,
-    //     paper,
-    //     takingMethod,
-    //     paymentMethod,
-    //     orderStatus,
-    //     paymentStatus,
-    //     create_at
-    // }, (err, results) => {
-    //     if (err) {
-    //         return console.log(err);
-    //     } else {
-    //         return console.log(results);
-    //     }
-    // })
-})
-
-router.get("/:idPesanan/", (req, res) => {
-    console.log(req.params.idPesanan)
-    connection.query("SELECT * FROM pesanan WHERE id_pesanan = ?", req.params.idPesanan, (err, results) => {
+    connection.query("INSERT INTO print_online.order SET ?", {
+        user_id: userId,
+        partner_id: partnerId,
+        document_name: documentName,
+        pages,
+        copies,
+        product_name: productName,
+        product_price: productPrice,
+        method_pickup: methodPickup,
+        method_payment: methodPayment,
+        created_at: Date.now()
+    }, (err, results) => {
         if (err) {
-            return console.log(err);
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
         } else {
-            return res.json(results)
+            return res.status(200).json({
+                success: true,
+                message: "Successfully made an Order!"
+            })
         }
     })
 })
 
-router.get('/download', (req, res) => {
-    res.download(path.join(__dirname, "../storage/pesanan/pesanan-1569239197083.docx"), (err) => {
-        if (err)
-            console.log(err)
+router.get("/:orderId/", (req, res) => {
+    const orderId = req.params.orderId;
+    connection.query("SELECT * FROM print_online.order WHERE id = ?", [orderId], (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else if (results && results.length > 0) {
+            return res.status(200).json({
+                success: true,
+                data: results[0]
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found!"
+            })
+        }
     })
 })
 
-
+router.get('/:orderId/download', (req, res) => {
+    const orderId = req.params.orderId;
+    connection.query("SELECT * FROM print_online.order WHERE id = ?", [orderId], (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else if (results && results.length > 0) {
+            return res.download(path.join(__dirname, `../storage/order/${results[0].document_name}`), (err) => {
+                if (err) {
+                    return res.status(500).json({
+                        success: false,
+                        message: "Can't Download File!"
+                    })
+                }
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found!"
+            })
+        }
+    })
+})
 
 module.exports = router;
