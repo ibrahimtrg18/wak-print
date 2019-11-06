@@ -17,35 +17,34 @@ router.post("/register", (req, res) => {
     if (!email || !password || !fullName || !businessName || !phoneNumber || !address || !description) {
         return res.status(400).json({
             success: false,
-            message: "tolong isi semua data!"
+            message: "Please, fill in all data!"
         })
     }
 
-    if (password && password.length < 6) {
+    if (password && password.length <= 6) {
         return res.status(400).json({
             success: false,
-            message: "password harus lebih dari 6!"
+            message: "Password length must be 6 or more!"
         })
     }
 
-    connection.query("SELECT * FROM partner WHERE email = ?", [email], (err, results) => {
+    connection.query("SELECT * FROM print_online.partner WHERE email = ?", [email], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
-                message: "ada kesalah didalam query database!"
+                message: "Error in Server!"
             })
         } else if (results && results.length > 0) {
             return res.status(409).json({
                 success: false,
-                message: "email anda sudah terdaftar!"
+                message: "Email already registered!"
             })
         } else {
             bcrypt.hash(password, 10, (err, passwordHashed) => {
                 if (err) {
-                    console.log(err)
                     return res.status(500).send()
                 }
-                connection.query("INSERT INTO partner SET ?", {
+                connection.query("INSERT INTO print_online.partner SET ?", {
                     email,
                     password: passwordHashed,
                     full_name: fullName,
@@ -57,21 +56,12 @@ router.post("/register", (req, res) => {
                     if (err) {
                         return res.status(500).json({
                             success: false,
-                            message: "ada kesalah didalam query database!"
+                            message: "Error in Server!"
                         })
                     } else {
                         return res.status(201).json({
                             success: true,
-                            message: "Succes to create User Wak Print",
-                            // data: {
-                            //     email,
-                            //     password,
-                            //     full_name,
-                            //     business_name,
-                            //     phone_number,
-                            //     address,
-                            //     description,
-                            // }
+                            message: "Successfully created a new Account!",
                         })
                     }
                 });
@@ -91,16 +81,16 @@ router.post("/login", (req, res) => {
     if (!email || !password) {
         return res.status(400).json({
             success: false,
-            message: "tolong isi semua data!"
+            message: "Please, fill in your email and password!"
         })
     }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM partner WHERE email=?", [email], (err, results) => {
+    connection.query("SELECT * FROM print_online.partner WHERE email=?", [email], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
-                message: "ada kesalah didalam query database"
+                message: "Error in Server!"
             })
         } else {
             if (results && results.length > 0) {
@@ -117,14 +107,14 @@ router.post("/login", (req, res) => {
                     } else {
                         return res.status(401).json({
                             success: false,
-                            message: "Email dan Password anda salah!"
+                            message: "Invalid Email and Password!"
                         })
                     }
                 })
             } else {
                 return res.status(401).json({
                     success: false,
-                    message: "email anda belum terdaftar"
+                    message: "Email not registered!"
                 })
             }
         }
@@ -134,20 +124,20 @@ router.post("/login", (req, res) => {
 router.get("/:partnerId", (req, res) => {
     const partnerId = req.params.partnerId
     connection.query(
-        `SELECT p.*, AVG(r.rate) AS rating, s.*
-        FROM partner p 
-            LEFT JOIN rating r 
+        `SELECT p.*, AVG(r.rate) AS rating, pd.*
+        FROM print_online.partner p 
+            LEFT JOIN print_online.rating r 
                 ON r.partner_id = p.id 
-            LEFT JOIN selling s
-                ON s.partner_id = p.id
+            LEFT JOIN print_online.product pd
+                ON pd.partner_id = p.id
         WHERE p.id = ${partnerId}
-        GROUP BY p.id, s.id`,
+        GROUP BY p.id, pd.id`,
         (err, results) => {
             if (err) {
                 console.log(err)
                 return res.status(500).json({
                     success: false,
-                    message: "error from server/database"
+                    message: "Error in Server!"
                 })
             } else if (results && results.length > 0) {
                 return res.status(200).json({
@@ -176,7 +166,7 @@ router.get("/:partnerId", (req, res) => {
             } else {
                 return res.status(404).json({
                     success: false,
-                    message: "user not found"
+                    message: "User not found!"
                 })
             }
         })
