@@ -53,7 +53,7 @@ const Register = (props) => {
         goTo="Masuk Disini"
         goToRedirect={() => goToLogin()}></Navbar>
       <div className="flex pt-24">
-        <div className="w-full md:px-64 px-8 mt-8">
+        <div className="w-full sm:px-64 px-8 mt-8">
           <div className="text-2xl font-medium text-gray-800 text-center">
             Daftar Mitra WakPrint
           </div>
