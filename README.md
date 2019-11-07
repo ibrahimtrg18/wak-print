@@ -1,7 +1,18 @@
 # print-online
+```
+git clone "https://github.com/t33rg3/print-online.git"
+```
 
 ### client
-> hello world
+```
+cd client
+npm install
+npm start
+```
 
 ### server
-* hello world
+```
+cd server
+npm install
+npm run devStart
+```
