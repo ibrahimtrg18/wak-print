@@ -1,17 +1,9 @@
 # print-online
-<<<<<<< HEAD
-=======
-
-## Installasi
->>>>>>> 52c96748e026a2ef89857f0f66ef79234752aae8
 clone terlebih dahulu
 ```
 $ git clone "https://github.com/t33rg3/print-online.git"
 ```
-<<<<<<< HEAD
 ## Installasi
-=======
->>>>>>> 52c96748e026a2ef89857f0f66ef79234752aae8
 #### client
 ```
 $ cd client
