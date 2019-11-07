@@ -21,11 +21,11 @@ $ node .                    // jalankan server di port localhost:4000
 ```
 
 #### router atau endpoint pada server
-Endpoint                    |kegunaan                                          | 
-----------------------------|--------------------------------------------------| 
-/api/user/register          |membuat account baru untuk **user**|
-/api/user/login             |masuk account untuk **user**|
-/api/user/:userId           |memberikan informasi **user** dari **id user**|
-/api/parent/register        |masuk account untuk **parent**|
-/api/parent/login           |masuk account untuk **parent**|
-/api/parent/:parentId       |memberikan informasi **parent** dari **id parent**|
+|Method     |Endpoint                    |kegunaan                                          | 
+|-----------|----------------------------|--------------------------------------------------| 
+|POST       |/api/user/register          |membuat account baru untuk **user**|
+|POST       |/api/user/login             |masuk account untuk **user**|
+|GET        |/api/user/:userId           |memberikan informasi **user** dari **id user**|
+|POST       |/api/parent/register        |masuk account untuk **parent**|
+|POST       |/api/parent/login           |masuk account untuk **parent**|
+|GET        |/api/parent/:parentId       |memberikan informasi **parent** dari **id parent**|
