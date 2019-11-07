@@ -3,32 +3,3 @@
 @tailwind components;
 
 @tailwind utilities;
-
-body{
-    height: 100%;
-}
-
-.btn {
-    @apply py-2 px-6 rounded;
-}
-
-.btn-primary {
-    background-color: #8E44AD;
-    color: #FFFFFF
-}
-
-.text-primary {
-    color: #8E44AD;
-}
-
-.text-secondary{
-    color: #C59BD7;
-}
-
-.border-primary{
-    border: 2px solid #8E44AD;
-}
-
-.focus\:shadow-outline-primary:focus {
-    box-shadow: 0 0 0 3px #C59BD7;
-}

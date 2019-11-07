@@ -48,7 +48,7 @@ const Login = (props) => {
   }
 
   return (
-    <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
+    <div className="bg-grayBg" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Daftar Disini"
         goToRedirect={() => goToRegister()} />
@@ -60,12 +60,12 @@ const Login = (props) => {
             style={{ height: "520px" }} />
         </div>
         <div className="sm:w-1/2 px-8">
-          <div className="text-2xl font-medium text-gray-800 text-center">
+          <div className="text-2xl font-medium text-black text-center">
             Masuk Mitra WakPrint
           </div>
           <p className="text-base font-medium text-red-400 text-center">{message}</p>
           <form className="items-center" onSubmit={(event) => handleSubmit(event)}>
-            <label className="block text-md uppercase font-base text-gray-700 py-2">
+            <label className="block text-md uppercase font-base text-grayText py-2">
               E-Mail
               <input
                 type="text"
@@ -73,10 +73,10 @@ const Login = (props) => {
                 id="email"
                 value={values.email}
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
+                className="w-full border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
-              className="block text-md uppercase font-base text-gray-700 py-2">
+              className="block text-md uppercase font-base text-grayText py-2">
               Kata Sandi
               <input
                 type="password"
@@ -84,9 +84,9 @@ const Login = (props) => {
                 id="password"
                 value={values.password}
                 onChange={(event) => handleChange(event)}
-                className="w-full border-primary rounded-lg py-2 px-3 focus:shadow-outline-primary" />
+                className="w-full border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
-            <div className="flex text-xs font-base text-gray-800 justify-center my-3">
+            <div className="flex text-xs font-base text-gray-800 justify-center my-2">
               <p>Belum punya akun?</p>
               <div
                 onClick={() => goToRegister()}
@@ -95,7 +95,7 @@ const Login = (props) => {
             <input
               type="submit"
               value="masuk"
-              className="btn btn-primary uppercase text-lg text-medium w-full focus:shadow-outline-primary cursor-pointer" />
+              className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer" />
           </form>
         </div>
       </div>

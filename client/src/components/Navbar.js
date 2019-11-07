@@ -57,7 +57,7 @@ const Navbar = (props) => {
           <div>
             <button
               onClick={() => props.goToRedirect()}
-              className="btn btn-primary text-lg text-medium px-12 focus:shadow-outline-primary">
+              className="rounded py-2 px-6 bg-primary text-white text-lg text-medium px-12 focus:shadow-outline outline-none">
               {props.goTo}
             </button>
           </div>
