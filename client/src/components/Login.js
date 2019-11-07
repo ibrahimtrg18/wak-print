@@ -28,23 +28,7 @@ const Login = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const response = await fetch("/api/partner/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": 'application/json'
-      },
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password
-      })
-    })
-    const data = await response.json();
-    if (data.success) {
-      props.authLogin(data.data);
-    } else {
-      setValues({ email: "", password: "" })
-      setMessage(data.message)
-    }
+    props.authLogin(values)
   }
 
   return (
