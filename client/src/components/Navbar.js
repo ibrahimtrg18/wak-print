@@ -28,8 +28,7 @@ const Navbar = (props) => {
                 <div className="flex">
                   <div className="block text-primary text-base font-bold">Hai {props.auth.data.full_name},&nbsp;</div>
                   <div
-                    className="text-secondary text-base font-bold cursor-pointer"
-                    onClick={() => props.authLogout()}>
+                    className="text-secondary text-base font-bold cursor-pointer">
                     Logout?
                 </div>
                 </div>
