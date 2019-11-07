@@ -1,4 +1,4 @@
-GET http":"//localhost:4000/api/user/16
+GET http://localhost:4000/api/user/16
 ###
 GET http://localhost:4000/api/partner/1
 ###
@@ -8,10 +8,10 @@ POST http://localhost:4000/api/user/register
 Content-Type: application/json
 
 {
-    "email":"hello@gmail.com",
+    "email":"hell1o@gmail.com",
     "password":"hello123",
-    "full_name":"hello",
-    "phone_number":"hello",
+    "fullName":"hello",
+    "phoneNumber":"hello",
     "address":"hello"
 }
 ###
@@ -41,7 +41,7 @@ Content-Type: application/json
 
 {
     "email":"hello@gmail.com",
-    "password":"hello12"
+    "password":"hello12",
 }
 ###
 GET http://localhost:4000/api/home/search?s=h
