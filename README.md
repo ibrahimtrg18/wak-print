@@ -6,17 +6,18 @@ $ git clone "https://github.com/t33rg3/print-online.git"
 ## Installasi
 #### client
 ```
-$ cd client
-$ npm install // install module
-$ npm start // jalankan client localhost:3000
+$ cd client                 // masuk ke direktori client
+$ npm install               // install module
+$ npm run build:css         // install tailwindcss
+$ npm start                 // jalankan client localhost:3000
 ```
 #### server
 ```
-$ cd server
-$ npm install // install module
-$ npm run devStart // jalankan server localhost:4000
+$ cd server                 // masuk ke direktori server
+$ npm install               // install module
+$ npm run devStart          // jalankan server localhost:4000
 atau
-$ node . // jalankan server di port localhost:4000
+$ node .                    // jalankan server di port localhost:4000
 ```
 
 #### router atau endpoint pada server
