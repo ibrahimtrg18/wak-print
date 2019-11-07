@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { authLogout } from '../redux/actions/authActions';
 import Navbar from './Navbar'
 
 const Beranda = (props) => {
@@ -14,7 +13,7 @@ const Beranda = (props) => {
 	if (props.auth) {
 		return (
 			<div className="bg-grayBg h-screen">
-				<Navbar goTo={"LogOut"} authLogout={() => props.authLogout()}></Navbar>
+				<Navbar goTo={"LogOut"} ></Navbar>
 				<div className="sm:flex sm:pt-40 pt-48">
 					<div className="lg:w-1/2 md:px-8 px-4">
 						<p className="text-2xl font-medium mb-2 text-center">
@@ -67,10 +66,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		authLogout: () => { dispatch(authLogout()) }
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Beranda)
+export default connect(mapStateToProps)(Beranda)
