@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { authLogout } from '../redux/actions/authActions';
-import Navbar from './Navbar'
+import Navbar from './Navbar';
 
 const Order = (props) => {
 
@@ -14,7 +13,7 @@ const Order = (props) => {
 	if (props.auth) {
 		return (
 			<div className="bg-gray-100 h-screen">
-				<Navbar goTo={"LogOut"} authLogout={() => props.authLogout()}></Navbar>
+				<Navbar goTo={"LogOut"}></Navbar>
 				<div className="sm:flex sm:pt-40 pt-48">
 					Order
 				</div>
@@ -25,16 +24,4 @@ const Order = (props) => {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		auth: state.auth
-	}
-}
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		authLogout: () => { dispatch(authLogout()) }
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Order)
+export default (Order)
