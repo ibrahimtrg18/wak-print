@@ -1,18 +1,31 @@
 # print-online
+
+## Installasi
+clone terlebih dahulu
 ```
-git clone "https://github.com/t33rg3/print-online.git"
+$ git clone "https://github.com/t33rg3/print-online.git"
+```
+#### client
+```
+$ cd client
+$ npm install // install module
+$ npm start // jalankan client localhost:3000
+```
+#### server
+```
+$ cd server
+$ npm install // install module
+$ npm run devStart // jalankan server localhost:4000
+atau
+$ node . // jalankan server di port localhost:4000
 ```
 
-### client
-```
-cd client
-npm install
-npm start
-```
-
-### server
-```
-cd server
-npm install
-npm run devStart
-```
+#### router atau endpoint pada server
+Endpoint                    |kegunaan                                          | 
+----------------------------|--------------------------------------------------| 
+/api/user/register          |membuat account baru untuk **user**|
+/api/user/login             |masuk account untuk **user**|
+/api/user/:userId           |memberikan informasi **user** dari **id user**|
+/api/parent/register        |masuk account untuk **parent**|
+/api/parent/login           |masuk account untuk **parent**|
+/api/parent/:parentId       |memberikan informasi **parent** dari **id parent**|
