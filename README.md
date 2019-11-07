@@ -20,7 +20,7 @@ atau
 $ node .                    // jalankan server di port localhost:4000
 ```
 
-## Router atau End-point pada serve
+## Router atau End-point pada server
 |Method     |Endpoint                    |kegunaan                                                  | 
 |-----------|----------------------------|----------------------------------------------------------| 
 |POST       |/api/user/register          |Membuat Account baru untuk **user**                       |
