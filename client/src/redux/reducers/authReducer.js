@@ -1,19 +1,29 @@
-import { AUTH_LOGIN } from '../actions/authActions'
-import { AUTH_LOGOUT } from '../actions/authActions'
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE } from '../actions/authActions'
 
 const initialState = {
-  data: null
+  data: null,
+  isLoading: true,
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_LOGIN:
+    case AUTH_REQUEST:
       return {
         ...state,
-        data: action.payload
+        isLoading: true,
       }
-    case AUTH_LOGOUT:
-      return state = initialState
+    case AUTH_SUCCESS:
+      return {
+        ...state,
+        data: action.payload,
+        isLoading: false,
+      }
+    case AUTH_FAILURE:
+      return {
+        ...state,
+        message: "hello",
+        isLoading: false,
+      }
     default:
       return state
   }
