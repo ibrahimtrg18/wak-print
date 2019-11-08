@@ -23,10 +23,17 @@ router.post("/register", (req, res) => {
     }
 
     // Cek Panjang Password
-    if (password && password.length <= 6) {
+    if (password && password.length < 6) {
         return res.status(400).json({
             success: false,
             message: "Password length must be 6 or more!"
+        })
+    }
+
+    if(phoneNumber && phoneNumber.length > 15){
+        return res.status(400).json({
+            success: false,
+            message: "Phone Number must be less than 15"
         })
     }
 
