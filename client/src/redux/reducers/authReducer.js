@@ -2,7 +2,8 @@ import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../actions
 
 const initialState = {
     data: null,
-    isLoading: true,
+    message: null,
+    isLoading: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -18,7 +19,7 @@ export const authReducer = (state = initialState, action) => {
             }
         case AUTH_FAILURE:
             return {
-                message: "Fail",
+                message: "Invalid Password!",
                 isLoading: false,
             }
         case AUTH_RESET:
