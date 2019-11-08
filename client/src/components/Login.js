@@ -45,13 +45,13 @@ const Login = (props) => {
         goTo="Daftar Disini"
         goToRedirect={() => goToRegister()} />
       <div className="sm:flex sm:pt-32 pt-32">
-        <div className="sm:w-1/2 px-4 sm:block hidden">
+        <div className="sm:w-1/2 px-4 sm:block md:block hidden">
           <img
             src={process.env.PUBLIC_URL + "/images/wak-print-login.png"}
             className="mx-auto"
             style={{ height: "520px" }} />
         </div>
-        <div className="sm:w-1/2 px-8">
+        <div className="sm:w-1/2 w-full px-8">
           <div className="text-2xl font-medium text-black text-center">
             Masuk Mitra WakPrint
           </div>
@@ -60,7 +60,7 @@ const Login = (props) => {
             <label className="block text-md uppercase font-base text-grayText py-2">
               E-Mail
               <input
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 value={values.email}
