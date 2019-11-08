@@ -32,9 +32,10 @@ export const authLogin = ({ email, password }) => {
                 email,
                 password
             })
-        }).then(data => {
-            if (data.ok) {
-                dispatch(authSuccess(data.json()))
+        }).then(res => res.json()
+        ).then(data => {
+            if (data.success) {
+                dispatch(authSuccess(data.data))
             }
         })
     }
