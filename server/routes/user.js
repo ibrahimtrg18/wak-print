@@ -108,7 +108,7 @@ router.post("/login", (req, res) => {
                     }
                     return res.status(401).json({
                         succes: false,
-                        message: "Invalid Email and Password!"
+                        message: "Invalid Password!"
                     })
                 })
             } else {
