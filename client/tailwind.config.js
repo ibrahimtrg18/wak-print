@@ -1,13 +1,11 @@
 module.exports = {
   theme: {
-    borderColor: theme =>({
-      default: theme('colors.primary','colors.black')
-    }),
     colors: {
       white: '#FFFFFF',
       black: '#000000',
       primary: '#8E44AD',
       secondary: '#C59BD7',
+      danger: '#eb2626',
       grayText: "#676767",
       grayBg: "#F9F9F9"
     },

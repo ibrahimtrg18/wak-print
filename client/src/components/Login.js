@@ -64,8 +64,9 @@ const Login = (props) => {
                 name="email"
                 id="email"
                 value={values.email}
+                placeholder="example@example.com"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-primary" />
             </label>
             <label
               className="block text-md uppercase font-base text-grayText py-2">
@@ -75,8 +76,9 @@ const Login = (props) => {
                 name="password"
                 id="password"
                 value={values.password}
+                placeholder="******"
                 onChange={(event) => handleChange(event)}
-                className="w-full border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-primary" />
             </label>
             <div className="flex text-xs font-base text-gray-800 justify-center my-2">
               <p>Belum punya akun?</p>
