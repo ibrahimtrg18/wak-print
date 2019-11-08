@@ -8,6 +8,7 @@ const Profile = (props) => {
 		if (!props.auth.data) {
 			props.history.push("/login");
 		}
+		console.log(props.auth.data)
 	})
 
 	if (props.auth) {
@@ -25,5 +26,10 @@ const Profile = (props) => {
 		return null;
 	}
 }
+const mapStateToProps = (state) => {
+	return {
+		auth: state.auth
+	}
+}
 
-export default (Profile)
+export default connect(mapStateToProps)(Profile)
