@@ -5,10 +5,14 @@ import Navbar from './Navbar';
 const History = (props) => {
 
 	useEffect(() => {
+		document.title = "Hitory"
+	}, [])
+
+	useEffect(() => {
 		if (!props.auth.data) {
 			props.history.push("/login");
 		}
-	})
+	}, [props.auth.data])
 
 	if (props.auth) {
 		return (
@@ -26,4 +30,10 @@ const History = (props) => {
 	}
 }
 
-export default (History)
+const mapStateToProps = (state) => {
+	return {
+		auth: state.auth
+	}
+}
+
+export default connect(mapStateToProps)(History)

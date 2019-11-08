@@ -5,10 +5,14 @@ import Navbar from './Navbar';
 const Order = (props) => {
 
 	useEffect(() => {
+		document.title = "Order"
+	}, [])
+
+	useEffect(() => {
 		if (!props.auth.data) {
 			props.history.push("/login");
 		}
-	})
+	}, [props.auth.data])
 
 	if (props.auth) {
 		return (
@@ -24,4 +28,10 @@ const Order = (props) => {
 	}
 }
 
-export default (Order)
+const mapStateToProps = (state) => {
+	return {
+		auth: state.auth
+	}
+}
+
+export default connect(mapStateToProps)(Order)

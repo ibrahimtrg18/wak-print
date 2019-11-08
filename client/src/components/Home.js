@@ -5,10 +5,14 @@ import Navbar from './Navbar'
 const Beranda = (props) => {
 
 	useEffect(() => {
+		document.title = "Beranda"
+	}, [])
+
+	useEffect(() => {
 		if (!props.auth.data) {
 			props.history.push("/login");
 		}
-	})
+	}, [props.auth.data])
 
 	if (props.auth) {
 		return (

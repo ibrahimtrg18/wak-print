@@ -17,14 +17,14 @@ const Login = (props) => {
   }, [])
 
   useEffect(() => {
-    setMessage(props.auth.message)
-  }, [props.auth.message])
-
-  useEffect(() => {
     if (props.auth.data) {
       props.history.push("/")
     }
   }, [props.auth.data])
+
+  useEffect(() => {
+    setMessage(props.auth.message)
+  }, [props.auth.message])
 
   const goToRegister = () => {
     props.history.push("/register")

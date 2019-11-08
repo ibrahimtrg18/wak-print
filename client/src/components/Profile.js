@@ -5,11 +5,15 @@ import Navbar from './Navbar';
 const Profile = (props) => {
 
 	useEffect(() => {
+		document.title = "Profile"
+	}, [])
+
+	useEffect(() => {
 		if (!props.auth.data) {
 			props.history.push("/login");
 		}
-		console.log(props.auth.data)
-	})
+	}, [props.auth.data])
+
 
 	if (props.auth) {
 		return (
