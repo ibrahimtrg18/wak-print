@@ -10,11 +10,10 @@ router.post("/register", (req, res) => {
         fullName,
         businessName,
         phoneNumber,
-        address,
-        description,
+        address
     } = req.body;
 
-    if (!email || !password || !fullName || !businessName || !phoneNumber || !address || !description) {
+    if (!email || !password || !fullName || !businessName || !phoneNumber || !address) {
         return res.status(400).json({
             success: false,
             message: "Please, fill in all data!"
@@ -50,8 +49,7 @@ router.post("/register", (req, res) => {
                     full_name: fullName,
                     business_name: businessName,
                     phone_number: phoneNumber,
-                    address,
-                    description
+                    address
                 }, (err) => {
                     if (err) {
                         return res.status(500).json({
