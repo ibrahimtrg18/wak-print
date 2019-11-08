@@ -104,7 +104,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     authLogin: (data) => { dispatch(authLogin(data)) },
-    auth: () => { dispatch(authLogout()) }
+    authLogout: () => { dispatch(authLogout()) }
   }
 }
 
