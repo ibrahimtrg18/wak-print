@@ -16,9 +16,10 @@ export const authSuccess = (payload) => {
     }
 }
 
-export const authFailure = () => {
+export const authFailure = (payload) => {
     return {
-        type: AUTH_FAILURE
+        type: AUTH_FAILURE,
+        payload
     }
 }
 
@@ -45,7 +46,7 @@ export const authLogin = ({ email, password }) => {
             if (data.success) {
                 dispatch(authSuccess(data.data))
             } else {
-                dispatch(authFailure())
+                dispatch(authFailure(data.message))
             }
         })
     }

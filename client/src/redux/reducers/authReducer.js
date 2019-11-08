@@ -19,7 +19,7 @@ export const authReducer = (state = initialState, action) => {
             }
         case AUTH_FAILURE:
             return {
-                message: "Invalid Password!",
+                message: action.payload,
                 isLoading: false,
             }
         case AUTH_RESET:
