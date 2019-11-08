@@ -30,6 +30,7 @@ export const authReset = () => {
 
 export const authLogin = ({ email, password }) => {
     return (dispatch) => {
+        dispatch(authRequest())
         fetch("/api/partner/login", {
             method: "POST",
             headers: {
@@ -43,6 +44,8 @@ export const authLogin = ({ email, password }) => {
         ).then(data => {
             if (data.success) {
                 dispatch(authSuccess(data.data))
+            } else {
+                dispatch(authFailure())
             }
         })
     }
