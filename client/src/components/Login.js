@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 
 import Navbar from './Navbar'
-import { authLogin } from '../redux/actions/authActions';
+import { authLogin, authLogout } from '../redux/actions/authActions';
 
 const Login = (props) => {
   const [values, setValues] = useState({
@@ -13,10 +13,18 @@ const Login = (props) => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
+    props.authLogout()
+  }, [])
+
+  useEffect(() => {
+    setMessage(props.auth.message)
+  }, [props.auth.message])
+
+  useEffect(() => {
     if (props.auth.data) {
       props.history.push("/")
     }
-  })
+  }, [props.auth.data])
 
   const goToRegister = () => {
     props.history.push("/register")
@@ -47,7 +55,7 @@ const Login = (props) => {
           <div className="text-2xl font-medium text-black text-center">
             Masuk Mitra WakPrint
           </div>
-          <p className="text-base font-medium text-red-400 text-center">{message}</p>
+          <p className="text-base font-medium text-danger text-center">{message}</p>
           <form className="items-center" onSubmit={(event) => handleSubmit(event)}>
             <label className="block text-md uppercase font-base text-grayText py-2">
               E-Mail
@@ -95,7 +103,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    authLogin: (data) => { dispatch(authLogin(data)) }
+    authLogin: (data) => { dispatch(authLogin(data)) },
+    auth: () => { dispatch(authLogout()) }
   }
 }
 
