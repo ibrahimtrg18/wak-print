@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from './Navbar';
 import { connect } from 'react-redux';
-import { regAccount } from '../redux/actions/regActions';
+import { regAccount, regReset, REG_SUCCESS } from '../redux/actions/regActions';
 
 const Register = (props) => {
   const [values, setValues] = useState({
@@ -13,21 +13,34 @@ const Register = (props) => {
     address: null
   })
 
+  const [message, setMessage] = useState(null);
   const [checkBox, setCheckBox] = useState(false);
 
   useEffect(() => {
     document.title = "Register"
+    props.regReset()
   }, [])
-
-  useEffect(() => {
-    console.log(values)
-  })
 
   useEffect(() => {
     if (props.auth.data) {
       props.history.push("/")
     }
   }, [props.auth.data])
+
+  useEffect(() => {
+    setMessage(props.reg.message)
+    window.scrollTo(0, 0)
+    if (props.reg.success) {
+      setValues({
+        email: "",
+        password: "",
+        fullName: "",
+        businessName: "",
+        phoneNumber: "",
+        address: ""
+      })
+    }
+  }, [props.reg.message])
 
   const goToLogin = () => {
     props.history.push("/login")
@@ -52,6 +65,12 @@ const Register = (props) => {
           <div className="text-2xl font-medium text-black text-center">
             Daftar Mitra WakPrint
           </div>
+          <p className={
+            props.reg.success ?
+              "text-base font-medium text-success text-center"
+              :
+              "text-base font-medium text-danger text-center"
+          }>{message}</p>
           <form className="items-center" onSubmit={(event) => handleSubmit(event)}>
             <label
               className="block text-md uppercase font-base text-grayText py-2">
@@ -60,6 +79,7 @@ const Register = (props) => {
                 type="email"
                 name="email"
                 id="email"
+                value={values.email}
                 onChange={(event) => handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
@@ -70,6 +90,7 @@ const Register = (props) => {
                 type="password"
                 name="password"
                 id="password"
+                value={values.password}
                 onChange={(event) => handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
@@ -80,6 +101,7 @@ const Register = (props) => {
                 type="text"
                 name="fullName"
                 id="fullName"
+                value={values.fullName}
                 onChange={(event) => handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
@@ -90,6 +112,7 @@ const Register = (props) => {
                 type="text"
                 name="businessName"
                 id="businessName"
+                value={values.businessName}
                 onChange={(event) => handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
@@ -97,9 +120,10 @@ const Register = (props) => {
               className="block text-md uppercase font-base text-grayText py-2">
               Nomor Telepon
               <input
-                type="text"
+                type="number"
                 name="phoneNumber"
                 id="phoneNumber"
+                value={values.phoneNumber}
                 onChange={(event) => handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
@@ -110,6 +134,7 @@ const Register = (props) => {
                 type="text"
                 name="address"
                 id="address"
+                value={values.address}
                 onChange={(event) => handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline h-32" />
             </label>
@@ -138,13 +163,15 @@ const Register = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    reg: state.reg
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    regAccount: (data) => dispatch(regAccount(data))
+    regAccount: (data) => dispatch(regAccount(data)),
+    regReset: () => dispatch(regReset())
   }
 }
 

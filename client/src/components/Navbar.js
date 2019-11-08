@@ -10,10 +10,10 @@ const Navbar = (props) => {
         <div className="flex items-center" style={{ width: "100%" }}>
           <div className="sm:flex block items-center" style={{ width: "100%" }}>
             <div className="block flex-grow font-bold text-3xl">
-              <div className="flex">
+              <Link className="flex" to="/home">
                 <div className="text-primary">Wak</div>
                 <div className="text-secondary">Print</div>
-              </div>
+              </Link>
               <div className="flex">
                 <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
                 <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
@@ -48,10 +48,10 @@ const Navbar = (props) => {
     return (
       <nav className="flex fixed top-0 left-0 right-0 justify-between flex-wrap bg-white py-6 px-4 sm:px-10 shadow-md">
         <div className="flex items-center" style={{ width: "100%" }}>
-          <div className="flex flex-grow font-bold text-3xl" >
+          <Link className="flex mr-auto font-bold text-3xl cursor-pointer" to="/home">
             <div className="text-primary">Wak</div>
             <div className="text-secondary">Print</div>
-          </div>
+          </Link>
           <div>
             <button
               onClick={() => props.goToRedirect()}

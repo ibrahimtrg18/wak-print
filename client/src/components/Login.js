@@ -13,6 +13,7 @@ const Login = (props) => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
+    document.title = "Login"
     props.authLogout()
   }, [])
 

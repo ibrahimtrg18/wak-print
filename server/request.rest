@@ -27,13 +27,12 @@ POST http://localhost:4000/api/partner/register
 Content-Type: application/json
 
 {
-    "email":"bambang@gmail.com",
-    "password":"test123",
-    "fullName":"bambang",
-    "businessName":"tokoPrint",
-    "phoneNumber":"0989898374632",
-    "address":"alamat",
-    "description":"jelasin"
+    "email":"asdmaskD@gmail.com",
+    "password":"asdmaskD@gmail.com",
+    "fullName":"asdmaskD@gmail.com",
+    "businessName":"asdmaskD@gmail.com",
+    "phoneNumber":"asdmaskD@gmail.com",
+    "address":"asdmaskD@gmail.com"
 }
 ###
 POST http://localhost:4000/api/partner/login
