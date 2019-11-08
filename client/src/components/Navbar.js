@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { authLogout } from '../redux/actions/authActions';
 
 const Navbar = (props) => {
   if (props.auth.data) {
@@ -14,13 +15,10 @@ const Navbar = (props) => {
                 <div className="text-secondary">Print</div>
               </div>
               <div className="flex">
-                <Link className="text-secondary text-base sm:mr-2 mr-10" to="/home">Home</Link>
-                <div className="text-primary text-base sm:mx-10 mr-10 sm:block hidden">|</div>
-                <Link className="text-secondary text-base sm:mr-2 mr-10" to="/order">Order</Link>
-                <div className="text-primary text-base sm:mx-10 mr-10 sm:block hidden">|</div>
-                <Link className="text-secondary text-base sm:mr-2 mr-10" to="/history">History</Link>
-                <div className="text-primary text-base sm:mx-10 mr-10 sm:block hidden">|</div>
-                <Link className="text-secondary text-base sm:mr-2 mr-10" to="/profile">Profile</Link>
+                <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
+                <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
+                <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
+                <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
               </div>
             </div>
             <div>
@@ -28,7 +26,8 @@ const Navbar = (props) => {
                 <div className="flex">
                   <div className="block text-primary text-base font-bold">Hai {props.auth.data.full_name},&nbsp;</div>
                   <div
-                    className="text-secondary text-base font-bold cursor-pointer">
+                    className="text-secondary text-base font-bold cursor-pointer"
+                    onClick={() => props.authLogout()}>
                     Logout?
                 </div>
                 </div>
@@ -72,5 +71,11 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authLogout: () => dispatch(authLogout())
+  }
+}
 
-export default connect(mapStateToProps)(Navbar);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
