@@ -1,6 +1,7 @@
 export const AUTH_REQUEST = "AUTH_REQUEST";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAILURE = "AUTH_FAILURE";
+export const AUTH_RESET = "AUTH_RESET";
 
 export const authRequest = () => {
     return {
@@ -21,8 +22,14 @@ export const authFailure = () => {
     }
 }
 
+export const authReset = () => {
+    return {
+        type: AUTH_RESET
+    }
+}
+
 export const authLogin = ({ email, password }) => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         fetch("/api/partner/login", {
             method: "POST",
             headers: {
@@ -38,5 +45,11 @@ export const authLogin = ({ email, password }) => {
                 dispatch(authSuccess(data.data))
             }
         })
+    }
+}
+
+export const authLogout = () => {
+    return (dispatch) => {
+        dispatch(authReset());
     }
 }
