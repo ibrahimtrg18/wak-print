@@ -27,7 +27,7 @@ router.post("/register", (req, res) => {
         })
     }
 
-    if(phoneNumber && phoneNumber.length > 15){
+    if (phoneNumber && phoneNumber.length > 15) {
         return res.status(400).json({
             success: false,
             message: "Phone Number must be less than 15"
@@ -175,6 +175,43 @@ router.get("/:partnerId", (req, res) => {
                 })
             }
         })
+})
+
+router.get("/:partnerId/order", (req, res) => {
+    const partnerId = req.params.partnerId;
+    connection.query("SELECT * FROM print_online.partner p WHERE p.id=?", [partnerId], (err, results) => {
+        if (err) {
+            res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else if (results && results.length > 0) {
+            connection.query("SELECT * FROM print_online.order o WHERE o.partner_id=?", [results[0].id], (err, results) => {
+                if (err) {
+                    res.status(500).json({
+                        success: false,
+                        message: "Error in Server!"
+                    })
+                } else if (results && results.length > 0) {
+                    res.status(200).json({
+                        success: true,
+                        data: results
+                    })
+                } else {
+                    res.status(200).json({
+                        success: true,
+                        message: "No Order Today!"
+                    })
+                }
+            })
+        } else {
+            res.status(404).json({
+                success: false,
+                message: "Partner not found!"
+            })
+        }
+    })
+
 })
 
 module.exports = router;
