@@ -6,11 +6,11 @@ import { authLogin, authLogout } from '../redux/actions/authActions';
 
 const Login = (props) => {
   const [values, setValues] = useState({
-    email: null,
-    password: null,
+    email: "",
+    password: "",
   })
 
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     document.title = "Login"
@@ -89,7 +89,7 @@ const Login = (props) => {
             </div>
             <input
               type="submit"
-              value="masuk"
+              value={props.auth.isLoading && props.auth.isLoading ? "Loading...": "masuk"}
               className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer" />
           </form>
         </div>
