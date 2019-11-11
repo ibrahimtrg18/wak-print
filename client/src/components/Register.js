@@ -5,15 +5,15 @@ import { regAccount, regReset, REG_SUCCESS } from '../redux/actions/regActions';
 
 const Register = (props) => {
   const [values, setValues] = useState({
-    email: null,
-    password: null,
-    fullName: null,
-    businessName: null,
-    phoneNumber: null,
-    address: null
+    email: "",
+    password: "",
+    fullName: "",
+    businessName: "",
+    phoneNumber: "",
+    address: ""
   })
 
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
   const [checkBox, setCheckBox] = useState(false);
 
   useEffect(() => {

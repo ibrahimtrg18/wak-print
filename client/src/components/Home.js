@@ -14,7 +14,7 @@ const Beranda = (props) => {
 		}
 	}, [props.auth.data])
 
-	if (props.auth) {
+	if (props.auth.data) {
 		return (
 			<div className="bg-grayBg h-screen">
 				<Navbar goTo={"LogOut"} ></Navbar>
@@ -22,31 +22,31 @@ const Beranda = (props) => {
 					<div className="lg:w-1/2 md:px-8 px-4">
 						<p className="text-2xl font-medium mb-2 text-center">
 							Analisis Usaha printer Anda
-          	</p>
+          				</p>
 						<div className="lg:px-12">
 							<div className="flex max-w-full rounded overflow-hidden shadow-lg mb-2 sm:px-16 px-16 py-4 bg-white">
 								<div className="flex-grow font-medium text-5xl">
 									6
-              	</div>
+              					</div>
 								<div className="text-base font-medium self-end pb-2">
 									Orderan
-              	</div>
+              					</div>
 							</div>
 							<div className="flex max-w-full rounded overflow-hidden shadow-lg mb-2 sm:px-16 px-16 py-4 bg-white">
 								<div className="flex-grow font-medium text-5xl">
 									1
-              	</div>
+              					</div>
 								<div className="text-base font-medium self-end pb-2">
 									Proses
-              	</div>
+              					</div>
 							</div>
 							<div className="flex max-w-full rounded overflow-hidden shadow-lg mb-2 sm:px-16 px-16 py-4 bg-white">
 								<div className="flex-grow font-medium text-5xl">
 									0
-              	</div>
+              					</div>
 								<div className="text-base font-medium self-end pb-2">
 									Selesai
-              </div>
+              					</div>
 							</div>
 						</div>
 					</div>
