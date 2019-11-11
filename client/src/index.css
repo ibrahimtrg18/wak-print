@@ -1,5 +1,9 @@
 @tailwind base;
 
+*:focus {
+    outline: 0
+}
+
 @tailwind components;
 
 @tailwind utilities;

@@ -7,6 +7,7 @@ module.exports = {
       secondary: '#C59BD7',
       danger: '#ad4444',
       success:"#60ad44",
+      grayBorder:"#DADADA",
       grayText: "#676767",
       grayBg: "#F9F9F9"
     },
