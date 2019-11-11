@@ -20,7 +20,7 @@ const upload = multer({
     fileFilter: (req, file, cb) => {
         isPrintType(file, cb)
     }
-})
+}).single("order")
 
 isPrintType = (file, cb) => {
     // type allowed
@@ -33,56 +33,66 @@ isPrintType = (file, cb) => {
     if (extname && mimetype) {
         return cb(null, true);
     } else {
-        return cb("ERROR: DOC, DOCX & PDF Only");
+        return cb(("ERROR: DOC, DOCX & PDF Only"), false);
     }
 
 }
 
-router.post("/", upload.single("order"), (req, res) => {
-    const {
-        userId,
-        partnerId,
-        pages,
-        copies, // null default "1"
-        productName,
-        productPrice,
-        methodPickup,
-        methodPayment,
-    } = req.body;
+router.post("/", (req, res) => {
+    upload(req, res, (err) => {
+        const {
+            userId,
+            partnerId,
+            pages,
+            copies, // null default "1"
+            productName,
+            productPrice,
+            methodPickup,
+            methodPayment,
+        } = req.body;
 
-    if (!req.file) {
-        return res.status(400).json({
-            success: false,
-            message: "Please, fill in File!"
-        })
-    }
-    // res.json(file.filename)
-    const documentName = req.file.filename
-
-    connection.query("INSERT INTO print_online.order SET ?", {
-        user_id: userId,
-        partner_id: partnerId,
-        document_name: documentName,
-        pages,
-        copies,
-        product_name: productName,
-        product_price: productPrice,
-        method_pickup: methodPickup,
-        method_payment: methodPayment,
-        created_at: Date.now()
-    }, (err, results) => {
         if (err) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
-                message: "Error in Server!"
-            })
-        } else {
-            return res.status(200).json({
-                success: true,
-                message: "Successfully made an Order!"
+                message: err
             })
         }
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please, fill in File!"
+            })
+        }
+
+        const documentName = req.file.filename
+
+        connection.query("INSERT INTO print_online.order SET ?", {
+            user_id: userId,
+            partner_id: partnerId,
+            document_name: documentName,
+            pages,
+            copies,
+            product_name: productName,
+            product_price: productPrice,
+            method_pickup: methodPickup,
+            method_payment: methodPayment,
+            created_at: Date.now()
+        }, (err, results) => {
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Error in Server!"
+                })
+            } else {
+                return res.status(200).json({
+                    success: true,
+                    message: "Successfully made an Order!"
+                })
+            }
+        })
     })
+
 })
 
 router.get("/:orderId/", (req, res) => {
