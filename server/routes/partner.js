@@ -181,31 +181,36 @@ router.get("/:partnerId/order", (req, res) => {
     const partnerId = req.params.partnerId;
     connection.query("SELECT * FROM print_online.partner p WHERE p.id=?", [partnerId], (err, results) => {
         if (err) {
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
             })
         } else if (results && results.length > 0) {
-            connection.query("SELECT * FROM print_online.order o WHERE o.partner_id=?", [results[0].id], (err, results) => {
+            connection.query(
+                `SELECT o.*, u.full_name, u.phone_number
+                FROM print_online.order o
+                    LEFT JOIN print_online.user u
+                        ON u.id = o.user_id
+                WHERE o.partner_id=?`, [results[0].id], (err, results) => {
                 if (err) {
-                    res.status(500).json({
+                    return res.status(500).json({
                         success: false,
                         message: "Error in Server!"
                     })
                 } else if (results && results.length > 0) {
-                    res.status(200).json({
+                    return res.status(200).json({
                         success: true,
                         data: results
                     })
                 } else {
-                    res.status(200).json({
+                    return res.status(200).json({
                         success: true,
                         message: "No Order Today!"
                     })
                 }
             })
         } else {
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 message: "Partner not found!"
             })
