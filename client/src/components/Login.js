@@ -16,7 +16,7 @@ const Login = (props) => {
   useEffect(() => {
     document.title = "Login"
     handleFocus()
-    return () => { props.resetAuth() }
+    props.resetAuth()
   }, [])
 
   useEffect(() => {
