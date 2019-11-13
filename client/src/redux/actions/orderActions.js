@@ -1,6 +1,7 @@
 export const ORDER_REQUEST = "ORDER_REQUEST";
 export const ORDER_SUCCESS = "ORDER_SUCCESS";
 export const ORDER_FAILURE = "ORDER_FAILURE";
+export const ORDER_RESET = "ORDER_RESET";
 
 export const orderRequest = () => {
     return {
@@ -22,9 +23,14 @@ export const orderFailure = (message) => {
     }
 }
 
+export const orderReset = () => {
+    return {
+        type: ORDER_RESET
+    }
+}
+
 export const getOrders = (partnerId) => {
     return (dispatch) => {
-        console.log(partnerId)
         dispatch(orderRequest());
         fetch(`/api/partner/${partnerId}/order`, {
             method: "GET"
@@ -37,5 +43,11 @@ export const getOrders = (partnerId) => {
                 dispatch(orderFailure(data.message))
             }
         })
+    }
+}
+
+export const resetOrders = () => {
+    return dispatch => {
+        dispatch(orderReset())
     }
 }

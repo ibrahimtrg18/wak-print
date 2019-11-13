@@ -1,4 +1,4 @@
-import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_FAILURE } from '../actions/orderActions';
+import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_FAILURE, ORDER_RESET } from '../actions/orderActions';
 
 const initialState = {
 	data: null,
@@ -9,7 +9,7 @@ export const orderReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ORDER_REQUEST:
 			return {
-				data:null,
+				data: null,
 				isLoading: true,
 			}
 		case ORDER_SUCCESS:
@@ -22,6 +22,8 @@ export const orderReducer = (state = initialState, action) => {
 				data: action.message,
 				isLoading: false,
 			}
+		case ORDER_RESET:
+			return initialState
 		default:
 			return state
 	}
