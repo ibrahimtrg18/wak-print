@@ -11,7 +11,13 @@ $ npm install               // install module
 $ npm run build:css         // install tailwindcss
 $ npm start                 // jalankan client localhost:3000
 ```
+
 ### server
+sebelum menlakukan command dibawah, lakukanlah configurasi database mysql.
+di dalam folder "./config/key" ada 2 object yang harus diubah.
+mysqlUser -> user mysql anda. contoh: "root"
+mysqlPassword -> password mysql anda. contoh: "123456" atau ""
+
 ```
 $ cd server                 // masuk ke direktori server
 $ npm install               // install module
@@ -19,6 +25,7 @@ $ npm run devStart          // jalankan server localhost:4000
 atau
 $ node .                    // jalankan server di port localhost:4000
 ```
+
 
 ## Router atau End-point pada server
 |Method     |Endpoint                    |kegunaan                                                  | 
