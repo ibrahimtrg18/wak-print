@@ -52,7 +52,7 @@ export const authLogin = ({ email, password }) => {
     }
 }
 
-export const authLogout = () => {
+export const resetAuth = () => {
     return (dispatch) => {
         dispatch(authReset());
     }

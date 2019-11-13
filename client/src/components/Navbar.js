@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { authLogout } from '../redux/actions/authActions';
+import { resetAuth } from '../redux/actions/authActions';
 
 const Navbar = (props) => {
   if (props.auth.data) {
@@ -27,7 +27,7 @@ const Navbar = (props) => {
                   <div className="block text-primary text-base font-bold">Hai {props.auth.data.full_name},&nbsp;</div>
                   <div
                     className="text-secondary text-base font-bold cursor-pointer"
-                    onClick={() => props.authLogout()}>
+                    onClick={() => props.resetAuth()}>
                     Logout?
                 </div>
                 </div>
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    authLogout: () => dispatch(authLogout())
+    resetAuth: () => dispatch(resetAuth())
   }
 }
 
