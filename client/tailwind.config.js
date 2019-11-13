@@ -5,6 +5,7 @@ module.exports = {
       black: '#000000',
       primary: '#8E44AD',
       secondary: '#C59BD7',
+      accent:"#FC6464",
       danger: '#ad4444',
       success:"#60ad44",
       grayBorder:"#DADADA",
