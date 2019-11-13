@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux';
 
 import Navbar from './Navbar'
-import { authLogin, authLogout } from '../redux/actions/authActions';
+import { authLogin, resetAuth } from '../redux/actions/authActions';
 
 const Login = (props) => {
+  const email = useRef()
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -14,7 +15,8 @@ const Login = (props) => {
 
   useEffect(() => {
     document.title = "Login"
-    props.authLogout()
+    handleFocus()
+    return () => { props.resetAuth() }
   }, [])
 
   useEffect(() => {
@@ -27,15 +29,20 @@ const Login = (props) => {
     setMessage(props.auth.message)
   }, [props.auth.message])
 
-  const goToRegister = () => {
+
+  const handleFocus = () => {
+    email.current.focus()
+  }
+
+  const _goToRegister = () => {
     props.history.push("/register")
   }
 
-  const handleChange = (event) => {
+  const _handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
 
-  const handleSubmit = async (event) => {
+  const _handleSubmit = async (event) => {
     event.preventDefault()
     props.authLogin(values)
   }
@@ -44,7 +51,7 @@ const Login = (props) => {
     <div className="bg-grayBg" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Daftar Disini"
-        goToRedirect={() => goToRegister()} />
+        goToRedirect={() => _goToRegister()} />
       <div className="sm:flex sm:pt-32 pt-32">
         <div className="sm:w-1/2 px-4 sm:block md:block hidden">
           <img
@@ -57,16 +64,17 @@ const Login = (props) => {
             Masuk Mitra WakPrint
           </div>
           <p className="text-base font-medium text-danger text-center">{message}</p>
-          <form className="items-center" onSubmit={(event) => handleSubmit(event)}>
+          <form className="items-center" onSubmit={(event) => _handleSubmit(event)}>
             <label className="block text-md uppercase font-base text-grayText py-2">
               E-Mail
               <input
                 type="email"
                 name="email"
                 id="email"
+                ref={email}
                 value={values.email}
                 placeholder="example@example.com"
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => _handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-primary" />
             </label>
             <label
@@ -78,18 +86,18 @@ const Login = (props) => {
                 id="password"
                 value={values.password}
                 placeholder="******"
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => _handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-primary" />
             </label>
             <div className="flex text-xs font-base text-gray-800 justify-center my-2">
               <p>Belum punya akun?</p>
               <div
-                onClick={() => goToRegister()}
+                onClick={() => _goToRegister()}
                 className="ml-1 text-primary cursor-pointer">Daftar</div>
             </div>
             <input
               type="submit"
-              value={props.auth.isLoading && props.auth.isLoading ? "Loading...": "masuk"}
+              value={props.auth.isLoading && props.auth.isLoading ? "Loading..." : "masuk"}
               className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer" />
           </form>
         </div>
@@ -107,7 +115,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     authLogin: (data) => { dispatch(authLogin(data)) },
-    authLogout: () => { dispatch(authLogout()) }
+    resetAuth: () => { dispatch(resetAuth()) }
   }
 }
 
