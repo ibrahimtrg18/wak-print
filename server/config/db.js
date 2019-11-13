@@ -1,10 +1,11 @@
 const mysql = require("mysql");
+const key = require("./key");
 
 // Create Connection to Mysql
 const connection = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "",
+    user: key.mysqlUser,
+    password: key.mysqlPassword,
     database: "print_online"
 })
 
