@@ -187,7 +187,7 @@ router.get("/:partnerId/order", (req, res) => {
             })
         } else if (results && results.length > 0) {
             connection.query(
-                `SELECT o.*, u.full_name, u.phone_number
+                `SELECT o.*, u.full_name, u.phone_number, u.photo
                 FROM print_online.order o
                     LEFT JOIN print_online.user u
                         ON u.id = o.user_id
