@@ -34,8 +34,8 @@ const Order = (props) => {
 				<div className="flex flex-wrap px-8">
 					{orders && orders.length > 0 ? orders.map(order => {
 						return (
-							<div className="w-full sm:w-1/2 md:w-1/3 p-1">
-								<div className="rounded shadow bg-white" key={order.id}>
+							<div className="w-full sm:w-1/2 md:w-1/3 p-1" key={order.id}>
+								<div className="rounded shadow bg-white">
 									<img
 										src={order.photo ? process.env.PUBLIC_URL + "/images/default_photo.svg" : process.env.PUBLIC_URL + "/images/default_photo.svg"}
 										className="w-full" />
@@ -87,7 +87,7 @@ const Order = (props) => {
 								</div>
 							</div>
 						)
-					}):"Null"}
+					}) : "Null"}
 				</div>
 			</div>
 		)
