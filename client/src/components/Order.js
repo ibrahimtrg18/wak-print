@@ -34,45 +34,54 @@ const Order = (props) => {
 					{orders.map(order => {
 						return (
 							<div className="w-full sm:w-1/2 md:w-1/3 p-1">
-								<div className="rounded shadow bg-white p-4" key={order.id}>
-									<div className="pt-2 pb-2">
-										<div className="">
+								<div className="rounded shadow bg-white" key={order.id}>
+									<img
+										src={order.photo ? process.env.PUBLIC_URL + "/images/default_photo.svg" : process.env.PUBLIC_URL + "/images/default_photo.svg"}
+										className="w-full" />
+									<div className="pb-4 px-4">
+										<div className="pt-4 pb-4">
 											<div className="text-grayText text-sm">Nama</div>
-											<div className="text-black font-medium text-base">{order.full_name}</div>
-										</div>
-										<div className="">
+											<div className="text-black font-medium text-base pb-2">{order.full_name}</div>
 											<div className="text-grayText text-sm">Nomor Telepon</div>
 											<div className="text-black font-medium text-base">{order.phone_number}</div>
 										</div>
-									</div>
-									<div className="text-black text-base font-semibold border-grayBorder border-b-2">Pengaturan File</div>
-									<div className="flex pb-2">
-										<div className="w-1/2">
-											<div className="text-grayText text-xs uppercase">Halaman</div>
-											<div className="border-grayBorder border-2 rounded px-2 inline">
-												{order.pages}
+										<div className="text-black text-base font-semibold border-grayBorder border-b-2">Pengaturan File</div>
+										<div className="flex py-2">
+											<div className="w-1/2">
+												<div className="text-grayText text-xs uppercase">Halaman</div>
+												<div className="border-grayBorder border-2 rounded px-2 inline">
+													{order.pages}
+												</div>
+											</div>
+											<div className="w-1/2">
+												<div className="text-grayText text-xs uppercase">Jumlah Rangkap</div>
+												<div className="border-grayBorder border-2 rounded px-2 inline">
+													{order.copies}
+												</div>
 											</div>
 										</div>
-										<div className="w-1/2">
-											<div className="text-grayText text-xs uppercase">Jumlah Rangkap</div>
-											<div className="border-grayBorder border-2 rounded px-2 inline">
-												{order.copies}
+										<div className="flex">
+											<div className="w-1/2 pb-2">
+												<div className="text-grayText text-xs uppercase">Product</div>
+												<div className="border-grayBorder border-2 rounded px-2 inline">
+													{order.product_name}
+												</div>
+											</div>
+											<div className="w-1/2 pb-2">
+												<div className="text-grayText text-xs uppercase">File</div>
+												<div className="border-primary border-2 bg-primary text-white rounded px-2 inline cursor-pointer">
+													Download
+											</div>
 											</div>
 										</div>
 									</div>
 									<div className="flex">
-										<div className="w-1/2 pb-2">
-											<div className="text-grayText text-xs uppercase">Product yang diminta</div>
-											<div className="border-grayBorder border-2 rounded px-2 inline">
-												{order.product_name}
-											</div>
-										</div>
-										<div className="w-1/2 pb-2">
-											<div className="text-grayText text-xs uppercase">Download File</div>
-											<div className="border-primary border-2 bg-primary text-white rounded px-2 inline cursor-pointer">
-												Download
-											</div>
-										</div>
+										<button className="w-1/2 bg-accent text-white text-center rounded-bl py-4 px-4">
+											Tolak
+										</button>
+										<button className="w-1/2 bg-primary text-white text-center rounded-br py-4 px-4">
+											Konfirmasi
+										</button>
 									</div>
 								</div>
 							</div>
