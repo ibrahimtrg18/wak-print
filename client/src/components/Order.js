@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import Navbar from './Navbar';
-import { orderData } from '../redux/actions/orderActions';
+import { getOrders } from '../redux/actions/orderActions';
 
 const Order = (props) => {
 
-	const [partner, setPartner] = useState(props.auth.data);
-	const [orders, setOrders] = useState(props.order.data);
 	const [message, setMessage] = useState(null);
+	const [orders, setOrders] = useState([]);
 
 	useEffect(() => {
 		document.title = "Order"
@@ -16,13 +15,15 @@ const Order = (props) => {
 	useEffect(() => {
 		if (!props.auth.data) {
 			props.history.push("/login");
-		} else if (partner && partner.id) {
-			props.orderData(partner.id)
+		} else {
+			props.getOrders(props.auth.data.id)
 		}
 	}, [props.auth.data])
 
+	useEffect(() => {
+		setOrders(props.order.data)
+	}, [props.order.data])
 
-	console.log(orders)
 	if (props.auth.data) {
 		return (
 			<div className="bg-grayBg h-screen">
@@ -31,7 +32,7 @@ const Order = (props) => {
 					<div className="text-3xl ml-2">Order</div>
 				</div>
 				<div className="flex flex-wrap px-8">
-					{orders.map(order => {
+					{orders && orders.length > 0 ? orders.map(order => {
 						return (
 							<div className="w-full sm:w-1/2 md:w-1/3 p-1">
 								<div className="rounded shadow bg-white" key={order.id}>
@@ -86,7 +87,7 @@ const Order = (props) => {
 								</div>
 							</div>
 						)
-					})}
+					}):"Null"}
 				</div>
 			</div>
 		)
@@ -104,7 +105,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		orderData: (partnerId) => { dispatch(orderData(partnerId)) }
+		getOrders: (partnerId) => { dispatch(getOrders(partnerId)) }
 	}
 }
 

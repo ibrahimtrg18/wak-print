@@ -9,6 +9,7 @@ export const orderReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ORDER_REQUEST:
 			return {
+				data:null,
 				isLoading: true,
 			}
 		case ORDER_SUCCESS:

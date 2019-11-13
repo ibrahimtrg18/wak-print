@@ -22,8 +22,9 @@ export const orderFailure = (message) => {
     }
 }
 
-export const orderData = (partnerId) => {
+export const getOrders = (partnerId) => {
     return (dispatch) => {
+        console.log(partnerId)
         dispatch(orderRequest());
         fetch(`/api/partner/${partnerId}/order`, {
             method: "GET"
