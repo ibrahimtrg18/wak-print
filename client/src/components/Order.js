@@ -10,9 +10,7 @@ const Order = (props) => {
 
 	useEffect(() => {
 		document.title = "Order"
-		return () => {
-			props.resetOrders()
-		}
+		props.resetOrders()
 	}, [])
 
 	useEffect(() => {
@@ -23,11 +21,11 @@ const Order = (props) => {
 		}
 	}, [props.auth.data])
 
-	useEffect(()=>{
+	useEffect(() => {
 		setMessage(props.order.message)
 		setOrders(props.order.data)
-	},[props.order])
-	
+	}, [props.order])
+
 	if (props.auth.data) {
 		return (
 			<div className="bg-grayBg h-screen">
