@@ -150,20 +150,20 @@ router.get("/:partnerId", (req, res) => {
                     data: {
                         info: {
                             id: results[0].id_wak_print,
-                            namaUsaha: results[0].full_name,
-                            namaPemilik: results[0].business_name,
-                            alamat: results[0].address,
-                            jumlahPrinter: results[0].jumlah_printer_wak_print,
-                            deskripsi: results[0].description,
                             email: results[0].email,
                             password: results[0].password,
-                            noTelp: results[0].phone_number,
+                            full_name: results[0].full_name,
+                            business_name: results[0].business_name,
+                            phone_number: results[0].phone_number,
+                            address: results[0].address,
+                            photo: results[0].photo,
+                            description: results[0].description,
                         },
                         rating: results[0].rating,
                         harga: results.map(result => {
                             return ({
-                                jenisHarga: result.name,
-                                nominalHarga: result.nominal
+                                name: result.name,
+                                price: result.price
                             })
                         })
                     }
