@@ -1,37 +1,44 @@
 export const AUTH_REQUEST = "AUTH_REQUEST";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAILURE = "AUTH_FAILURE";
+export const AUTH_LOGOUT = "AUTH_LOGOUT";
 export const AUTH_RESET = "AUTH_RESET";
 
-export const authRequest = () => {
+export const _authRequest = () => {
     return {
         type: AUTH_REQUEST,
     }
 }
 
-export const authSuccess = (payload) => {
+export const _authSuccess = (payload) => {
     return {
         type: AUTH_SUCCESS,
         payload
     }
 }
 
-export const authFailure = (payload) => {
+export const _authFailure = (payload) => {
     return {
         type: AUTH_FAILURE,
         payload
     }
 }
 
-export const authReset = () => {
+export const _authLogout = () => {
+    return {
+        type: AUTH_LOGOUT
+    }
+}
+
+export const _authReset = () => {
     return {
         type: AUTH_RESET
     }
 }
 
-export const authLogin = ({ email, password }) => {
+export const _login = ({ email, password }) => {
     return (dispatch) => {
-        dispatch(authRequest())
+        dispatch(_authRequest())
         fetch("/api/partner/login", {
             method: "POST",
             headers: {
@@ -41,19 +48,25 @@ export const authLogin = ({ email, password }) => {
                 email,
                 password
             })
-        }).then(res => res.json()
-        ).then(data => {
-            if (data.success) {
-                dispatch(authSuccess(data.data))
-            } else {
-                dispatch(authFailure(data.message))
-            }
         })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success)
+                    dispatch(_authSuccess(data.data))
+                else
+                    dispatch(_authFailure(data.message))
+            })
     }
 }
 
-export const resetAuth = () => {
+export const _logout = () => {
     return (dispatch) => {
-        dispatch(authReset());
+        dispatch(_authLogout());
+    }
+}
+
+export const _reset = () => {
+    return (dispatch) => {
+        dispatch(_authReset());
     }
 }

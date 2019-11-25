@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import { regAccount, regReset, REG_SUCCESS } from '../redux/actions/regActions';
 
 const Register = (props) => {
+  const emailRef = useRef()
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -18,6 +19,7 @@ const Register = (props) => {
 
   useEffect(() => {
     document.title = "Register"
+    emailRef.current.focus()
     props.regReset()
   }, [])
 
@@ -42,15 +44,15 @@ const Register = (props) => {
     }
   }, [props.reg.message])
 
-  const goToLogin = () => {
+  const _goToLogin = () => {
     props.history.push("/login")
   }
 
-  const handleChange = (event) => {
+  const _handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
 
-  const handleSubmit = (event) => {
+  const _handleSubmit = (event) => {
     event.preventDefault()
     props.regAccount(values)
   }
@@ -59,7 +61,7 @@ const Register = (props) => {
     <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Masuk Disini"
-        goToRedirect={() => goToLogin()}></Navbar>
+        goToRedirect={() => _goToLogin()}></Navbar>
       <div className="flex pt-24">
         <div className="w-full sm:px-16 md:px-32 lg:px-32 xl:px-64 px-8 mt-8">
           <div className="text-2xl font-medium text-black text-center">
@@ -71,7 +73,7 @@ const Register = (props) => {
               :
               "text-base font-medium text-danger text-center"
           }>{message}</p>
-          <form className="items-center" onSubmit={(event) => handleSubmit(event)}>
+          <form className="items-center" onSubmit={(event) => _handleSubmit(event)}>
             <label
               className="block text-md uppercase font-base text-grayText py-2">
               E-Mail
@@ -79,8 +81,9 @@ const Register = (props) => {
                 type="email"
                 name="email"
                 id="email"
+                ref={emailRef}
                 value={values.email}
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => _handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
@@ -91,7 +94,7 @@ const Register = (props) => {
                 name="password"
                 id="password"
                 value={values.password}
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => _handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
@@ -102,7 +105,7 @@ const Register = (props) => {
                 name="fullName"
                 id="fullName"
                 value={values.fullName}
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => _handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
@@ -113,7 +116,7 @@ const Register = (props) => {
                 name="businessName"
                 id="businessName"
                 value={values.businessName}
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => _handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
@@ -124,7 +127,7 @@ const Register = (props) => {
                 name="phoneNumber"
                 id="phoneNumber"
                 value={values.phoneNumber}
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => _handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
@@ -135,7 +138,7 @@ const Register = (props) => {
                 name="address"
                 id="address"
                 value={values.address}
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => _handleChange(event)}
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline h-32" />
             </label>
             <div className="block text-xs font-base text-gray-800 justify-center my-3">

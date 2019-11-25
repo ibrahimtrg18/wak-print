@@ -2,21 +2,20 @@ import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux';
 
 import Navbar from './Navbar'
-import { authLogin, resetAuth } from '../redux/actions/authActions';
+import { _login, _reset } from '../redux/actions/authActions';
 
 const Login = (props) => {
-  const email = useRef()
   const [values, setValues] = useState({
     email: "",
     password: "",
   })
-
   const [message, setMessage] = useState("");
+  const emailRef = useRef()
 
   useEffect(() => {
     document.title = "Login"
-    handleFocus()
-    props.resetAuth()
+    emailRef.current.focus()
+    props._reset()
   }, [])
 
   useEffect(() => {
@@ -29,22 +28,18 @@ const Login = (props) => {
     setMessage(props.auth.message)
   }, [props.auth.message])
 
-
-  const handleFocus = () => {
-    email.current.focus()
-  }
-
   const _goToRegister = () => {
     props.history.push("/register")
   }
 
   const _handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value })
+    const {name,value} = event.target
+    setValues({ ...values, [name]: value })
   }
 
   const _handleSubmit = async (event) => {
     event.preventDefault()
-    props.authLogin(values)
+    props._login(values)
   }
 
   return (
@@ -71,11 +66,11 @@ const Login = (props) => {
                 type="email"
                 name="email"
                 id="email"
-                ref={email}
+                ref={emailRef}
                 value={values.email}
                 placeholder="example@example.com"
                 onChange={(event) => _handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-primary" />
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-secondary" />
             </label>
             <label
               className="block text-md uppercase font-base text-grayText py-2">
@@ -87,7 +82,7 @@ const Login = (props) => {
                 value={values.password}
                 placeholder="******"
                 onChange={(event) => _handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-primary" />
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-secondary" />
             </label>
             <div className="flex text-xs font-base text-gray-800 justify-center my-2">
               <p>Belum punya akun?</p>
@@ -114,8 +109,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    authLogin: (data) => { dispatch(authLogin(data)) },
-    resetAuth: () => { dispatch(resetAuth()) }
+    _login: (data) => { dispatch(_login(data)) },
+    _reset: () => { dispatch(_reset()) }
   }
 }
 

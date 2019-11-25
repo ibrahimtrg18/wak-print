@@ -13,6 +13,8 @@ router.post("/register", (req, res) => {
         address
     } = req.body;
 
+    console.log(req.body)
+
     if (!email || !password || !fullName || !businessName || !phoneNumber || !address) {
         return res.status(400).json({
             success: false,
@@ -38,7 +40,7 @@ router.post("/register", (req, res) => {
         if (err) {
             return res.status(500).json({
                 success: false,
-                message: "Error in Server!1"
+                message: "Error in Server!"
             })
         } else if (results && results.length > 0) {
             return res.status(409).json({

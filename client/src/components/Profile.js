@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import Navbar from './Navbar';
+import { getProfile, resetProfile } from "../redux/actions/profileActions";
 
 const Profile = (props) => {
 
+	const [message, setMessage] = useState(null);
+	const [profile, setProfile] = useState({});
+
 	useEffect(() => {
 		document.title = "Profile"
+		props.resetProfile()
 	}, [])
 
 	useEffect(() => {
@@ -14,15 +19,18 @@ const Profile = (props) => {
 		}
 	}, [props.auth.data])
 
+	useEffect(() => {
+		setMessage(props.auth.message)
+		setProfile(props.auth.data)
+	}, [props.auth])
 
-	if (props.auth) {
+	if (props.auth.data) {
 		return (
 			<div className="bg-gray-100 h-screen">
 				<Navbar goTo={"LogOut"} ></Navbar>
-				<div className="sm:flex sm:pt-40 pt-48">
-					<div className="lg:w-1/2 md:px-8 px-4">
-						Profile
-					</div>
+				<div className="sm:pt-32 pt-40 px-8">
+					<div className="text-3xl ml-2">Profile</div>
+					<div className="">{profile.full_name}</div>
 				</div>
 			</div>
 		)
@@ -32,8 +40,16 @@ const Profile = (props) => {
 }
 const mapStateToProps = (state) => {
 	return {
-		auth: state.auth
+		auth: state.auth,
+		profile: state.profile
 	}
 }
 
-export default connect(mapStateToProps)(Profile)
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getProfile: (partnerId) => { dispatch(getProfile(partnerId)) },
+		resetProfile: () => { dispatch(resetProfile()) }
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

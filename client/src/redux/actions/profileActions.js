@@ -32,7 +32,7 @@ export const profileReset = () => {
 export const getProfile = (partnerId) => {
     return (dispatch) => {
         dispatch(profileRequest());
-        fetch(`/api/partner/${partnerId}/order`, {
+        fetch(`/api/partner/${partnerId}`, {
             method: "GET"
         }).then(
             res => res.json()

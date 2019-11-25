@@ -1,4 +1,4 @@
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../actions/authActions'
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_LOGOUT, AUTH_RESET } from '../actions/authActions'
 
 const initialState = {
     data: null,
@@ -26,8 +26,13 @@ export const authReducer = (state = initialState, action) => {
                 message: action.payload,
                 isLoading: false,
             }
-        case AUTH_RESET:
+        case AUTH_LOGOUT:
             return initialState
+        case AUTH_RESET:
+            return {
+                ...state,
+                message: null
+            }
         default:
             return state
     }
