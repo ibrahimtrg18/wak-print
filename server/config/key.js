@@ -1,6 +1,6 @@
 module.exports = {
-    MYSQL_HOST:"srv43.niagahoster.com",
-    MYSQL_DATABASE:"u4749611_print_online",
-    MYSQL_USER : "u4749611_print_online",
+    MYSQL_HOST:"localhost",
+    MYSQL_DATABASE:"wak_print",
+    MYSQL_USER : "root",
     MYSQL_PASSWORD: "123456",
 }
