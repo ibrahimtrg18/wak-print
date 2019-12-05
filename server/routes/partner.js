@@ -36,8 +36,9 @@ router.post("/register", (req, res) => {
         })
     }
 
-    connection.query("SELECT * FROM print_online.partner WHERE email = ?", [email], (err, results) => {
+    connection.query("SELECT * FROM partner WHERE email = ?", [email], (err, results) => {
         if (err) {
+            console.log(err)
             return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
@@ -50,9 +51,10 @@ router.post("/register", (req, res) => {
         } else {
             bcrypt.hash(password, 10, (err, passwordHashed) => {
                 if (err) {
+                    console.log(err)
                     return res.status(500).send()
                 }
-                connection.query("INSERT INTO print_online.partner SET ?", {
+                connection.query("INSERT INTO partner SET ?", {
                     email,
                     password: passwordHashed,
                     full_name: fullName,
@@ -93,8 +95,9 @@ router.post("/login", (req, res) => {
     }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM print_online.partner WHERE email=?", [email], (err, results) => {
+    connection.query("SELECT * FROM partner WHERE email=?", [email], (err, results) => {
         if (err) {
+            console.log(err)
             return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
@@ -129,16 +132,17 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/:partnerId", (req, res) => {
-    const partnerId = req.params.partnerId
+    const partnerId = req.params.partnerId;
+    
     connection.query(
-        `SELECT p.*, AVG(r.rate) AS rating, pd.*
-        FROM print_online.partner p 
-            LEFT JOIN print_online.rating r 
-                ON r.partner_id = p.id 
-            LEFT JOIN print_online.product pd
-                ON pd.partner_id = p.id
-        WHERE p.id = ${partnerId}
-        GROUP BY p.id, pd.id`,
+        `SELECT partner.*, AVG(rating.rate) AS rating, product.*
+        FROM partner 
+            LEFT JOIN rating 
+                ON rating.partner_id = partner.id 
+            LEFT JOIN product
+                ON product.partner_id = partner.id
+        WHERE partner.id = ${partnerId}
+        GROUP BY partner.id, product.id`,
         (err, results) => {
             if (err) {
                 console.log(err)
@@ -181,7 +185,7 @@ router.get("/:partnerId", (req, res) => {
 
 router.get("/:partnerId/order", (req, res) => {
     const partnerId = req.params.partnerId;
-    connection.query("SELECT * FROM print_online.partner p WHERE p.id=?", [partnerId], (err, results) => {
+    connection.query("SELECT * FROM partner WHERE partner.id=?", [partnerId], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -189,11 +193,11 @@ router.get("/:partnerId/order", (req, res) => {
             })
         } else if (results && results.length > 0) {
             connection.query(
-                `SELECT o.*, u.full_name, u.phone_number, u.photo
-                FROM print_online.order o
-                    LEFT JOIN print_online.user u
-                        ON u.id = o.user_id
-                WHERE o.partner_id=?`, [results[0].id], (err, results) => {
+                `SELECT order.*, user.full_name, user.phone_number, user.photo
+                FROM order
+                    LEFT JOIN user
+                        ON user.id = order.user_id
+                WHERE order.partner_id=?`, [results[0].id], (err, results) => {
                 if (err) {
                     return res.status(500).json({
                         success: false,
