@@ -15,7 +15,6 @@ connection.connect((err) => {
         console.log(err);
         return;
     }
-    
     console.log("success connection to database");
 })
 

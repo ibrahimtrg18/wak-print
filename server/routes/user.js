@@ -11,8 +11,10 @@ router.post("/register", (req, res) => {
         password,
         fullName,
         phoneNumber,
-        address,
+        address
     } = req.body;
+
+    console.log(req.body);
 
     // Cek Semua terisi
     if (!email || !password || !fullName || !phoneNumber || !address) {
@@ -38,8 +40,9 @@ router.post("/register", (req, res) => {
     }
 
     // Memasukan kedalam tableUser
-    connection.query("SELECT * FROM print_online.user WHERE email = ?", [email], (err, rows) => {
+    connection.query("SELECT * FROM user WHERE email = ?", [email], (err, rows) => {
         if (err) {
+            console.log(err)
             return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
@@ -54,7 +57,7 @@ router.post("/register", (req, res) => {
                 if (err) {
                     return res.status(500).send()
                 }
-                connection.query("INSERT INTO print_online.user SET ?", {
+                connection.query("INSERT INTO user SET ?", {
                     email,
                     password: passwordHashed,
                     full_name: fullName,
@@ -80,11 +83,12 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-    console.log(req.body);
     const {
         email,
         password
     } = req.body;
+
+    console.log(req.body);
 
     if (!email || !password) {
         return res.status(400).json({
@@ -94,8 +98,9 @@ router.post("/login", (req, res) => {
     }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM print_online.user WHERE email=?", [email], (err, rows) => {
+    connection.query("SELECT * FROM user WHERE email=?", [email], (err, rows) => {
         if (err) {
+            console.log(err)
             return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
@@ -131,7 +136,7 @@ router.post("/login", (req, res) => {
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
 
-    connection.query("SELECT * FROM print_online.user WHERE id = ?", [userId], (err, rows) => {
+    connection.query("SELECT * FROM user WHERE id = ?", [userId], (err, rows) => {
         if (err) {
             return res.json(err)
         } else if (rows && rows.length > 0) {

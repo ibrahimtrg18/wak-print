@@ -133,9 +133,9 @@ router.post("/login", (req, res) => {
 
 router.get("/:partnerId", (req, res) => {
     const partnerId = req.params.partnerId;
-    
+
     connection.query(
-        `SELECT partner.*, AVG(rating.rate) AS rating, product.*
+        `SELECT partner.*, AVG(rating.rate) AS rating, product.name as product_name, product.price as product_price
         FROM partner 
             LEFT JOIN rating 
                 ON rating.partner_id = partner.id 
@@ -151,29 +151,56 @@ router.get("/:partnerId", (req, res) => {
                     message: "Error in Server!"
                 })
             } else if (results && results.length > 0) {
-                return res.status(200).json({
-                    success: true,
-                    data: {
-                        info: {
-                            id: results[0].id_wak_print,
-                            email: results[0].email,
-                            password: results[0].password,
-                            full_name: results[0].full_name,
-                            business_name: results[0].business_name,
-                            phone_number: results[0].phone_number,
-                            address: results[0].address,
-                            photo: results[0].photo,
-                            description: results[0].description,
-                        },
-                        rating: results[0].rating,
-                        harga: results.map(result => {
-                            return ({
-                                name: result.name,
-                                price: result.price
-                            })
+                const products = results.map(result => {
+                    if (result.product_name && result.product_price) {
+                        return ({
+                            name: result.product_name,
+                            price: result.product_price
                         })
+                    }else{
+                        return
                     }
                 })
+                if (products[0] !== undefined) {
+                    return res.status(200).json({
+                        success: true,
+                        data: {
+                            info: {
+                                id: results[0].id_wak_print,
+                                email: results[0].email,
+                                password: results[0].password,
+                                full_name: results[0].full_name,
+                                business_name: results[0].business_name,
+                                phone_number: results[0].phone_number,
+                                address: results[0].address,
+                                photo: results[0].photo,
+                                description: results[0].description,
+                            },
+                            rating: results[0].rating,
+                            products
+                        }
+                    })
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        data: {
+                            info: {
+                                id: results[0].id_wak_print,
+                                email: results[0].email,
+                                password: results[0].password,
+                                full_name: results[0].full_name,
+                                business_name: results[0].business_name,
+                                phone_number: results[0].phone_number,
+                                address: results[0].address,
+                                photo: results[0].photo,
+                                description: results[0].description,
+                            },
+                            rating: results[0].rating,
+                            products: null
+                        }
+                    })
+                }
+
             } else {
                 return res.status(404).json({
                     success: false,
