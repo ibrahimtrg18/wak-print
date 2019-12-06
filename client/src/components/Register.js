@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from 'react'
 import Navbar from './Navbar';
 import { connect } from 'react-redux';
-import { regAccount, regReset, REG_SUCCESS } from '../redux/actions/regActions';
+import { regAccount, regReset } from '../redux/actions/regActions';
 
 const Register = (props) => {
   const emailRef = useRef()
