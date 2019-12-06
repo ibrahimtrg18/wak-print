@@ -29,7 +29,7 @@ const Order = (props) => {
 	console.log(orders)
 	if (props.auth.data) {
 		return (
-			<div className="bg-grayBg h-screen">
+			<div className="bg-bg h-screen">
 				<Navbar goTo={"LogOut"}></Navbar>
 				<div className="sm:pt-32 pt-40 px-8">
 					<div className="text-3xl ml-2">Order</div>
@@ -44,35 +44,35 @@ const Order = (props) => {
 										className="w-full" />
 									<div className="pb-4 px-4">
 										<div className="pt-4 pb-4">
-											<div className="text-grayText text-sm">Nama</div>
+											<div className="text-text text-sm">Nama</div>
 											<div className="text-black font-medium text-base pb-2">{order.full_name}</div>
-											<div className="text-grayText text-sm">Nomor Telepon</div>
+											<div className="text-text text-sm">Nomor Telepon</div>
 											<div className="text-black font-medium text-base">{order.phone_number}</div>
 										</div>
-										<div className="text-black text-base font-semibold border-grayBorder border-b-2">Pengaturan File</div>
+										<div className="text-black text-base font-semibold border-border border-b-2">Pengaturan File</div>
 										<div className="flex py-2">
 											<div className="w-1/2">
-												<div className="text-grayText text-xs uppercase">Halaman</div>
-												<div className="border-grayBorder border-2 rounded px-2 inline">
+												<div className="text-text text-xs uppercase">Halaman</div>
+												<div className="border-border border-2 rounded px-2 inline">
 													{order.pages}
 												</div>
 											</div>
 											<div className="w-1/2">
-												<div className="text-grayText text-xs uppercase">Jumlah Rangkap</div>
-												<div className="border-grayBorder border-2 rounded px-2 inline">
+												<div className="text-text text-xs uppercase">Jumlah Rangkap</div>
+												<div className="border-border border-2 rounded px-2 inline">
 													{order.copies}
 												</div>
 											</div>
 										</div>
 										<div className="flex">
 											<div className="w-1/2 pb-2">
-												<div className="text-grayText text-xs uppercase">Product</div>
-												<div className="border-grayBorder border-2 rounded px-2 inline">
+												<div className="text-text text-xs uppercase">Product</div>
+												<div className="border-border border-2 rounded px-2 inline">
 													{order.product_name}
 												</div>
 											</div>
 											<div className="w-1/2 pb-2">
-												<div className="text-grayText text-xs uppercase">File</div>
+												<div className="text-text text-xs uppercase">File</div>
 												<div className="border-primary border-2 bg-primary text-white rounded px-2 inline cursor-pointer">
 													Download
 											</div>

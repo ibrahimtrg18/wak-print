@@ -43,7 +43,7 @@ const Login = (props) => {
   }
 
   return (
-    <div className="bg-grayBg" style={{ height: "100%", minHeight: "100vh" }}>
+    <div className="bg-bg" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Daftar Disini"
         goToRedirect={() => _goToRegister()} />
@@ -60,7 +60,7 @@ const Login = (props) => {
           </div>
           <p className="text-base font-medium text-danger text-center">{message}</p>
           <form className="items-center" onSubmit={(event) => _handleSubmit(event)}>
-            <label className="block text-md uppercase font-base text-grayText py-2">
+            <label className="block text-md uppercase font-base text-text py-2">
               E-Mail
               <input
                 type="email"
@@ -73,7 +73,7 @@ const Login = (props) => {
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline placeholder-secondary" />
             </label>
             <label
-              className="block text-md uppercase font-base text-grayText py-2">
+              className="block text-md uppercase font-base text-text py-2">
               Kata Sandi
               <input
                 type="password"
