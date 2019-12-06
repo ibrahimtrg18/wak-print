@@ -1,9 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import Navbar from './Navbar';
+import { getOrders, resetOrders } from '../redux/actions/ordersActions';
 
 const Order = (props) => {
-  
+  const [orders, setOrders] = useState(null);
+
+  useEffect(() => {
+    document.title = "Order"
+    props.getOrders(props.auth.data.id)
+  }, [])
+
+  useEffect(() => {
+    if (!props.auth.data) {
+      props.history.push("/login");
+      props.resetOrders();
+    }
+  }, [props.auth.data])
+
+  useEffect(() => {
+    setOrders(props.orders.data)
+  }, [props.orders])
+
+  console.log(orders)
   if (props.auth.data) {
     return (
       <div className="bg-bg h-screen">
@@ -12,7 +31,7 @@ const Order = (props) => {
           <div className="text-3xl ml-2">Order</div>
         </div>
         <div className="flex flex-wrap px-8">
-          {/* {orders.map(order => {
+          {props.orders.isLoading ? "Loading" : orders && orders.length > 0 ? orders && orders.map(order => {
             return (
               <div className="w-full sm:w-1/2 md:w-1/3 p-1" key={order.id}>
                 <div className="rounded shadow bg-white">
@@ -67,8 +86,8 @@ const Order = (props) => {
                 </div>
               </div>
             )
-          })} */}
-				</div>
+          }) : "Tidak ada orders"}
+        </div>
       </div>
     )
   } else {
@@ -79,7 +98,14 @@ const Order = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    orders: state.orders
   }
 }
 
-export default connect(mapStateToProps)(Order)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getOrders: (partnerId) => { dispatch(getOrders(partnerId)) },
+    resetOrders: () => dispatch(resetOrders())
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Order)
