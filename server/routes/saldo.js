@@ -6,4 +6,8 @@ router.post("/deposit", (req, res) => {
     return res.send(Math.floor((Math.random() * 999) + nominal).toString())
 });
 
+router.post("/withdraw", (req, res) => {
+    const { nominal } = req.body;
+})
+
 module.exports = router;
