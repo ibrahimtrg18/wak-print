@@ -75,7 +75,7 @@ const Register = (props) => {
           }>{message}</p>
           <form className="items-center" onSubmit={(event) => _handleSubmit(event)}>
             <label
-              className="block text-md uppercase font-base text-grayText py-2">
+              className="block text-md uppercase font-base text-text py-2">
               E-Mail
               <input
                 type="email"
@@ -87,7 +87,7 @@ const Register = (props) => {
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
-              className="block text-md uppercase font-base text-grayText py-2">
+              className="block text-md uppercase font-base text-text py-2">
               Password
               <input
                 type="password"
@@ -98,7 +98,7 @@ const Register = (props) => {
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
-              className="block text-md uppercase font-base text-grayText py-2">
+              className="block text-md uppercase font-base text-text py-2">
               Nama Lengkap
               <input
                 type="text"
@@ -109,7 +109,7 @@ const Register = (props) => {
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
-              className="block text-md uppercase font-base text-grayText py-2">
+              className="block text-md uppercase font-base text-text py-2">
               Nama Usaha
               <input
                 type="text"
@@ -120,7 +120,7 @@ const Register = (props) => {
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
-              className="block text-md uppercase font-base text-grayText py-2">
+              className="block text-md uppercase font-base text-text py-2">
               Nomor Telepon
               <input
                 type="number"
@@ -131,7 +131,7 @@ const Register = (props) => {
                 className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
             </label>
             <label
-              className="block text-md uppercase font-base text-grayText py-2">
+              className="block text-md uppercase font-base text-text py-2">
               Alamat
               <textarea
                 type="text"
