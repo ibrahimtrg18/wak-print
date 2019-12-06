@@ -210,22 +210,24 @@ router.get("/:partnerId", (req, res) => {
         })
 })
 
-router.get("/:partnerId/order", (req, res) => {
+router.get("/:partnerId/orders", (req, res) => {
     const partnerId = req.params.partnerId;
     connection.query("SELECT * FROM partner WHERE partner.id=?", [partnerId], (err, results) => {
         if (err) {
+            console.log(err)
             return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
             })
         } else if (results && results.length > 0) {
             connection.query(
-                `SELECT order.*, user.full_name, user.phone_number, user.photo
-                FROM order
+                `SELECT orders.*, user.full_name, user.phone_number, user.photo
+                FROM orders
                     LEFT JOIN user
-                        ON user.id = order.user_id
-                WHERE order.partner_id=?`, [results[0].id], (err, results) => {
+                        ON user.id = orders.user_id
+                WHERE orders.partner_id=?`, [results[0].id], (err, results) => {
                 if (err) {
+                    console.log(err)
                     return res.status(500).json({
                         success: false,
                         message: "Error in Server!"
