@@ -1,31 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import Navbar from './Navbar';
-import { getOrders, resetOrders } from '../redux/actions/orderActions';
 
 const Order = (props) => {
-  const [message, setMessage] = useState(null);
-  const [orders, setOrders] = useState([]);
-
-  useEffect(() => {
-    document.title = "Order"
-    props.resetOrders()
-  }, [])
-
-  useEffect(() => {
-    if (!props.auth.data) {
-      props.history.push("/login");
-    } else {
-      props.getOrders(props.auth.data.id)
-    }
-  }, [props.auth])
-
-  useEffect(() => {
-    setMessage(props.order.message)
-    setOrders(props.order.data)
-  }, [props.order])
-
-  console.log(orders)
+  
   if (props.auth.data) {
     return (
       <div className="bg-bg h-screen">
@@ -34,7 +12,7 @@ const Order = (props) => {
           <div className="text-3xl ml-2">Order</div>
         </div>
         <div className="flex flex-wrap px-8">
-          {orders && orders.map(order => {
+          {/* {orders.map(order => {
             return (
               <div className="w-full sm:w-1/2 md:w-1/3 p-1" key={order.id}>
                 <div className="rounded shadow bg-white">
@@ -89,7 +67,7 @@ const Order = (props) => {
                 </div>
               </div>
             )
-          }) : "Loading..." : "Tidak ada Order"}
+          })} */}
 				</div>
       </div>
     )
@@ -101,15 +79,7 @@ const Order = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    order: state.order
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getOrders: (partnerId) => { dispatch(getOrders(partnerId)) },
-    resetOrders: () => { dispatch(resetOrders()) }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Order)
+export default connect(mapStateToProps)(Order)

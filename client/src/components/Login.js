@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux';
 
 import Navbar from './Navbar'
-import { _login, _reset } from '../redux/actions/authActions';
+import { login, reset } from '../redux/actions/authActions';
 
 const Login = (props) => {
   const [values, setValues] = useState({
@@ -15,7 +15,7 @@ const Login = (props) => {
   useEffect(() => {
     document.title = "Login"
     emailRef.current.focus()
-    props._reset()
+    props.reset()
   }, [])
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Login = (props) => {
 
   const _handleSubmit = async (event) => {
     event.preventDefault()
-    props._login(values)
+    props.login(values)
   }
 
   return (
@@ -109,8 +109,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _login: (data) => { dispatch(_login(data)) },
-    _reset: () => { dispatch(_reset()) }
+    login: (data) => { dispatch(login(data)) },
+    reset: () => { dispatch(reset()) }
   }
 }
 
