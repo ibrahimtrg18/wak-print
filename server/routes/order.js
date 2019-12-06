@@ -51,6 +51,8 @@ router.post("/", (req, res) => {
             methodPayment,
         } = req.body;
 
+        console.log(req.body);
+
         if (err) {
             return res.status(400).json({
                 success: false,
@@ -67,7 +69,7 @@ router.post("/", (req, res) => {
 
         const documentName = req.file.filename
 
-        connection.query("INSERT INTO print_online.order SET ?", {
+        connection.query("INSERT INTO order SET ?", {
             user_id: userId,
             partner_id: partnerId,
             document_name: documentName,
@@ -97,7 +99,7 @@ router.post("/", (req, res) => {
 
 router.get("/:orderId/", (req, res) => {
     const orderId = req.params.orderId;
-    connection.query("SELECT * FROM print_online.order WHERE id = ?", [orderId], (err, results) => {
+    connection.query("SELECT * FROM order WHERE id = ?", [orderId], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -119,7 +121,7 @@ router.get("/:orderId/", (req, res) => {
 
 router.get('/:orderId/download', (req, res) => {
     const orderId = req.params.orderId;
-    connection.query("SELECT * FROM print_online.order WHERE id = ?", [orderId], (err, results) => {
+    connection.query("SELECT * FROM order WHERE id = ?", [orderId], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
