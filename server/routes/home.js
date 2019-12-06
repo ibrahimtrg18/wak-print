@@ -8,7 +8,7 @@ router.get("/all", (req, res) => {
 
 router.get("/search", (req, res) => {
     connection.query(
-        `SELECT partner.id AS partner_id, partner.*, AVG(rating.rate) AS rating, MIN(product.nominal) min, MAX(product.nominal) max
+        `SELECT partner.id AS partner_id, partner.*, AVG(rating.rate) AS rating, MIN(product.price) min, MAX(product.price) max
         FROM partner 
             LEFT JOIN rating 
                 ON rating.partner_id = partner.id 
@@ -30,7 +30,7 @@ router.get("/search", (req, res) => {
                         return ({
                             info: {
                                 id: result.id,
-                                businessName: result.partner_id,
+                                businessName: result.business_name,
                                 fullName: result.full_name,
                                 address: result.address,
                                 phoneNumber: result.phone_number,
