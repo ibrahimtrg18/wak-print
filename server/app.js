@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+router.use("/", require("./routes/home")); // home and search
 router.use("/file", require("./routes/file")); // files
 router.use("/photo", require("./routes/photo")); // photo / foto 
-router.use("/home", require("./routes/home")); // home and search
 router.use("/order", require("./routes/order")); // order / pesanan
 router.use("/history", require("./routes/history")); // history / riwayat
 router.use("/balance", require("./routes/saldo")); // balance / wallet / saldo
