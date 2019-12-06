@@ -33,7 +33,7 @@ const Navbar = (props) => {
                 </div>
                 <div className="flex items-center float-right">
                   <img
-                    src={process.env.PUBLIC_URL + "/images/icon_saldo.png"}
+                    src={process.env.PUBLIC_URL + "/images/icon_saldo.svg"}
                     className="mr-1"
                     style={{ height: "18px" }} />
                   <div className="block text-black text-base font-bold">Rp. {props.auth.data.balance ? props.auth.data.balance : "0"}</div>

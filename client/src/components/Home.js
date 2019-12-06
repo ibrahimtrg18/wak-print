@@ -52,7 +52,7 @@ const Beranda = (props) => {
 					</div>
 					<div className="lg:w-1/2 px-8 sm:block hidden">
 						<img
-							src={process.env.PUBLIC_URL + "/images/wak-print-home.png"}
+							src={process.env.PUBLIC_URL + "/images/home.svg"}
 							className="mx-auto"
 							style={{ height: "410px" }} />
 					</div>

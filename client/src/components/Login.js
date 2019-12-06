@@ -50,7 +50,7 @@ const Login = (props) => {
       <div className="sm:flex sm:pt-32 pt-32">
         <div className="sm:w-1/2 px-4 sm:block md:block hidden">
           <img
-            src={process.env.PUBLIC_URL + "/images/wak-print-login.png"}
+            src={process.env.PUBLIC_URL + "/images/login.svg"}
             className="mx-auto"
             style={{ height: "520px" }} />
         </div>
