@@ -4,41 +4,41 @@ export const AUTH_FAILURE = "AUTH_FAILURE";
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
 export const AUTH_RESET = "AUTH_RESET";
 
-export const _authRequest = () => {
+export const authRequest = () => {
     return {
         type: AUTH_REQUEST,
     }
 }
 
-export const _authSuccess = (payload) => {
+export const authSuccess = (payload) => {
     return {
         type: AUTH_SUCCESS,
         payload
     }
 }
 
-export const _authFailure = (payload) => {
+export const authFailure = (payload) => {
     return {
         type: AUTH_FAILURE,
         payload
     }
 }
 
-export const _authLogout = () => {
+export const authLogout = () => {
     return {
         type: AUTH_LOGOUT
     }
 }
 
-export const _authReset = () => {
+export const authReset = () => {
     return {
         type: AUTH_RESET
     }
 }
 
-export const _login = ({ email, password }) => {
+export const login = ({ email, password }) => {
     return (dispatch) => {
-        dispatch(_authRequest())
+        dispatch(authRequest())
         fetch("/api/partner/login", {
             method: "POST",
             headers: {
@@ -52,21 +52,21 @@ export const _login = ({ email, password }) => {
             .then((res) => res.json())
             .then((data) => {
                 if (data.success)
-                    dispatch(_authSuccess(data.data))
+                    dispatch(authSuccess(data.data))
                 else
-                    dispatch(_authFailure(data.message))
+                    dispatch(authFailure(data.message))
             })
     }
 }
 
-export const _logout = () => {
+export const logout = () => {
     return (dispatch) => {
-        dispatch(_authLogout());
+        dispatch(authLogout());
     }
 }
 
-export const _reset = () => {
+export const reset = () => {
     return (dispatch) => {
-        dispatch(_authReset());
+        dispatch(authReset());
     }
 }

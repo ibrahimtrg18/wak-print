@@ -34,15 +34,15 @@ export const getProfile = (partnerId) => {
         dispatch(profileRequest());
         fetch(`/api/partner/${partnerId}`, {
             method: "GET"
-        }).then(
-            res => res.json()
-        ).then(data => {
-            if (data.success) {
-                dispatch(profileSuccess(data.data))
-            } else {
-                dispatch(profileFailure(data.message))
-            }
         })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    dispatch(profileSuccess(data.data))
+                } else {
+                    dispatch(profileFailure(data.message))
+                }
+            })
     }
 }
 

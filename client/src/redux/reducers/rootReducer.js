@@ -4,9 +4,9 @@ import { regReducer } from './regReducer';
 import { profileReducer } from './profileReducer';
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  reg: regReducer,
-  profile: profileReducer,
+    auth: authReducer,
+    reg: regReducer,
+    profile: profileReducer,
 })
 
 export default rootReducer;
