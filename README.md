@@ -13,11 +13,16 @@ $ npm run build:css         // jalankan script mensalin tailwindcss.config ke fo
 $ npm start                 // jalankan client localhost:3000
 ```
 
+### database
+buka database mysql kalian dan import sql query didalam wak_print_backup.sql dan 
+pastikan nama databasenya wak_print
+
 ### server
-sebelum menlakukan command dibawah, lakukanlah configurasi database mysql.
-di dalam folder "./config/key" ada 2 object yang harus diubah.
-mysqlUser -> user mysql anda. contoh: "root"
-mysqlPassword -> password mysql anda. contoh: "123456" atau ""
+sebelum melakukan command dibawah, lakukanlah configurasi database mysql.
+di dalam folder "./config/key" ada 2 object yang harus diubah.  
+mysqlUser -> user mysql anda. contoh: "root"  
+mysqlPassword -> password mysql anda. contoh: "123456" atau ""  
+pastikan anda sudah melakukan tahap **database**
 ```
 $ cd server                 // masuk ke direktori server
 $ npm install               // install module
@@ -26,17 +31,16 @@ atau
 $ node .                    // jalankan server di port localhost:4000
 ```
 
-
 ## Router atau End-point pada server
-|Method     |Endpoint                    |kegunaan                                                  | 
-|-----------|----------------------------|----------------------------------------------------------| 
-|POST       |/api/user/register          |Membuat Account baru untuk **user**                       |
-|POST       |/api/user/login             |Masuk Account untuk **user**                              |
-|POST       |/api/parent/register        |Membuat Account untuk **parent**                          |
-|POST       |/api/parent/login           |Masuk Account untuk **parent**                            |
-|GET        |/api/user/:userId           |Memberikan Informasi **user** berdasarkan **:userId**     |
-|GET        |/api/parent/:parentId       |Memberikan Informasi **parent** berdasarkan **:parentId** |
-|POST       |/api/order/                 |Membuat order                                             |
+| Method | Endpoint              | kegunaan                                                  |
+|--------|-----------------------|-----------------------------------------------------------|
+| POST   | /api/user/register    | Membuat Account baru untuk **user**                       |
+| POST   | /api/user/login       | Masuk Account untuk **user**                              |
+| POST   | /api/parent/register  | Membuat Account untuk **parent**                          |
+| POST   | /api/parent/login     | Masuk Account untuk **parent**                            |
+| GET    | /api/user/:userId     | Memberikan Informasi **user** berdasarkan **:userId**     |
+| GET    | /api/parent/:parentId | Memberikan Informasi **parent** berdasarkan **:parentId** |
+| POST   | /api/order/           | Membuat order                                             |
 
 ### /api/user/register
 ```
