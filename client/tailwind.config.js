@@ -8,9 +8,9 @@ module.exports = {
       accent:"#FC6464",
       danger: '#ad4444',
       success:"#60ad44",
-      grayBorder:"#DADADA",
-      grayText: "#676767",
-      grayBg: "#F9F9F9"
+      border:"#DADADA",
+      text: "#676767",
+      bg: "#F9F9F9"
     },
     boxShadow: {
       default: '0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)',
