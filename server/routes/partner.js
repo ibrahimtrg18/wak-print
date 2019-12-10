@@ -36,7 +36,7 @@ router.post("/register", (req, res) => {
         })
     }
 
-    connection.query("SELECT * FROM partner WHERE email = ?", [email], (err, results) => {
+    connection.query("SELECT * FROM partners WHERE email = ?", [email], (err, results) => {
         if (err) {
             console.log(err)
             return res.status(500).json({
@@ -54,7 +54,7 @@ router.post("/register", (req, res) => {
                     console.log(err)
                     return res.status(500).send()
                 }
-                connection.query("INSERT INTO partner SET ?", {
+                connection.query("INSERT INTO partners SET ?", {
                     email,
                     password: passwordHashed,
                     full_name: fullName,
@@ -95,7 +95,7 @@ router.post("/login", (req, res) => {
     }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM partner WHERE email=?", [email], (err, results) => {
+    connection.query("SELECT * FROM partners WHERE email=?", [email], (err, results) => {
         if (err) {
             console.log(err)
             return res.status(500).json({
@@ -135,14 +135,14 @@ router.get("/:partnerId", (req, res) => {
     const partnerId = req.params.partnerId;
 
     connection.query(
-        `SELECT partner.*, AVG(rating.rate) AS rating, product.name as product_name, product.price as product_price
-        FROM partner 
-            LEFT JOIN rating 
-                ON rating.partner_id = partner.id 
-            LEFT JOIN product
-                ON product.partner_id = partner.id
-        WHERE partner.id = ${partnerId}
-        GROUP BY partner.id, product.id`,
+        `SELECT partners.*, AVG(ratings.rate) AS ratings, products.name as product_name, products.price as product_price
+        FROM partners 
+            LEFT JOIN ratings 
+                ON ratings.partner_id = partners.id 
+            LEFT JOIN products
+                ON products.partner_id = partners.id
+        WHERE partners.id = ${partnerId}
+        GROUP BY partners.id, products.id`,
         (err, results) => {
             if (err) {
                 console.log(err)
@@ -157,7 +157,7 @@ router.get("/:partnerId", (req, res) => {
                             name: result.product_name,
                             price: result.product_price
                         })
-                    }else{
+                    } else {
                         return
                     }
                 })
@@ -212,7 +212,7 @@ router.get("/:partnerId", (req, res) => {
 
 router.get("/:partnerId/orders", (req, res) => {
     const partnerId = req.params.partnerId;
-    connection.query("SELECT * FROM partner WHERE partner.id=?", [partnerId], (err, results) => {
+    connection.query("SELECT * FROM partners WHERE partner.id=?", [partnerId], (err, results) => {
         if (err) {
             console.log(err)
             return res.status(500).json({
@@ -221,10 +221,10 @@ router.get("/:partnerId/orders", (req, res) => {
             })
         } else if (results && results.length > 0) {
             connection.query(
-                `SELECT orders.*, user.full_name, user.phone_number, user.photo
+                `SELECT orders.*, users.full_name, users.phone_number, users.photo
                 FROM orders
-                    LEFT JOIN user
-                        ON user.id = orders.user_id
+                    LEFT JOIN users
+                        ON users.id = orders.user_id
                 WHERE orders.partner_id=?`, [results[0].id], (err, results) => {
                 if (err) {
                     console.log(err)
