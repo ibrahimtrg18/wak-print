@@ -1,13 +1,15 @@
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `wak_print` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `wak_print`;
+-- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
 --
 -- Host: localhost    Database: wak_print
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	5.7.28-0ubuntu0.18.04.4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -16,13 +18,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `order`
+-- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `partner_id` int(11) NOT NULL,
@@ -41,23 +43,22 @@ CREATE TABLE `order` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order`
+-- Dumping data for table `orders`
 --
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (14,1,1,'order-1573030577885.docx','1-3',2,'A4 HVS 60 Gram: Warna',50000,1,1,0,0,'1573030577924');
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `partner`
+-- Table structure for table `partners`
 --
 
-DROP TABLE IF EXISTS `partner`;
+DROP TABLE IF EXISTS `partners`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `partner` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `partners` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(64) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -66,30 +67,29 @@ CREATE TABLE `partner` (
   `phone_number` varchar(16) NOT NULL,
   `address` varchar(255) NOT NULL,
   `photo` varchar(255) DEFAULT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `balance` decimal(65,0) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `partner`
+-- Dumping data for table `partners`
 --
 
-LOCK TABLES `partner` WRITE;
-/*!40000 ALTER TABLE `partner` DISABLE KEYS */;
-INSERT INTO `partner` VALUES (1,'hello@gmail.com','$2b$10$iaivIXJj.Dh9R/uMVht66.6j/w9Ac0rswPL2kG10vyBuvh/9Xn/eS','hello','hello','hello','hello',NULL,'hello',0),(2,'hello3@gmail.com','$2b$10$YA3RnRjtCsUqNiUs3sb9R.suYgcja3jAAuxem34cezweT9a3tQgGC','hello','hello','hello','hello',NULL,'hello',0),(3,'hello2@gmail.com','$2b$10$LPTGKzvWbkr4EjZ7T1ju1O6NFUlOMjkg6EimjZcg7ad2I8WHXTHr2','hello','hello','hello','hello',NULL,'hello',0),(4,'test123','$2b$10$a..LsnzP2zOZbz3T8/qQHOz82QoOzKeLhfARRd5JWpSgHSj8jkQ3G','hello','hello','hello','hello',NULL,'hello',0),(5,'test@gmail.com','$2b$10$FJgrq9YC7c6xCy52GZPu3Osts5bDZf.BNC78HWsr57TkvfE7KZRSm','hello','hello','hello','hello',NULL,'hello',0),(6,'bambang@gmail.com','$2b$10$j52.2w36/bShWPwfbs6iqOPXcw7RWaRWKhYyaiabx107u/10pYRLi','bambang','tokoPrint','0989898374632','alamat',NULL,'jelasin',0);
-/*!40000 ALTER TABLE `partner` ENABLE KEYS */;
+LOCK TABLES `partners` WRITE;
+/*!40000 ALTER TABLE `partners` DISABLE KEYS */;
+/*!40000 ALTER TABLE `partners` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `product`
+-- Table structure for table `products`
 --
 
-DROP TABLE IF EXISTS `product`;
+DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `product` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `partner_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -99,23 +99,46 @@ CREATE TABLE `product` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `product`
+-- Dumping data for table `products`
 --
 
-LOCK TABLES `product` WRITE;
-/*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,1,'hello',500),(2,1,'test',1000);
-/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `rating`
+-- Table structure for table `proofs`
 --
 
-DROP TABLE IF EXISTS `rating`;
+DROP TABLE IF EXISTS `proofs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rating` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `proofs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `photo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proofs`
+--
+
+LOCK TABLES `proofs` WRITE;
+/*!40000 ALTER TABLE `proofs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `proofs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ratings`
+--
+
+DROP TABLE IF EXISTS `ratings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ratings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `partner_id` int(11) NOT NULL,
   `rate` tinyint(1) NOT NULL,
@@ -124,23 +147,46 @@ CREATE TABLE `rating` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rating`
+-- Dumping data for table `ratings`
 --
 
-LOCK TABLES `rating` WRITE;
-/*!40000 ALTER TABLE `rating` DISABLE KEYS */;
-INSERT INTO `rating` VALUES (1,1,5),(2,1,3);
-/*!40000 ALTER TABLE `rating` ENABLE KEYS */;
+LOCK TABLES `ratings` WRITE;
+/*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Table structure for table `topups`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `topups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `nominal` decimal(65,0) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topups`
+--
+
+LOCK TABLES `topups` WRITE;
+/*!40000 ALTER TABLE `topups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(64) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -155,13 +201,12 @@ CREATE TABLE `user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'hello@gmail.com','$2b$10$pgdr3U/4YuP39oi1C6a/xecl79L.GXgDhbNjbbCw2ordR91lNxmHy','hello','hello','hello',NULL,0,NULL),(2,'hell1o@gmail.com','$2b$10$9f.maGO6n01bb0gK2DWbvuZ4yka6VUaMilgn4Pqc0RiM7XMq83e3q','hello','hello','hello',NULL,0,NULL);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -173,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-05 17:15:10
+-- Dump completed on 2019-12-10 13:50:31
