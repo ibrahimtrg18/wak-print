@@ -240,7 +240,7 @@ router.get("/:partnerId/orders", (req, res) => {
                 } else {
                     return res.status(200).json({
                         success: true,
-                        message: "No Order Today!"
+                        data: [],
                     })
                 }
             })
