@@ -32,7 +32,7 @@ router.post("/register", (req, res) => {
         })
     }
 
-    if(phoneNumber && phoneNumber.length > 15){
+    if (phoneNumber && phoneNumber.length > 15) {
         return res.status(400).json({
             success: false,
             message: "Phone Number must be less than 15"
@@ -40,7 +40,7 @@ router.post("/register", (req, res) => {
     }
 
     // Memasukan kedalam tableUser
-    connection.query("SELECT * FROM user WHERE email = ?", [email], (err, rows) => {
+    connection.query("SELECT * FROM users WHERE email = ?", [email], (err, rows) => {
         if (err) {
             console.log(err)
             return res.status(500).json({
@@ -57,7 +57,7 @@ router.post("/register", (req, res) => {
                 if (err) {
                     return res.status(500).send()
                 }
-                connection.query("INSERT INTO user SET ?", {
+                connection.query("INSERT INTO users SET ?", {
                     email,
                     password: passwordHashed,
                     full_name: fullName,
@@ -98,7 +98,7 @@ router.post("/login", (req, res) => {
     }
 
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
-    connection.query("SELECT * FROM user WHERE email=?", [email], (err, rows) => {
+    connection.query("SELECT * FROM users WHERE email=?", [email], (err, rows) => {
         if (err) {
             console.log(err)
             return res.status(500).json({
@@ -136,7 +136,7 @@ router.post("/login", (req, res) => {
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
 
-    connection.query("SELECT * FROM user WHERE id = ?", [userId], (err, rows) => {
+    connection.query("SELECT * FROM users WHERE id = ?", [userId], (err, rows) => {
         if (err) {
             return res.json(err)
         } else if (rows && rows.length > 0) {
