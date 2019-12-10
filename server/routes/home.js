@@ -8,14 +8,14 @@ router.get("/all", (req, res) => {
 
 router.get("/search", (req, res) => {
     connection.query(
-        `SELECT partner.id AS partner_id, partner.*, AVG(rating.rate) AS rating, MIN(product.price) min, MAX(product.price) max
-        FROM partner 
-            LEFT JOIN rating 
-                ON rating.partner_id = partner.id 
-            LEFT JOIN product
-                ON product.partner_id = partner.id
-        WHERE partner.business_name LIKE '%${req.query.s}%'
-        GROUP BY partner.id`,
+        `SELECT partners.id AS partner_id, partners.*, AVG(ratings.rate) AS rating, MIN(products.price) min, MAX(products.price) max
+        FROM partners 
+            LEFT JOIN ratings 
+                ON ratings.partner_id = partners.id 
+            LEFT JOIN products
+                ON products.partner_id = partners.id
+        WHERE partners.business_name LIKE '%${req.query.s}%'
+        GROUP BY partners.id`,
         (err, results) => {
             if (err) {
                 console.log(err)
