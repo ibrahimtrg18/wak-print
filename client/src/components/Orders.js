@@ -4,11 +4,14 @@ import Navbar from './Navbar';
 import { getOrders, resetOrders } from '../redux/actions/ordersActions';
 
 const Order = (props) => {
-  const [orders, setOrders] = useState(null);
+  const [orders, setOrders] = useState(props.orders.data);
 
   useEffect(() => {
     document.title = "Order"
     props.getOrders(props.auth.data.id)
+    return () => {
+      props.resetOrders();
+    }
   }, [])
 
   useEffect(() => {
