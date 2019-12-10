@@ -212,7 +212,7 @@ router.get("/:partnerId", (req, res) => {
 
 router.get("/:partnerId/orders", (req, res) => {
     const partnerId = req.params.partnerId;
-    connection.query("SELECT * FROM partners WHERE partner.id=?", [partnerId], (err, results) => {
+    connection.query("SELECT * FROM partners WHERE partners.id=?", [partnerId], (err, results) => {
         if (err) {
             console.log(err)
             return res.status(500).json({
