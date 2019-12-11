@@ -2,44 +2,44 @@ POST http://localhost:4000/api/user/register
 Content-Type: application/json
 
 {
-    "email":"hell1225o@gmail.com",
-    "password":"hell31",
-    "fullName":"hello",
-    "phoneNumber":"1234567890123456",
-    "address":"hello"
+    "email":"ibrahimtarigan@gmail.com",
+    "password":"test123",
+    "fullName":"ibrahim tarigan",
+    "phoneNumber":"081260086777",
+    "address":"Jln. Jend Jamin Ginting No.273, Padang Bulan, Medan"
 }
 ###
 POST http://localhost:4000/api/user/login
 Content-Type: application/json
 
 {
-    "email":"hello@gmail.com",
-    "password":"hello123"
+    "email":"ibrahimtarigan@gmail.com",
+    "password":"test123"
 }
 ###
-GET http://localhost:4000/api/user/16
+GET http://localhost:4000/api/user/4
 ###
 POST http://localhost:4000/api/partner/register
 Content-Type: application/json
 
 {
-    "email":"ibrahimtarigan@gmail.com",                                 // wajib
-    "password":"test123",                                               // wajib password >= 6
-    "fullName":"ibrahim tarigan",                                       // wajib
-    "businessName":"print trg",                                         // wajib
-    "phoneNumber":"081260086777",                                       // wajib phoneNumber <= 15
-    "address":"Jln. Jend Jamin Ginting No.273, Padang Bulan, Medan"     // wajib 
+    "email":"ibrahimtarigan@gmail.com",
+    "password":"test123",
+    "fullName":"ibrahim tarigan",
+    "businessName":"print trg",
+    "phoneNumber":"081260086777",
+    "address":"Jln. Jend Jamin Ginting No.273, Padang Bulan, Medan"
 }
 ###
 POST http://localhost:4000/api/partner/login
 Content-Type: application/json
 
 {
-    "email":"hello@gmail.com",
-    "password":"hello123"
+    "email":"ibrahimtarigan@gmail.com",
+    "password":"test123"
 }
 ###
-GET http://localhost:4000/api/partner/1
+GET http://localhost:4000/api/partner/9
 ###
 GET http://localhost:4000/api/partner/1/orders
 ###
