@@ -6,7 +6,7 @@ router.use("/file", require("./routes/file")); // files
 router.use("/photo", require("./routes/photo")); // photo / foto 
 router.use("/order", require("./routes/order")); // order / pesanan
 router.use("/history", require("./routes/history")); // history / riwayat
-router.use("/balance", require("./routes/saldo")); // balance / wallet / saldo
+router.use("/balance", require("./routes/balance")); // balance / wallet / saldo
 router.use("/user", require("./routes/user")); // user
 router.use("/partner", require("./routes/partner")); // wakprint
 
