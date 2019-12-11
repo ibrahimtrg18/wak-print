@@ -17,16 +17,18 @@ Content-Type: application/json
     "password":"hello123"
 }
 ###
+GET http://localhost:4000/api/user/16
+###
 POST http://localhost:4000/api/partner/register
 Content-Type: application/json
 
 {
-    "email":"asdmaskD21@gmail.com",
-    "password":"asdmaa",
-    "fullName":"asdmaskD@gmail.com",
-    "businessName":"asdmaskD@gmail.com",
-    "phoneNumber":"08123456789", 
-    "address":"asdmaskD@gmail.com"
+    "email":"ibrahimtarigan@gmail.com",                                 // wajib
+    "password":"test123",                                               // wajib password >= 6
+    "fullName":"ibrahim tarigan",                                       // wajib
+    "businessName":"print trg",                                         // wajib
+    "phoneNumber":"081260086777",                                       // wajib phoneNumber <= 15
+    "address":"Jln. Jend Jamin Ginting No.273, Padang Bulan, Medan"     // wajib 
 }
 ###
 POST http://localhost:4000/api/partner/login
@@ -37,12 +39,31 @@ Content-Type: application/json
     "password":"hello123"
 }
 ###
-GET http://localhost:4000/api/user/16
-###
 GET http://localhost:4000/api/partner/1
 ###
-GET http://localhost:4000/api/partner/1/order
+GET http://localhost:4000/api/partner/1/orders
 ###
 GET http://localhost:4000/api/search?s=
 ###
 POST http://localhost:4000/api/order
+###
+GET http://localhost:4000/api/order/1
+###
+GET http://localhost:4000/api/order/1/download
+###
+POST http://localhost:4000/api/balance/deposit
+Content-Type:  application/json
+
+{
+    "userId": 1,
+    "nominal": 20000
+}
+###
+POST http://localhost:4000/api/balance/withdraw
+Content-Type:  application/json
+
+{
+    "partnerId": 1,
+    "nominal": 20000,
+    "bankNumber": "55310828340293"
+}
