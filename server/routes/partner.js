@@ -13,7 +13,7 @@ router.post("/register", (req, res) => {
         address
     } = req.body;
 
-    console.log(req.body)
+    console.log(req.body);
 
     if (!email || !password || !fullName || !businessName || !phoneNumber || !address) {
         return res.status(400).json({
@@ -85,7 +85,7 @@ router.post("/login", (req, res) => {
         password
     } = req.body;
 
-    console.log(req.body)
+    console.log(req.body);
 
     if (!email || !password) {
         return res.status(400).json({
@@ -97,7 +97,7 @@ router.post("/login", (req, res) => {
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
     connection.query("SELECT * FROM partners WHERE email=?", [email], (err, results) => {
         if (err) {
-            console.log(err)
+            console.log(err);
             return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
@@ -106,7 +106,7 @@ router.post("/login", (req, res) => {
             if (results && results.length > 0) {
                 bcrypt.compare(password, results[0].password, (err, result) => {
                     if (err) {
-                        console.log(err)
+                        console.log(err);
                         return res.status(500).send()
                     }
                     if (result) {
@@ -133,7 +133,6 @@ router.post("/login", (req, res) => {
 
 router.get("/:partnerId", (req, res) => {
     const partnerId = req.params.partnerId;
-
     connection.query(
         `SELECT partners.*, AVG(ratings.rate) AS ratings, products.name as product_name, products.price as product_price
         FROM partners 
@@ -145,7 +144,7 @@ router.get("/:partnerId", (req, res) => {
         GROUP BY partners.id, products.id`,
         (err, results) => {
             if (err) {
-                console.log(err)
+                console.log(err);
                 return res.status(500).json({
                     success: false,
                     message: "Error in Server!"
@@ -158,7 +157,7 @@ router.get("/:partnerId", (req, res) => {
                             price: result.product_price
                         })
                     } else {
-                        return
+                        return;
                     }
                 })
                 if (products[0] !== undefined) {
@@ -210,6 +209,37 @@ router.get("/:partnerId", (req, res) => {
         })
 })
 
+router.post("/:partnerId/edit", (req, res) => {
+    const partnerId = req.params.partnerId;
+    const {
+        fullName,
+        businessName,
+        phoneNumber,
+        address
+    }= req.body;
+    connection.query(`UPDATE partners SET ? WHERE partners.id=${partnerId}`,
+        { 
+            full_name: fullName,
+            business_name: businessName,
+            phone_number: phoneNumber,
+            address: address
+        },
+        (err, results) => {
+            if (err) {
+                console.log(err)
+                return res.status(500).json({
+                    success: false,
+                    message: "Error in Server!"
+                })
+            } else {
+                return res.status(200).json({
+                    success: true,
+                    message: "Successfully update partner"
+                })
+            }
+        })
+})
+
 router.get("/:partnerId/orders", (req, res) => {
     const partnerId = req.params.partnerId;
     connection.query("SELECT * FROM partners WHERE partners.id=?", [partnerId], (err, results) => {
@@ -251,7 +281,6 @@ router.get("/:partnerId/orders", (req, res) => {
             })
         }
     })
-
-})
+});
 
 module.exports = router;
