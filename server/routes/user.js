@@ -42,7 +42,7 @@ router.post("/register", (req, res) => {
     // Memasukan kedalam tableUser
     connection.query("SELECT * FROM users WHERE email = ?", [email], (err, rows) => {
         if (err) {
-            console.log(err)
+            console.log(err);
             return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
@@ -65,7 +65,7 @@ router.post("/register", (req, res) => {
                     address
                 }, (err) => {
                     if (err) {
-                        console.log(err)
+                        console.log(err);
                         return res.status(500).json({
                             success: false,
                             message: "Error in Server!"
@@ -100,7 +100,7 @@ router.post("/login", (req, res) => {
     // Cek Email dan Password sama dengan salah satu row didalam tableUser
     connection.query("SELECT * FROM users WHERE email=?", [email], (err, rows) => {
         if (err) {
-            console.log(err)
+            console.log(err);
             return res.status(500).json({
                 success: false,
                 message: "Error in Server!"
@@ -109,7 +109,7 @@ router.post("/login", (req, res) => {
             if (rows && rows.length > 0) {
                 bcrypt.compare(password, rows[0].password, (err, result) => {
                     if (err) {
-                        console.log(err)
+                        console.log(err);
                         return res.status(500).send()
                     }
                     if (result) {
@@ -119,7 +119,7 @@ router.post("/login", (req, res) => {
                         });
                     }
                     return res.status(401).json({
-                        succes: false,
+                        success: false,
                         message: "Invalid Password!"
                     })
                 })
@@ -154,6 +154,35 @@ router.get("/:userId", (req, res) => {
         }
     })
 });
+
+router.post("/:userId/edit", (req, res) => {
+    const userId = req.params.userId;
+    const {
+        fullName,
+        phoneNumber,
+        address
+    }= req.body;
+    connection.query(`UPDATE users SET ? WHERE users.id=${userId}`,
+        { 
+            full_name: fullName,
+            phone_number: phoneNumber,
+            address: address
+        },
+        (err, results) => {
+            if (err) {
+                console.log(err)
+                return res.status(500).json({
+                    success: false,
+                    message: "Error in Server!"
+                })
+            } else {
+                return res.status(200).json({
+                    success: true,
+                    message: "Successfully update user"
+                })
+            }
+        })
+})
 
 // router.get("/auth/google", passport.authenticate("google", {
 //     scope: ["email", "profile"]
