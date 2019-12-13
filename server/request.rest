@@ -2,7 +2,7 @@ POST http://localhost:4000/api/user/register
 Content-Type: application/json
 
 {
-    "email":"ibrahimtarigan@gmail.com",
+    "email":"ibrahimtarigan1@gmail.com",
     "password":"test123",
     "fullName":"ibrahim tarigan",
     "phoneNumber":"081260086777",
@@ -13,19 +13,28 @@ POST http://localhost:4000/api/user/login
 Content-Type: application/json
 
 {
-    "email":"ibrahimtarigan@gmail.com",
+    "email":"ibrahimtarigan1@gmail.com",
     "password":"test123"
 }
 ###
 GET http://localhost:4000/api/user/4
 ###
-POST http://localhost:4000/api/user/4/edit
+PUT http://localhost:4000/api/user/4
 Content-Type: application/json
 
 {
     "fullName":"ibrahim trg",
     "phoneNumber":"081234567890",
     "address":"Medan"
+}
+###
+GET http://localhost:4000/api/user/4/photo
+###
+PUT http://localhost:4000/api/user/4/photo
+Content-Type: multipart/form-data
+
+{
+    "photo":"D:\\266509"
 }
 ###
 POST http://localhost:4000/api/partner/register
@@ -50,7 +59,7 @@ Content-Type: application/json
 ###
 GET http://localhost:4000/api/partner/9
 ###
-POST http://localhost:4000/api/partner/9/edit
+PUT http://localhost:4000/api/partner/9
 Content-Type: application/json
 
 {
@@ -59,6 +68,10 @@ Content-Type: application/json
     "phoneNumber":"081234567890",
     "address":"Medan"
 }
+###
+GET http://localhost:4000/api/partner/9/photo
+###
+PUT http://localhost:4000/api/partner/9/photo
 ###
 GET http://localhost:4000/api/partner/1/orders
 ###
