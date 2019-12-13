@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const fs = require("fs");
+const upload = require("./photo");
 const connection = require("../config/db");
 // const passportSetup = require("../config/passport-setup");
 // const passport = require("passport");
@@ -155,15 +157,15 @@ router.get("/:userId", (req, res) => {
     })
 });
 
-router.post("/:userId/edit", (req, res) => {
+router.put("/:userId", (req, res) => {
     const userId = req.params.userId;
     const {
         fullName,
         phoneNumber,
         address
-    }= req.body;
+    } = req.body;
     connection.query(`UPDATE users SET ? WHERE users.id=${userId}`,
-        { 
+        {
             full_name: fullName,
             phone_number: phoneNumber,
             address: address
@@ -182,6 +184,70 @@ router.post("/:userId/edit", (req, res) => {
                 })
             }
         })
+})
+
+router.get("/:userId/photo", (req, res) => {
+    const userId = req.params.userId;
+    connection.query("SELECT users.photo FROM users WHERE users.id=?", [userId], (err, results) => {
+        if (err) {
+            return console.log(err)
+        } else if (results && results.length > 0) {
+            console.log(results[0])
+            fs.readFile("./storage/photo/"+results[0].photo, (err, data) => {
+                if (err) {
+                    return res.json(err);
+                } else {
+                    res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+                    res.end(data);
+                }
+            })
+        }
+    })
+})
+
+router.put("/:userId/photo", (req, res) => {
+    const userId = req.params.userId;
+    upload(req, res, (err) => {
+        console.log(req.body);
+
+        if (err) {
+            return res.status(400).json({
+                success: false,
+                message: err
+            })
+        }
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please, fill in File!"
+            })
+        }
+
+        const photoName = req.file.filename
+
+        connection.query(`UPDATE users SET users.photo = ? WHERE users.id = ${userId}`,
+            [photoName],
+            (err, results) => {
+                if (err) {
+                    console.log(err)
+                    return res.status(500).json({
+                        success: false,
+                        message: "Error in Server!"
+                    })
+                } else if (results && results.changedRows == 1) {
+                    return res.status(200).json({
+                        success: true,
+                        message: "Successfully update Photo partner"
+                    })
+                } else {
+                    return res.status(200).json({
+                        success: false,
+                        message: "User Not Found"
+                    })
+                }
+            })
+    })
 })
 
 // router.get("/auth/google", passport.authenticate("google", {
