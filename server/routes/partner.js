@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const fs = require('fs');
+const upload = require("./photo");
 const connection = require("../config/db");
 
 router.post("/register", (req, res) => {
@@ -209,16 +211,16 @@ router.get("/:partnerId", (req, res) => {
         })
 })
 
-router.post("/:partnerId/edit", (req, res) => {
+router.put("/:partnerId", (req, res) => {
     const partnerId = req.params.partnerId;
     const {
         fullName,
         businessName,
         phoneNumber,
         address
-    }= req.body;
+    } = req.body;
     connection.query(`UPDATE partners SET ? WHERE partners.id=${partnerId}`,
-        { 
+        {
             full_name: fullName,
             business_name: businessName,
             phone_number: phoneNumber,
@@ -238,6 +240,65 @@ router.post("/:partnerId/edit", (req, res) => {
                 })
             }
         })
+})
+
+router.get("/:partnerId/photo", (req, res) => {
+    const partnerId = req.params.partnerId;
+    connection.query("SELECT partners.photo FROM partners WHERE partners.id=?", [partnerId], (err, results) => {
+        if (err) {
+            console.log(err)
+        } else if (results && results.length > 0) {
+            console.log(results[0])
+            fs.readFile("./storage/photo/"+results[0].photo, (err, data) => {
+                if (err) {
+                    return res.json(err);
+                } else {
+                    res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+                    res.end(data);
+                }
+            })
+        }
+    })
+})
+
+router.put("/:partnerId/photo", (req, res) => {
+    const partnerId = req.params.partnerId;
+    upload(req, res, (err) => {
+        console.log(req.body);
+
+        if (err) {
+            return res.status(400).json({
+                success: false,
+                message: err
+            })
+        }
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please, fill in File!"
+            })
+        }
+
+        const photoName = req.file.filename
+
+        connection.query(`UPDATE partners SET partners.photo = ? WHERE partners.id = ${partnerId}`,
+            [photoName],
+            (err, results) => {
+                if (err) {
+                    console.log(err)
+                    return res.status(500).json({
+                        success: false,
+                        message: "Error in Server!"
+                    })
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        message: "Successfully update Photo partner"
+                    })
+                }
+            })
+    })
 })
 
 router.get("/:partnerId/orders", (req, res) => {
