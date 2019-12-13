@@ -249,7 +249,7 @@ router.get("/:partnerId/photo", (req, res) => {
             console.log(err)
         } else if (results && results.length > 0) {
             console.log(results[0])
-            fs.readFile("./storage/photo/"+results[0].photo, (err, data) => {
+            fs.readFile("./storage/photo/" + results[0].photo, (err, data) => {
                 if (err) {
                     return res.json(err);
                 } else {
@@ -291,10 +291,15 @@ router.put("/:partnerId/photo", (req, res) => {
                         success: false,
                         message: "Error in Server!"
                     })
-                } else {
+                } else if (results && results.changedRows == 1) {
                     return res.status(200).json({
                         success: true,
                         message: "Successfully update Photo partner"
+                    })
+                } else {
+                    return res.status(200).json({
+                        success: false,
+                        message: "User Not Found"
                     })
                 }
             })
