@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
     }
-})
+});
 
 const upload = multer({
     storage: storage,
@@ -19,7 +19,7 @@ const upload = multer({
     fileFilter: (req, file, cb) => {
         isFotoProfileType(file, cb)
     }
-})
+}).single("photo")
 
 isFotoProfileType = (file, cb) => {
     // type allowed
@@ -34,33 +34,6 @@ isFotoProfileType = (file, cb) => {
     } else {
         return cb("ERROR: Image Only")
     }
-}
+};
 
-router.post("/", upload.single("photo"), (req, res) => {
-    let errors;
-    const file = req.file;
-    if (!file) {
-        errors = {
-            message: "Please Put your Image"
-        };
-        return res.json({
-            errors
-        })
-    }
-    res.json(file)
-})
-
-router.get('/', (req, res) => {
-    fs.readFile("./storage/print/print-1569044374731.doxc", (err, data) => {
-        if (err) {
-            return res.json(err);
-        } else {
-            res.writeHead(200, {
-                'Content-Type': 'image/jpeg'
-            });
-            res.send(data)
-        }
-    })
-})
-
-module.exports = router;
+module.exports = upload;
