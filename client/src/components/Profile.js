@@ -39,11 +39,12 @@ const Profile = (props) => {
               <>
                 {profile && profile.info.photo ?
                   <img
-                    src={process.env.PUBLIC_URL + "/images/home.svg"}
-                    className="mx-auto" />
-                  : <img
+                    src={`/api/partner/${props.auth.data.id}/photo`}
+                    className="mx-auto max-w-sm" />
+                  :
+                  <img
                     src={process.env.PUBLIC_URL + "/images/default_photo.svg"}
-                    className="mx-auto" />
+                    className="mx-auto max-w-sm" />
                 }
                 <Link to="#" className="text-primary text-semibold float-right">Edit Profile</Link>
                 <h1 className="text-black text-base font-semibold border-border border-b-2">Info</h1>
@@ -93,7 +94,6 @@ const Profile = (props) => {
                   : "Tidak ada product"}
               </>
             }
-
           </div>
         </div>
       </div >
