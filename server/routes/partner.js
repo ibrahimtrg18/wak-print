@@ -176,6 +176,7 @@ router.get("/:partnerId", (req, res) => {
                                 address: results[0].address,
                                 photo: results[0].photo,
                                 description: results[0].description,
+                                status: results[0].status
                             },
                             rating: results[0].rating,
                             products
@@ -195,6 +196,7 @@ router.get("/:partnerId", (req, res) => {
                                 address: results[0].address,
                                 photo: results[0].photo,
                                 description: results[0].description,
+                                status: results[0].status
                             },
                             rating: results[0].rating,
                             products: null
