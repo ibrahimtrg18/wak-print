@@ -136,7 +136,7 @@ router.post("/login", (req, res) => {
 router.get("/:partnerId", (req, res) => {
     const partnerId = req.params.partnerId;
     connection.query(
-        `SELECT partners.*, AVG(ratings.rate) AS ratings, products.name as product_name, products.price as product_price
+        `SELECT partners.*, partners.id as id_wak_print, AVG(ratings.rate) AS ratings, products.name as product_name, products.price as product_price
         FROM partners 
             LEFT JOIN ratings 
                 ON ratings.partner_id = partners.id 
@@ -312,6 +312,30 @@ router.patch("/:partnerId/photo", (req, res) => {
                 }
             })
     })
+})
+
+router.patch("/:partnerId/status", (req, res) => {
+    const partnerId = req.params.partnerId;
+    connection.query(`UPDATE partners SET partners.status = IF(partners.status=1,0,1) WHERE partners.id = ${partnerId}`,
+        (err, results) => {
+            if (err) {
+                console.log(err)
+                return res.status(500).json({
+                    success: false,
+                    message: "Error in Server!"
+                })
+            } else if (results && (results.affectedRows > 0 || results.changedRows > 0)) {
+                return res.status(200).json({
+                    success: true,
+                    message: "Successfully update Photo partner"
+                })
+            } else {
+                return res.status(200).json({
+                    success: false,
+                    message: "User Not Found"
+                })
+            }
+        })
 })
 
 router.get("/:partnerId/orders", (req, res) => {

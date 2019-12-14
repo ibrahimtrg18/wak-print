@@ -2,6 +2,7 @@ export const PROFILE_REQUEST = "PROFILE_REQUEST";
 export const PROFILE_SUCCESS = "PROFILE_SUCCESS";
 export const PROFILE_FAILURE = "PROFILE_FAILURE";
 export const PROFILE_RESET = "PROFILE_RESET";
+export const PROFILE_STATUS = "PROFILE_STATUS";
 
 export const profileRequest = () => {
     return {
@@ -29,6 +30,12 @@ export const profileReset = () => {
     }
 }
 
+export const profileStatus = () => {
+    return {
+        type: PROFILE_STATUS,
+    }
+}
+
 export const getProfile = (partnerId) => {
     return (dispatch) => {
         dispatch(profileRequest());
@@ -49,5 +56,19 @@ export const getProfile = (partnerId) => {
 export const resetProfile = () => {
     return dispatch => {
         dispatch(profileReset())
+    }
+}
+
+export const changeStatus = (partnerId) => {
+    return dispatch => {
+        fetch(`/api/partner/${partnerId}/status`, {
+            method: "PATCH"
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    dispatch(profileStatus())
+                }
+            })
     }
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Navbar from './Navbar';
-import { getProfile, resetProfile } from "../redux/actions/profileActions";
+import { getProfile, resetProfile, changeStatus } from "../redux/actions/profileActions";
 
 const Profile = (props) => {
   const [profile, setProfile] = useState(props.profile.data);
@@ -61,7 +61,12 @@ const Profile = (props) => {
                   </>
                   : "Not found"}
                 <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Status</h1>
-                {profile && profile.info.status ? <p>Buka</p> : <p>Tutup</p>}
+                <div className="block text-xs font-base">
+                  <label className="flex items-center text-base">
+                    <input type="checkbox" className="mr-2" checked={profile && profile.info.status} onChange={() => props.changeStatus(profile.info.id)} />
+                    {profile && profile.info.status ? "Buka" : "Tutup"}
+                  </label>
+                </div>
                 <Link to="#" className="text-primary text-semibold float-right mt-2">Tambah Jasa</Link>
                 <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Jasa</h1>
                 {profile && profile.products ?
@@ -113,7 +118,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getProfile: (partnerId) => { dispatch(getProfile(partnerId)) },
-    resetProfile: () => { dispatch(resetProfile()) }
+    resetProfile: () => { dispatch(resetProfile()) },
+    changeStatus: (partnerId) => { dispatch(changeStatus(partnerId)) }
   }
 }
 

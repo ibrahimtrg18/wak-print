@@ -1,4 +1,4 @@
-import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILURE, PROFILE_RESET } from '../actions/profileActions';
+import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILURE, PROFILE_RESET, PROFILE_STATUS } from '../actions/profileActions';
 
 const initialState = {
 	data: null,
@@ -22,6 +22,8 @@ export const profileReducer = (state = initialState, action) => {
 				data: action.message,
 				isLoading: false,
 			}
+		case PROFILE_STATUS:
+			return Object.assign({}, state, { data: { info: { ...state.data.info, status: !state.data.info.status } } });
 		case PROFILE_RESET:
 			return initialState
 		default:
