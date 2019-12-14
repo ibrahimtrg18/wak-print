@@ -23,14 +23,14 @@ PUT http://localhost:4000/api/user/4
 Content-Type: application/json
 
 {
-    "fullName":"ibrahim trg",
-    "phoneNumber":"081234567890",
+    "fullName":"ibrahim trg1",
+    "phoneNumber":"0812345678901",
     "address":"Medan"
 }
 ###
 GET http://localhost:4000/api/user/4/photo
 ###
-PUT http://localhost:4000/api/user/4/photo
+PATCH http://localhost:4000/api/user/4/photo
 Content-Type: multipart/form-data
 
 {
@@ -71,15 +71,20 @@ Content-Type: application/json
 ###
 GET http://localhost:4000/api/partner/9/photo
 ###
-PUT http://localhost:4000/api/partner/9/photo
+PATCH http://localhost:4000/api/partner/9/photo
 ###
-GET http://localhost:4000/api/partner/1/orders
+GET http://localhost:4000/api/partner/9/orders
 ###
 GET http://localhost:4000/api/search?s=
 ###
 POST http://localhost:4000/api/order
+Content-Type: 
 ###
-GET http://localhost:4000/api/order/1
+GET http://localhost:4000/api/order/21
+###
+PATCH http://localhost:4000/api/order/21/confirm
+###
+PATCH http://localhost:4000/api/order/21/decline
 ###
 GET http://localhost:4000/api/order/1/download
 ###
@@ -99,3 +104,4 @@ Content-Type:  application/json
     "nominal": 20000,
     "bankNumber": "55310828340293"
 }
+###
