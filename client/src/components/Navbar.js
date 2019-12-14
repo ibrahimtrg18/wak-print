@@ -4,6 +4,55 @@ import { connect } from 'react-redux';
 import { logout } from '../redux/actions/authActions';
 
 const Navbar = (props) => {
+  const onNav = () => {
+    switch (props.onNav) {
+      case 1:
+        return (
+          <>
+            <Link className="text-primary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
+            <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+          </>
+        )
+      case 2:
+        return (
+          <>
+            <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
+            <Link className="text-primary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+          </>
+        )
+      case 3:
+        return (
+          <>
+            <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
+            <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
+            <Link className="text-primary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+          </>
+        )
+      case 4:
+        return (
+          <>
+            <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
+            <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
+            <Link className="text-primary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+          </>
+        )
+      default:
+        return (
+          <>
+            <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
+            <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+          </>
+        )
+    }
+  }
   if (props.auth.data) {
     return (
       <nav className="flex fixed top-0 left-0 right-0 justify-between flex-wrap bg-white py-6 px-4 sm:px-10 shadow-md">
@@ -15,10 +64,7 @@ const Navbar = (props) => {
                 <div className="text-secondary">Print</div>
               </Link>
               <div className="flex">
-                <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
-                <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
-                <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
-                <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+                {onNav()}
               </div>
             </div>
             <div>
@@ -55,7 +101,7 @@ const Navbar = (props) => {
           <div>
             <button
               onClick={() => props.goToRedirect()}
-              className="rounded py-2 px-6 bg-primary text-white text-lg text-medium px-12 focus:shadow-outline outline-none">
+              className="rounded py-2 px-6 bg-primary text-white text-lg text-medium px-12 focus:shadow-outline outline-none hover:bg-secondary">
               {props.goTo}
             </button>
           </div>

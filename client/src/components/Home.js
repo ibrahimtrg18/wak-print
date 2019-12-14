@@ -16,7 +16,7 @@ const Beranda = (props) => {
   if (props.auth.data) {
     return (
       <div className="bg-bg h-screen">
-        <Navbar goTo={"LogOut"} ></Navbar>
+        <Navbar goTo={"LogOut"} onNav={1}></Navbar>
         <div className="sm:flex sm:pt-40 pt-48">
           <div className="lg:w-1/2 md:px-8 px-4">
             <p className="text-2xl font-medium mb-2 text-center">

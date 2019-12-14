@@ -30,7 +30,7 @@ const Profile = (props) => {
   if (props.auth.data) {
     return (
       <div className="bg-gray-100 h-screen">
-        <Navbar goTo={"LogOut"} ></Navbar>
+        <Navbar goTo={"LogOut"} onNav={4}></Navbar>
         <div className="sm:pt-32 pt-40 px-8">
           <h1 className="text-3xl ml-2">Profile</h1>
           <div className="inline px-8">

@@ -16,7 +16,7 @@ const History = (props) => {
   if (props.auth) {
     return (
       <div className="bg-gray-100 h-screen">
-        <Navbar goTo={"LogOut"}></Navbar>
+        <Navbar goTo={"LogOut"} onNav={3}></Navbar>
         <div className="sm:flex sm:pt-40 pt-48">
           <div className="lg:w-1/2 md:px-8 px-4">
             History
