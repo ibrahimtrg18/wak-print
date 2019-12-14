@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
     }
-})
+});
 
 const upload = multer({
     storage: storage,
@@ -20,7 +20,7 @@ const upload = multer({
     fileFilter: (req, file, cb) => {
         isPrintType(file, cb)
     }
-}).single("order")
+}).single("order");
 
 isPrintType = (file, cb) => {
     // type allowed
@@ -35,8 +35,7 @@ isPrintType = (file, cb) => {
     } else {
         return cb(("ERROR: DOC, DOCX & PDF Only"), false);
     }
-
-}
+};
 
 router.post("/", (req, res) => {
     upload(req, res, (err) => {
@@ -48,7 +47,7 @@ router.post("/", (req, res) => {
             productName,
             productPrice,
             methodPickup,
-            methodPayment,
+            methodPayment
         } = req.body;
 
         console.log(req.body);
@@ -82,6 +81,7 @@ router.post("/", (req, res) => {
             created_at: Date.now()
         }, (err, results) => {
             if (err) {
+                console.log(err)
                 return res.status(500).json({
                     success: false,
                     message: "Error in Server!"
@@ -94,12 +94,11 @@ router.post("/", (req, res) => {
             }
         })
     })
-
-})
+});
 
 router.get("/:orderId/", (req, res) => {
     const orderId = req.params.orderId;
-    connection.query("SELECT * FROM orders WHERE id = ?", [orderId], (err, results) => {
+    connection.query("SELECT * FROM orders WHERE orders.id = ?", [orderId], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -117,11 +116,57 @@ router.get("/:orderId/", (req, res) => {
             })
         }
     })
-})
+});
+
+router.patch("/:orderId/confirm", (req, res) => {
+    const orderId = req.params.orderId;
+    connection.query("UPDATE orders SET orders.status_order = 1 WHERE orders.id = ?", [orderId], (err, results) => {
+        console.log(results)
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else if (results && (results.affectedRows > 0 || results.changedRows > 0)) {
+            return res.status(200).json({
+                success: true,
+                message: "Successfully to Confirm order"
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found!"
+            })
+        }
+    })
+});
+
+router.patch("/:orderId/decline", (req, res) => {
+    const orderId = req.params.orderId;
+    connection.query("UPDATE orders SET orders.status_order = -1 WHERE orders.id = ?", [orderId], (err, results) => {
+        console.log(results)
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else if (results && (results.affectedRows > 0 || results.changedRows > 0)) {
+            return res.status(200).json({
+                success: true,
+                message: "Successfully to Decline order"
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found!"
+            })
+        }
+    })
+});
 
 router.get('/:orderId/download', (req, res) => {
     const orderId = req.params.orderId;
-    connection.query("SELECT * FROM orders WHERE id = ?", [orderId], (err, results) => {
+    connection.query("SELECT * FROM orders WHERE orders.id = ?", [orderId], (err, results) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -143,6 +188,6 @@ router.get('/:orderId/download', (req, res) => {
             })
         }
     })
-})
+});
 
 module.exports = router;
