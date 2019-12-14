@@ -93,7 +93,10 @@ const Login = (props) => {
             <input
               type="submit"
               value={props.auth.isLoading && props.auth.isLoading ? "Loading..." : "masuk"}
-              className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer" />
+              className={props.auth.isLoading && props.auth.isLoading ? 
+                "rounded bg-secondary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-not-allowed" 
+              : 
+              "rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer hover:bg-secondary"} />
           </form>
         </div>
       </div>
