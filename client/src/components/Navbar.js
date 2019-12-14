@@ -38,8 +38,8 @@ const Navbar = (props) => {
           <>
             <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
             <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
-            <Link className="text-primary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
+            <Link className="text-primary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
           </>
         )
       default:
