@@ -227,16 +227,22 @@ router.put("/:partnerId", (req, res) => {
             address: address
         },
         (err, results) => {
+            console.log(results)
             if (err) {
                 console.log(err)
                 return res.status(500).json({
                     success: false,
                     message: "Error in Server!"
                 })
-            } else {
+            } else if (results && (results.affectedRows > 0 || results.changedRows > 0)) {
                 return res.status(200).json({
                     success: true,
                     message: "Successfully update partner"
+                })
+            } else {
+                return res.status(200).json({
+                    success: false,
+                    message: "User Not Found"
                 })
             }
         })
@@ -261,7 +267,7 @@ router.get("/:partnerId/photo", (req, res) => {
     })
 })
 
-router.put("/:partnerId/photo", (req, res) => {
+router.patch("/:partnerId/photo", (req, res) => {
     const partnerId = req.params.partnerId;
     upload(req, res, (err) => {
         console.log(req.body);
@@ -291,7 +297,7 @@ router.put("/:partnerId/photo", (req, res) => {
                         success: false,
                         message: "Error in Server!"
                     })
-                } else if (results && results.changedRows == 1) {
+                } else if (results && (results.affectedRows > 0 || results.changedRows > 0)) {
                     return res.status(200).json({
                         success: true,
                         message: "Successfully update Photo partner"

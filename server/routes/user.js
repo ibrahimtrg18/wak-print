@@ -164,6 +164,14 @@ router.put("/:userId", (req, res) => {
         phoneNumber,
         address
     } = req.body;
+    
+    if (phoneNumber && phoneNumber.length > 15) {
+        return res.status(400).json({
+            success: false,
+            message: "Phone Number must be less than 15"
+        })
+    }
+    
     connection.query(`UPDATE users SET ? WHERE users.id=${userId}`,
         {
             full_name: fullName,
@@ -177,10 +185,15 @@ router.put("/:userId", (req, res) => {
                     success: false,
                     message: "Error in Server!"
                 })
-            } else {
+            } else if (results && (results.affectedRows > 0 || results.changedRows > 0)) {
                 return res.status(200).json({
                     success: true,
                     message: "Successfully update user"
+                })
+            } else {
+                return res.status(200).json({
+                    success: false,
+                    message: "User Not Found"
                 })
             }
         })
@@ -205,7 +218,7 @@ router.get("/:userId/photo", (req, res) => {
     })
 })
 
-router.put("/:userId/photo", (req, res) => {
+router.patch("/:userId/photo", (req, res) => {
     const userId = req.params.userId;
     upload(req, res, (err) => {
         console.log(req.body);
@@ -235,10 +248,10 @@ router.put("/:userId/photo", (req, res) => {
                         success: false,
                         message: "Error in Server!"
                     })
-                } else if (results && results.changedRows == 1) {
+                } else if (results && (results.affectedRows > 0 || results.changedRows > 0)) {
                     return res.status(200).json({
                         success: true,
-                        message: "Successfully update Photo partner"
+                        message: "Successfully update Photo user"
                     })
                 } else {
                     return res.status(200).json({
