@@ -9,46 +9,46 @@ const Navbar = (props) => {
       case 1:
         return (
           <>
-            <Link className="text-primary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
-            <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+            <Link className="text-primary underline text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
           </>
         )
       case 2:
         return (
           <>
-            <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
-            <Link className="text-primary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
+            <Link className="text-primary underline text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
           </>
         )
       case 3:
         return (
           <>
-            <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
-            <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
-            <Link className="text-primary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
+            <Link className="text-primary underline text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
           </>
         )
       case 4:
         return (
           <>
-            <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
-            <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
-            <Link className="text-primary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
+            <Link className="text-primary underline text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
           </>
         )
       default:
         return (
           <>
-            <Link className="text-secondary text-base sm:pr-10 pr-2 sm:border-r-2" to="/home">Home</Link>
-            <Link className="text-secondary text-base sm:px-10 px-2 sm:border-r-2" to="/order">Order</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-10 pr-2 sm:border-r-2" to="/profile">Profile</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
+            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
           </>
         )
     }
@@ -67,23 +67,21 @@ const Navbar = (props) => {
                 {onNav()}
               </div>
             </div>
-            <div>
-              <div className="block px-2">
-                <div className="flex">
-                  <div className="block text-primary text-base font-bold">Hai {props.auth.data.full_name},&nbsp;</div>
-                  <div
-                    className="text-secondary text-base font-bold cursor-pointer"
-                    onClick={() => props.logout()}>
-                    Logout?
+            <div className="sm:inline-block block">
+              <div className="sm:flex inline-flex">
+                <div className="sm:inline-block text-primary text-base font-bold">Hai {props.auth.data.full_name},&nbsp;</div>
+                <div
+                  className="sm:inline-block text-secondary text-base font-bold cursor-pointer"
+                  onClick={() => props.logout()}>
+                  Logout?
                 </div>
-                </div>
-                <div className="flex items-center float-right">
-                  <img
-                    src={process.env.PUBLIC_URL + "/images/icon_saldo.svg"}
-                    className="mr-1"
-                    style={{ height: "18px" }} />
-                  <div className="block text-black text-base font-bold">Rp. {props.auth.data.balance ? props.auth.data.balance : "0"}</div>
-                </div>
+              </div>
+              <div className="flex items-center float-right">
+                <img
+                  src={process.env.PUBLIC_URL + "/images/icon_saldo.svg"}
+                  className="mr-1"
+                  style={{ height: "18px" }} />
+                <div className="block text-black text-base font-bold">Rp. {props.auth.data.balance ? props.auth.data.balance : "0"}</div>
               </div>
             </div>
           </div>
