@@ -46,8 +46,8 @@ const Profile = (props) => {
                     src={process.env.PUBLIC_URL + "/images/default_photo.svg"}
                     className="mx-auto max-w-sm" />
                 }
-                <Link to="#" className="text-primary text-semibold float-right">Edit Profile</Link>
-                <h1 className="text-black text-base font-semibold border-border border-b-2">Info</h1>
+                <Link to="#" className="text-primary text-semibold float-right mt-2">Edit Profile</Link>
+                <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Info</h1>
                 {profile && profile ?
                   <>
                     <p className="text-base text-text">Name Percetakan</p>
@@ -55,14 +55,15 @@ const Profile = (props) => {
                     <p className="text-base text-text">Name Lengkap</p>
                     <p className="text-base text-black">{profile.info.full_name}</p>
                     <p className="text-base text-text">Deskripsi</p>
-                    <p className="text-base text-black">{profile.info.description}</p>
+                    <p className="text-base text-black">{profile.info.description ? profile.info.description : "-"}</p>
                     <p className="text-base text-text">Alamat</p>
                     <p className="text-base text-black">{profile.info.address}</p>
                   </>
                   : "Not found"}
-                <h1 className="text-black text-base font-semibold border-border border-b-2 my-4">Status</h1>
-                <Link to="#" className="text-primary text-semibold float-right">Tambah Jasa</Link>
-                <h1 className="text-black text-base font-semibold border-border border-b-2">Jasa</h1>
+                <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Status</h1>
+                {profile && profile.info.status ? <p>Buka</p> : <p>Tutup</p>}
+                <Link to="#" className="text-primary text-semibold float-right mt-2">Tambah Jasa</Link>
+                <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Jasa</h1>
                 {profile && profile.products ?
                   <table className="table-fixed">
                     <thead>
