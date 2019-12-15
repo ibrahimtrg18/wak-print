@@ -136,7 +136,7 @@ router.post("/login", (req, res) => {
 router.get("/:partnerId", (req, res) => {
     const partnerId = req.params.partnerId;
     connection.query(
-        `SELECT partners.*, partners.id as id_wak_print, AVG(ratings.rate) AS ratings, products.name as product_name, products.price as product_price
+        `SELECT partners.*, partners.id as id_wak_print, AVG(ratings.rate) AS ratings, products.name as product_name, products.price as product_price, products.id as product_id
         FROM partners 
             LEFT JOIN ratings 
                 ON ratings.partner_id = partners.id 
@@ -155,6 +155,7 @@ router.get("/:partnerId", (req, res) => {
                 const products = results.map(result => {
                     if (result.product_name && result.product_price) {
                         return ({
+                            id: result.product_id,
                             name: result.product_name,
                             price: result.product_price
                         })
@@ -389,7 +390,7 @@ router.post("/:partnerId/product", (req, res) => {
 
 router.delete("/:partnerId/product/:productId", (req, res) => {
     const { partnerId, productId } = req.params;
-    connection.query("DELETE FROM products WHERE products.id = ?", [productId], (err, results) => {
+    connection.query("DELETE FROM products WHERE products.id = ? AND products.partner_id=?", [productId, partnerId], (err, results) => {
         if (err) {
             console.log(err)
             return res.status(500).json({
@@ -397,7 +398,7 @@ router.delete("/:partnerId/product/:productId", (req, res) => {
                 message: "Error in Server!"
             })
         } else {
-            return req.status(200).json({
+            return res.status(200).json({
                 success: true,
                 message: "Successfully delete new products"
             })
