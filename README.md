@@ -55,6 +55,7 @@ $ npm start                 // jalankan client localhost:3000
 | GET       |  P  | /api/order/:id/download       | Mendownload **order**                                       |
 
 | GET       |  U  |/api/search?s=print trg        | Mencari Nama Toko berdasarkan isi dari **s**                |
+
 | POST      |  U  |/api/balance/deposit           | Untuk membuat permintaan penambahan wallet                  |
 | POST      |  P  |/api/balance/withdraw          | Untuk membuat permintaan pengeluaran wallet                 |
 

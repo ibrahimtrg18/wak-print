@@ -73,7 +73,7 @@ GET http://localhost:4000/api/partner/9/photo
 ###
 PATCH http://localhost:4000/api/partner/9/photo
 ###
-GET http://localhost:4000/api/partner/9/orders
+GET http://localhost:4000/api/partner/17/orders
 ###
 GET http://localhost:4000/api/search?s=
 ###
@@ -82,9 +82,11 @@ Content-Type:
 ###
 GET http://localhost:4000/api/order/21
 ###
-PATCH http://localhost:4000/api/order/21/confirm
+PATCH http://localhost:4000/api/order/27/confirm
 ###
 PATCH http://localhost:4000/api/order/21/decline
+###
+PATCH http://localhost:4000/api/order/21/done
 ###
 GET http://localhost:4000/api/order/1/download
 ###
