@@ -46,14 +46,18 @@ const Profile = (props) => {
                     src={process.env.PUBLIC_URL + "/images/default_photo.svg"}
                     className="mx-auto max-w-sm" />
                 }
-                <Link to="#" className="text-primary text-semibold float-right mt-2">Edit Profile</Link>
-                <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Info</h1>
+                <div>
+                  <Link to="/profile/edit" className="text-primary text-semibold float-right">Edit Profile</Link>
+                  <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Info</h1>
+                </div>
                 {profile && profile ?
                   <>
                     <p className="text-base text-text">Name Percetakan</p>
                     <p className="text-base text-black">{profile.info.business_name}</p>
                     <p className="text-base text-text">Name Lengkap</p>
                     <p className="text-base text-black">{profile.info.full_name}</p>
+                    <p className="text-base text-text">Nomor Telepon</p>
+                    <p className="text-base text-black">{profile.info.phone_number}</p>
                     <p className="text-base text-text">Deskripsi</p>
                     <p className="text-base text-black">{profile.info.description ? profile.info.description : "-"}</p>
                     <p className="text-base text-text">Alamat</p>
@@ -63,12 +67,16 @@ const Profile = (props) => {
                 <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Status</h1>
                 <div className="block text-xs font-base">
                   <label className="flex items-center text-base">
-                    <input type="checkbox" className="mr-2" checked={profile && profile.info.status} onChange={() => props.changeStatus(profile.info.id)} />
+                    <input type="checkbox" className="mr-2"
+                      checked={profile && profile.info.status == 1 ? true : false}
+                      onChange={() => props.changeStatus(profile.info.id)} />
                     {profile && profile.info.status ? "Buka" : "Tutup"}
                   </label>
                 </div>
-                <Link to="#" className="text-primary text-semibold float-right mt-2">Tambah Jasa</Link>
-                <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Jasa</h1>
+                <div>
+                  <Link to="#" className="text-primary text-semibold float-right">Tambah Jasa</Link>
+                  <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Jasa</h1>
+                </div>
                 {profile && profile.products ?
                   <table className="table-fixed">
                     <thead>
