@@ -107,3 +107,4 @@ Content-Type:  application/json
     "bankNumber": "55310828340293"
 }
 ###
+DELETE http://localhost:3000/api/partner/17/product/4
