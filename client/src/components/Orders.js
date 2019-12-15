@@ -11,7 +11,12 @@ const Order = (props) => {
 
   useEffect(() => {
     document.title = "Order"
-    props.getOrders(props.auth.data.id)
+    if (!props.auth.data) {
+      props.history.push("/login");
+      props.resetOrders();
+    }else{
+      props.getOrders(props.auth.data.id)
+    }
     return () => {
       props.resetOrders();
     }
@@ -99,7 +104,7 @@ const Order = (props) => {
         </div>
         <div className="flex flex-wrap px-8">
           {props.orders.isLoading ? "Loading" : orders && orders.length > 0 ? orders && orders.map(order => {
-            if (order.status_order == 0 || order.status_order == 1) {
+            if (order.status_order === 0 || order.status_order === 1) {
               orderan = orderan + 1;
               return (
                 <div className="w-full sm:w-1/2 md:w-1/3 p-1" key={order.id}>
@@ -125,7 +130,7 @@ const Order = (props) => {
                         <div className="w-1/2">
                           <p className="text-text text-xs uppercase">Halaman</p>
                           <p className="border-border border-2 rounded px-2 overflow-y-auto inline-block">
-                            {order.pages && order.pages == '0' ? "1,3,4,5,7,8,9,12,2,4" : order.pages}
+                            {order.pages && order.pages === '0' ? "1,3,4,5,7,8,9,12,2,4" : order.pages}
                           </p>
                         </div>
                         <div className="w-1/2">

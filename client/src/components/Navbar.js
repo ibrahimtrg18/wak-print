@@ -60,8 +60,8 @@ const Navbar = (props) => {
           <div className="sm:flex block items-center" style={{ width: "100%" }}>
             <div className="block flex-grow font-bold text-3xl">
               <Link className="flex" to="/home">
-                <div className="text-primary">Wak</div>
-                <div className="text-secondary">Print</div>
+                <p className="text-primary">Wak</p>
+                <p className="text-secondary">Print</p>
               </Link>
               <div className="flex">
                 {onNav()}
@@ -76,13 +76,15 @@ const Navbar = (props) => {
                   Logout?
                 </div>
               </div>
-              <div className="flex items-center float-right">
+              <Link className="flex items-center float-right hover:underline" to="/wallet">
                 <img
                   src={process.env.PUBLIC_URL + "/images/icon_saldo.svg"}
                   className="mr-1"
                   style={{ height: "18px" }} />
-                <div className="block text-black text-base font-bold">Rp. {props.auth.data.balance ? props.auth.data.balance : "0"}</div>
-              </div>
+                <p className="block text-black text-base font-bold">
+                  Rp. {props.auth.data.balance ? props.auth.data.balance : "0"}
+                </p>
+              </Link>
             </div>
           </div>
         </div>

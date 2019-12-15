@@ -10,8 +10,13 @@ const Beranda = (props) => {
   let selesai = 0;
 
   useEffect(() => {
-    document.title = "Order"
-    props.getOrders(props.auth.data.id)
+    document.title = "Home"
+    if (!props.auth.data) {
+      props.history.push("/login");
+      props.resetOrders();
+    } else {
+      props.getOrders(props.auth.data.id)
+    }
     return () => {
       props.resetOrders();
     }
@@ -42,7 +47,7 @@ const Beranda = (props) => {
               <div className="flex max-w-full rounded overflow-hidden shadow-lg mb-2 sm:px-16 px-16 py-4 bg-white">
                 <div className="flex-grow font-medium text-5xl">
                   {orders && orders ? orders.map(order => {
-                    if (order.status_order == 0) {
+                    if (order.status_order === 0) {
                       orderan = orderan + 1
                     }
                   })
@@ -56,7 +61,7 @@ const Beranda = (props) => {
               <div className="flex max-w-full rounded overflow-hidden shadow-lg mb-2 sm:px-16 px-16 py-4 bg-white">
                 <div className="flex-grow font-medium text-5xl">
                   {orders && orders ? orders.map(order => {
-                    if (order.status_order == 1) {
+                    if (order.status_order === 1) {
                       proses = proses + 1
                     }
                   })
@@ -70,7 +75,7 @@ const Beranda = (props) => {
               <div className="flex max-w-full rounded overflow-hidden shadow-lg mb-2 sm:px-16 px-16 py-4 bg-white">
                 <div className="flex-grow font-medium text-5xl">
                   {orders && orders ? orders.map(order => {
-                    if (order.status_order == 2) {
+                    if (order.status_order === 2) {
                       selesai = selesai + 1
                     }
                   })

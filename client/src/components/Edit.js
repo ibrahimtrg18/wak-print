@@ -17,14 +17,19 @@ const Edit = (props) => {
 
   useEffect(() => {
     document.title = "Profile"
-    props.getProfile(props.auth.data.id)
-    setValues({
-      businessName: props.profile.data.info.business_name,
-      fullName: props.profile.data.info.full_name,
-      phoneNumber: props.profile.data.info.phone_number,
-      description: props.profile.data.info.description,
-      address: props.profile.data.info.address
-    })
+    if (!props.auth.data) {
+      props.history.push("/login");
+      props.resetProfile()
+    } else {
+      props.getProfile(props.auth.data.id)
+      setValues({
+        businessName: props.profile.data.info.business_name,
+        fullName: props.profile.data.info.full_name,
+        phoneNumber: props.profile.data.info.phone_number,
+        description: props.profile.data.info.description,
+        address: props.profile.data.info.address
+      })
+    }
     return () => {
       props.resetProfile()
     }
@@ -68,77 +73,81 @@ const Edit = (props) => {
                     className="mx-auto max-w-sm" />
                 }
                 <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Info</h1>
-                {profile && profile ?
-                  <>
-                    <label
-                      className="text-base text-text">
-                      Name Percetakan
+                <form onSubmit={() => {
+                  props.editProfile(profile.info.id, values)
+                  props.history.push("/profile")
+                }}>
+                  {profile && profile ?
+                    <>
+                      <label
+                        className="text-base text-text">
+                        Name Percetakan
+                        <input
+                          type="text"
+                          name="businessName"
+                          id="businessName"
+                          defaultValue={profile.info.business_name}
+                          onChange={(event) => handleChange(event)}
+                          className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary"
+                          required />
+                      </label>
+                      <label
+                        className="text-base text-text">
+                        Name Lengkap
+                        <input
+                          type="text"
+                          name="fullName"
+                          id="fullName"
+                          defaultValue={profile.info.full_name}
+                          onChange={(event) => handleChange(event)}
+                          className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary"
+                          required />
+                      </label>
+                      <label
+                        className="block text-md uppercase font-base text-text py-2">
+                        Nomor Telepon
+                        <input
+                          type="tel"
+                          name="phoneNumber"
+                          id="phoneNumber"
+                          pattern="[0-9]{10,15}"
+                          defaultValue={profile.info.phone_number}
+                          onChange={(event) => handleChange(event)}
+                          className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline"
+                          required />
+                      </label>
+                      <label
+                        className="text-base text-text">
+                        Deskripsi
+                        <input
+                          type="text"
+                          name="description"
+                          id="description"
+                          defaultValue={profile.info.description ? profile.info.description : "-"}
+                          onChange={(event) => handleChange(event)}
+                          className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary"
+                          required />
+                      </label>
+                      <label
+                        className="text-base text-text">
+                        Alamat
+                        <textarea
+                          type="text"
+                          name="address"
+                          id="address"
+                          defaultValue={profile.info.address}
+                          onChange={(event) => handleChange(event)}
+                          className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline h-32"
+                          required />
+                      </label>
+                    </>
+                    : "Not found"}
+                  <div className="pt-2 mt-2 border-border border-t-2">
                     <input
-                        type="text"
-                        name="businessName"
-                        id="businessName"
-                        defaultValue={profile.info.business_name}
-                        onChange={(event) => handleChange(event)}
-                        className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary" />
-                    </label>
-                    <label
-                      className="text-base text-text">
-                      Name Lengkap
-                    <input
-                        type="text"
-                        name="fullName"
-                        id="fullName"
-                        defaultValue={profile.info.full_name}
-                        onChange={(event) => handleChange(event)}
-                        className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary" />
-                    </label>
-                    <label
-                      className="block text-md uppercase font-base text-text py-2">
-                      Nomor Telepon
-                    <input
-                        type="tel"
-                        name="phoneNumber"
-                        id="phoneNumber"
-                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                        defaultValue={profile.info.phone_number}
-                        onChange={(event) => handleChange(event)}
-                        className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline" />
-                    </label>
-                    <label
-                      className="text-base text-text">
-                      Deskripsi
-                    <input
-                        type="text"
-                        name="description"
-                        id="description"
-                        defaultValue={profile.info.description ? profile.info.description : "-"}
-                        onChange={(event) => handleChange(event)}
-                        className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary" />
-                    </label>
-                    <label
-                      className="text-base text-text">
-                      Alamat
-                      <textarea
-                        type="text"
-                        name="address"
-                        id="address"
-                        defaultValue={profile.info.address}
-                        onChange={(event) => handleChange(event)}
-                        className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline h-32" />
-                    </label>
-                  </>
-                  : "Not found"}
-                <div className="pt-2 mt-2 border-border border-t-2">
-                  <button
-                    className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer hover:bg-secondary"
-                    onClick={() => {
-                      props.editProfile(profile.info.id, values)
-                      props.history.push("/profile")
-                    }}
-                  >
-                    Simpan
-                  </button>
-                </div>
+                      type="submit"
+                      className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer hover:bg-secondary" />
+                  </div>
+                </form>
               </>
             }
           </div>

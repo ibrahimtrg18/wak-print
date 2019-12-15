@@ -13,11 +13,16 @@ const Product = (props) => {
 
   useEffect(() => {
     document.title = "Profile"
-    props.getProfile(props.auth.data.id)
-    setValues({
-      name: props.profile.data.info.business_name,
-      price: props.profile.data.info.full_name,
-    })
+    if (!props.auth.data) {
+      props.history.push("/login");
+      props.resetProfile()
+    } else {
+      props.getProfile(props.auth.data.id)
+      setValues({
+        name: props.profile.data.info.business_name,
+        price: props.profile.data.info.full_name,
+      })
+    }
     return () => {
       props.resetProfile()
     }
@@ -48,38 +53,41 @@ const Product = (props) => {
         <div className="sm:pt-32 pt-40 px-8">
           <h1 className="text-3xl ml-2">Tambah Jasa</h1>
           <div className="px-8">
-            <label
-              className="text-base text-text">
-              Name Jasa
+            <form onSubmit={() => {
+              props.addProduct(profile.info.id, values)
+              props.history.push("/profile")
+            }}>
+              <label
+                className="text-base text-text">
+                Name Jasa
               <input
-                type="text"
-                name="name"
-                id="name"
-                onChange={(event) => handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary"
-                required />
-            </label>
-            <label
-              className="text-base text-text">
-              Harga Jasa
+                  type="text"
+                  name="name"
+                  id="name"
+                  onChange={(event) => handleChange(event)}
+                  className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary"
+                  required />
+              </label>
+              <label
+                className="text-base text-text">
+                Harga Jasa
               <input
-                type="number"
-                name="price"
-                id="price"
-                onChange={(event) => handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary"
-                required />
-            </label>
-            <div className="pt-2 mt-2">
-              <button
-                className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer hover:bg-secondary"
-                onClick={() => {
-                  props.addProduct(profile.info.id, values)
-                  props.history.push("/profile")
-                }}>
-                Tambah
-              </button>
-            </div>
+                  type="number"
+                  name="price"
+                  id="price"
+                  min="0"
+                  defaultValue="0"
+                  onChange={(event) => handleChange(event)}
+                  className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary"
+                  required />
+              </label>
+              <div className="pt-2 mt-2">
+                <input
+                  type="submit"
+                  className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer hover:bg-secondary"
+                  value="Tambah" />
+              </div>
+            </form>
           </div>
         </div>
       </div >

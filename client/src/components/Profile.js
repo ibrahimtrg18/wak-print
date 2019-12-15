@@ -9,7 +9,12 @@ const Profile = (props) => {
 
   useEffect(() => {
     document.title = "Profile"
-    props.getProfile(props.auth.data.id)
+    if (!props.auth.data) {
+      props.history.push("/login");
+      props.resetProfile()
+    } else {
+      props.getProfile(props.auth.data.id)
+    }
     return () => {
       props.resetProfile()
     }
@@ -30,8 +35,25 @@ const Profile = (props) => {
     fetch(`/api/partner/${partnerId}/product/${productId}`, {
       method: "DELETE"
     })
-      .then(res => res.json())
-      .then(data => console.log(data))
+      .then(res => {
+        if (res.ok) {
+          props.getProfile(props.auth.data.id)
+        }
+      })
+  }
+
+  const handleUpload = (e) => {
+    const data = new FormData()
+    data.append('photo', e.target.files[0])
+    fetch(`/api/partner/${props.auth.data.id}/photo`, {
+      method: "PATCH",
+      body: data
+    })
+      .then(res => {
+        if (res.ok) {
+          props.getProfile(props.auth.data.id)
+        }
+      })
   }
 
   console.log(profile)
@@ -54,6 +76,7 @@ const Profile = (props) => {
                     src={process.env.PUBLIC_URL + "/images/default_photo.svg"}
                     className="mx-auto max-w-sm" />
                 }
+                <input type="file" onChange={(e) => handleUpload(e)} />
                 <div>
                   <Link to="/profile/edit" className="text-primary text-semibold float-right">Edit Profile</Link>
                   <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Info</h1>
@@ -76,7 +99,7 @@ const Profile = (props) => {
                 <div className="block text-xs font-base">
                   <label className="flex items-center text-base">
                     <input type="checkbox" className="mr-2"
-                      checked={profile && profile.info.status == 1 ? true : false}
+                      checked={profile && profile.info.status === 1 ? true : false}
                       onChange={() => props.changeStatus(profile.info.id)} />
                     {profile && profile.info.status ? "Buka" : "Tutup"}
                   </label>
@@ -98,7 +121,7 @@ const Profile = (props) => {
                     {profile.products.map((product, index) => {
                       return (
                         <tbody key={product.id}>
-                          <tr className={index % 2 == 1 ? "bg-border" : null}>
+                          <tr className={index % 2 === 1 ? "bg-border" : null}>
                             <td className="border px-4 py-2 border-text">{index}</td>
                             <td className="border px-4 py-2 border-text">{product.name}</td>
                             <td className="border px-4 py-2 border-text">{product.price}</td>
