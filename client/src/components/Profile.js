@@ -26,6 +26,14 @@ const Profile = (props) => {
     setProfile(props.profile.data)
   }, [props.profile])
 
+  const handleRemoveProduct = (partnerId, productId) => {
+    fetch(`/api/partner/${partnerId}/product/${productId}`, {
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
+  }
+
   console.log(profile)
   if (props.auth.data) {
     return (
@@ -89,15 +97,16 @@ const Profile = (props) => {
                     </thead>
                     {profile.products.map((product, index) => {
                       return (
-                        <tbody>
+                        <tbody key={product.id}>
                           <tr className={index % 2 == 1 ? "bg-border" : null}>
                             <td className="border px-4 py-2 border-text">{index}</td>
                             <td className="border px-4 py-2 border-text">{product.name}</td>
                             <td className="border px-4 py-2 border-text">{product.price}</td>
                             <td className="border px-4 py-2 border-text">
                               <div className="flex">
-                                <button className="bg-primary rounded text-white px-4 py-2 mx-2">Edit</button>
-                                <button className="bg-danger rounded text-white px-4 py-2">Hapus</button>
+                                {/* <button className="bg-primary rounded text-white px-4 py-2 mx-2">Edit</button> */}
+                                <button className="bg-danger rounded text-white px-4 py-2"
+                                  onClick={() => handleRemoveProduct(profile.info.id, product.id)}>Hapus</button>
                               </div>
                             </td>
                           </tr>
