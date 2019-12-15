@@ -219,14 +219,17 @@ router.put("/:partnerId", (req, res) => {
         fullName,
         businessName,
         phoneNumber,
-        address
+        address,
+        description
     } = req.body;
+    console.log(req.body)
     connection.query(`UPDATE partners SET ? WHERE partners.id=${partnerId}`,
         {
             full_name: fullName,
             business_name: businessName,
             phone_number: phoneNumber,
-            address: address
+            address: address,
+            description: description
         },
         (err, results) => {
             console.log(results)
