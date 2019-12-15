@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
+import download from "downloadjs";
 import Navbar from './Navbar';
 import { getOrders, resetOrders } from '../redux/actions/ordersActions';
 // const download = require('downloadjs');
-import download from "downloadjs";
 
 const Order = (props) => {
   const [orders, setOrders] = useState(props.orders.data);
+  let orderan = 0;
 
   useEffect(() => {
     document.title = "Order"
@@ -36,17 +37,28 @@ const Order = (props) => {
   }
 
   const handleDecline = (id) => {
-    fetch(`/api/order/${id}/download`,
+    console.log(id)
+    fetch(`/api/order/${id}/decline`,
       { method: "PATCH" })
-      .then(res => res.data())
+      .then(res => res.json())
       .then(data => console.log(data))
+    props.getOrders(props.auth.data.id)
   }
 
   const handleConfirm = (id) => {
-    fetch(`/api/order/${id}/download`,
+    fetch(`/api/order/${id}/confirm`,
       { method: "PATCH" })
-      .then(res => res.data())
+      .then(res => res.json())
       .then(data => console.log(data))
+    props.getOrders(props.auth.data.id)
+  }
+
+  const handleProcess = (id) => {
+    fetch(`/api/order/${id}/done`,
+      { method: "PATCH" })
+      .then(res => res.json())
+      .then(data => console.log(data))
+    props.getOrders(props.auth.data.id)
   }
 
   const orderStatus = (id, status) => {
@@ -56,11 +68,11 @@ const Order = (props) => {
         return (
           <>
             <button className="w-1/2 bg-pink text-white text-center font-black rounded-bl py-4 px-4 hover:bg-pink-secondary"
-              onClick={() => handleDecline}>
+              onClick={() => handleDecline(id)}>
               Tolak
             </button>
             <button className="w-1/2 bg-primary text-white text-center font-black rounded-br py-4 px-4 hover:bg-secondary"
-              onClick={() => handleConfirm}>
+              onClick={() => handleConfirm(id)}>
               Konfirmasi
             </button>
           </>
@@ -68,7 +80,8 @@ const Order = (props) => {
       case 1:
         return (
           <>
-            <button className="w-full bg-yellow text-black text-center font-black rounded-bl py-4 px-4 cursor-not-allowed">
+            <button className="w-full bg-yellow text-black text-center font-black rounded-bl py-4 px-4"
+              onClick={() => handleProcess(id)}>
               Process
             </button>
           </>
@@ -79,14 +92,15 @@ const Order = (props) => {
   console.log(orders)
   if (props.auth.data) {
     return (
-      <div className="bg-bg h-screen">
+      <div className="bg-bg h-screen" style={{ height: "100%", minHeight: "100vh" }}>
         <Navbar goTo={"LogOut"} onNav={2}></Navbar>
         <div className="sm:pt-32 pt-40 px-8">
           <div className="text-3xl ml-2">Order</div>
         </div>
         <div className="flex flex-wrap px-8">
           {props.orders.isLoading ? "Loading" : orders && orders.length > 0 ? orders && orders.map(order => {
-            if (order.status_order == 0 || order.status_order == 1)
+            if (order.status_order == 0 || order.status_order == 1) {
+              orderan = orderan + 1;
               return (
                 <div className="w-full sm:w-1/2 md:w-1/3 p-1" key={order.id}>
                   <div className="rounded shadow bg-white">
@@ -146,7 +160,9 @@ const Order = (props) => {
                   </div>
                 </div>
               )
+            }
           }) : "Tidak ada orders"}
+          {props.orders.isLoading ? "" : orderan && orderan > 0 ? "" : "Tidak ada orders"}
         </div>
       </div>
     )

@@ -47,14 +47,13 @@ const Login = (props) => {
       <Navbar
         goTo="Daftar Disini"
         goToRedirect={() => goToRegister()} />
-      <div className="sm:flex sm:pt-32 pt-32">
-        <div className="sm:w-1/2 px-4 sm:block md:block hidden">
+      <div className="sm:flex sm:pt-24 pt-24">
+        <div className="sm:w-1/2 sm:block md:block hidden px-1">
           <img
             src={process.env.PUBLIC_URL + "/images/login.svg"}
-            className="mx-auto"
-            style={{ height: "520px" }} />
+            className="mx-auto"/>
         </div>
-        <div className="sm:w-1/2 w-full px-8">
+        <div className="sm:w-1/2 w-full px-8 pt-12">
           <div className="text-2xl font-medium text-black text-center">
             Masuk Mitra WakPrint
           </div>
