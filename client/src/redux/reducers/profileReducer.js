@@ -23,7 +23,12 @@ export const profileReducer = (state = initialState, action) => {
 				isLoading: false,
 			}
 		case PROFILE_STATUS:
-			return Object.assign({}, state, { data: { info: { ...state.data.info, status: !state.data.info.status } } });
+			return Object.assign({}, state, {
+				data: {
+					info: { ...state.data.info, status: !state.data.info.status },
+					products: state.data.products
+				}
+			});
 		case PROFILE_RESET:
 			return initialState
 		default:
