@@ -161,7 +161,7 @@ const Order = (props) => {
                 </div>
               )
             }
-          }) : "Tidak ada orders"}
+          }) : ""}
           {props.orders.isLoading ? "" : orderan && orderan > 0 ? "" : "Tidak ada orders"}
         </div>
       </div>
