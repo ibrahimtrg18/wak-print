@@ -9,53 +9,53 @@ const Navbar = (props) => {
       case 1:
         return (
           <>
-            <Link className="text-primary underline text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
+            <Link className="text-white bg-primary rounded underline text-base sm:px-4 px-2" to="/home">Home</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/order">Order</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/history">History</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/profile">Profile</Link>
           </>
         )
       case 2:
         return (
           <>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
-            <Link className="text-primary underline text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/home">Home</Link>
+            <Link className="text-white bg-primary rounded underline text-base sm:px-4 px-2" to="/order">Order</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/history">History</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/profile">Profile</Link>
           </>
         )
       case 3:
         return (
           <>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
-            <Link className="text-primary underline text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/home">Home</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/order">Order</Link>
+            <Link className="text-white bg-primary rounded underline text-base sm:px-4 px-2" to="/history">History</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/profile">Profile</Link>
           </>
         )
       case 4:
         return (
           <>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
-            <Link className="text-primary underline text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/home">Home</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/order">Order</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/history">History</Link>
+            <Link className="text-white bg-primary rounded underline text-base sm:px-4 px-2" to="/profile">Profile</Link>
           </>
         )
       default:
         return (
           <>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/home">Home</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/order">Order</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/history">History</Link>
-            <Link className="text-secondary text-base sm:px-4 px-2 border border-secondary" to="/profile">Profile</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/home">Home</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/order">Order</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/history">History</Link>
+            <Link className="text-primary rounded underline text-base sm:px-4 px-2" to="/profile">Profile</Link>
           </>
         )
     }
   }
   if (props.auth.data) {
     return (
-      <nav className="flex fixed top-0 left-0 right-0 justify-between flex-wrap bg-white py-6 px-4 sm:px-10 shadow-md">
+      <nav className="flex fixed top-0 left-0 right-0 justify-between flex-wrap bg-white py-3 px-1 sm:px-10 px-4 shadow-md">
         <div className="flex items-center" style={{ width: "100%" }}>
           <div className="sm:flex block items-center" style={{ width: "100%" }}>
             <div className="block flex-grow font-bold text-3xl">
