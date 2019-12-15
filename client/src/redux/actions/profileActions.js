@@ -72,3 +72,24 @@ export const changeStatus = (partnerId) => {
             })
     }
 }
+
+export const editProfile = (partnerId, values) => {
+    return dispatch => {
+        console.log(partnerId, values)
+        fetch(`/api/partner/${partnerId}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify({
+                fullName: values.fullName,
+                businessName: values.businessName,
+                phoneNumber: values.phoneNumber,
+                description: values.description,
+                address: values.address
+            })
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+    }
+}
