@@ -8,6 +8,7 @@ import Orders from './components/Orders';
 import Profile from './components/Profile';
 import History from './components/History';
 import Edit from './components/Edit';
+import Product from './components/Product';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
           <Route path="/profile/edit" component={Edit}></Route>
+          <Route path="/profile/product" component={Product}></Route>
           <Route path="/profile" component={Profile}></Route>
           <Route path="/history" component={History}></Route>
           <Route path="/order" component={Orders}></Route>
