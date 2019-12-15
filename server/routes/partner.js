@@ -253,6 +253,49 @@ router.put("/:partnerId", (req, res) => {
         })
 })
 
+router.get("/:partnerId/orders", (req, res) => {
+    const partnerId = req.params.partnerId;
+    connection.query("SELECT * FROM partners WHERE partners.id=?", [partnerId], (err, results) => {
+        if (err) {
+            console.log(err)
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else if (results && results.length > 0) {
+            connection.query(
+                `SELECT orders.*, users.full_name, users.phone_number, users.photo
+                FROM orders
+                    LEFT JOIN users
+                        ON users.id = orders.user_id
+                WHERE orders.partner_id=?`, [results[0].id], (err, results) => {
+                if (err) {
+                    console.log(err)
+                    return res.status(500).json({
+                        success: false,
+                        message: "Error in Server!"
+                    })
+                } else if (results && results.length > 0) {
+                    return res.status(200).json({
+                        success: true,
+                        data: results
+                    })
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        data: [],
+                    })
+                }
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Partner not found!"
+            })
+        }
+    })
+});
+
 router.get("/:partnerId/photo", (req, res) => {
     const partnerId = req.params.partnerId;
     connection.query("SELECT partners.photo FROM partners WHERE partners.id=?", [partnerId], (err, results) => {
@@ -317,6 +360,51 @@ router.patch("/:partnerId/photo", (req, res) => {
     })
 })
 
+router.post("/:partnerId/product", (req, res) => {
+    const partnerId = req.params.partnerId;
+    const {
+        name,
+        price
+    } = req.body;
+    console.log(req.body)
+    connection.query("INSERT INTO products SET ?", {
+        partner_id: partnerId,
+        name: name,
+        price: price
+    }, (err, results) => {
+        if (err) {
+            console.log(err)
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: "Successfully create new products"
+            })
+        }
+    })
+})
+
+router.delete("/:partnerId/product/:productId", (req, res) => {
+    const { partnerId, productId } = req.params;
+    connection.query("DELETE FROM products WHERE products.id = ?", [productId], (err, results) => {
+        if (err) {
+            console.log(err)
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else {
+            return req.status(200).json({
+                success: true,
+                message: "Successfully delete new products"
+            })
+        }
+    })
+})
+
 router.patch("/:partnerId/status", (req, res) => {
     const partnerId = req.params.partnerId;
     connection.query(`UPDATE partners SET partners.status = IF(partners.status=1,0,1) WHERE partners.id = ${partnerId}`,
@@ -341,47 +429,5 @@ router.patch("/:partnerId/status", (req, res) => {
         })
 })
 
-router.get("/:partnerId/orders", (req, res) => {
-    const partnerId = req.params.partnerId;
-    connection.query("SELECT * FROM partners WHERE partners.id=?", [partnerId], (err, results) => {
-        if (err) {
-            console.log(err)
-            return res.status(500).json({
-                success: false,
-                message: "Error in Server!"
-            })
-        } else if (results && results.length > 0) {
-            connection.query(
-                `SELECT orders.*, users.full_name, users.phone_number, users.photo
-                FROM orders
-                    LEFT JOIN users
-                        ON users.id = orders.user_id
-                WHERE orders.partner_id=?`, [results[0].id], (err, results) => {
-                if (err) {
-                    console.log(err)
-                    return res.status(500).json({
-                        success: false,
-                        message: "Error in Server!"
-                    })
-                } else if (results && results.length > 0) {
-                    return res.status(200).json({
-                        success: true,
-                        data: results
-                    })
-                } else {
-                    return res.status(200).json({
-                        success: true,
-                        data: [],
-                    })
-                }
-            })
-        } else {
-            return res.status(404).json({
-                success: false,
-                message: "Partner not found!"
-            })
-        }
-    })
-});
 
 module.exports = router;

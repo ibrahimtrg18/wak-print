@@ -74,7 +74,7 @@ const Profile = (props) => {
                   </label>
                 </div>
                 <div>
-                  <Link to="#" className="text-primary text-semibold float-right">Tambah Jasa</Link>
+                  <Link to="/profile/product" className="text-primary text-semibold float-right">Tambah Jasa</Link>
                   <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Jasa</h1>
                 </div>
                 {profile && profile.products ?

@@ -93,3 +93,21 @@ export const editProfile = (partnerId, values) => {
             .then(data => console.log(data))
     }
 }
+
+export const addProduct = (partnerId, values) => {
+    return dispatch => {
+        console.log(partnerId, values)
+        fetch(`/api/partner/${partnerId}/product`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                name: values.name,
+                price: values.price
+            })
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+    }
+}

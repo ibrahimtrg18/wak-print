@@ -164,6 +164,29 @@ router.patch("/:orderId/decline", (req, res) => {
     })
 });
 
+router.patch("/:orderId/done", (req, res) => {
+    const orderId = req.params.orderId;
+    connection.query("UPDATE orders SET orders.status_order = 2 WHERE orders.id = ?", [orderId], (err, results) => {
+        console.log(results)
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Error in Server!"
+            })
+        } else if (results && (results.affectedRows > 0 || results.changedRows > 0)) {
+            return res.status(200).json({
+                success: true,
+                message: "Successfully to finished order"
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found!"
+            })
+        }
+    })
+});
+
 router.get('/:orderId/download', (req, res) => {
     const orderId = req.params.orderId;
     connection.query("SELECT * FROM orders WHERE orders.id = ?", [orderId], (err, results) => {
