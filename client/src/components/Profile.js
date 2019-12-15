@@ -39,7 +39,7 @@ const Profile = (props) => {
     return (
       <div className="bg-gray-100 h-screen">
         <Navbar goTo={"LogOut"} onNav={4}></Navbar>
-        <div className="sm:pt-32 pt-40 px-8">
+        <div className="sm:pt-24 pt-32 px-8">
           <h1 className="text-3xl ml-2">Profile</h1>
           <div className="inline px-8">
             {props.profile.isLoading ?

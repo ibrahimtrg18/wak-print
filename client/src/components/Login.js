@@ -47,7 +47,7 @@ const Login = (props) => {
       <Navbar
         goTo="Daftar Disini"
         goToRedirect={() => goToRegister()} />
-      <div className="sm:flex sm:pt-24 pt-24">
+      <div className="sm:flex sm:pt-24 pt-20">
         <div className="sm:w-1/2 sm:block md:block hidden px-1">
           <img
             src={process.env.PUBLIC_URL + "/images/login.svg"}

@@ -94,7 +94,7 @@ const Order = (props) => {
     return (
       <div className="bg-bg h-screen" style={{ height: "100%", minHeight: "100vh" }}>
         <Navbar goTo={"LogOut"} onNav={2}></Navbar>
-        <div className="sm:pt-32 pt-40 px-8">
+        <div className="sm:pt-24 pt-32 px-8">
           <div className="text-3xl ml-2">Order</div>
         </div>
         <div className="flex flex-wrap px-8">
