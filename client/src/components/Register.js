@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import { regAccount, regReset } from '../redux/actions/regActions';
@@ -44,15 +44,15 @@ const Register = (props) => {
     }
   }, [props.reg.message])
 
-  const _goToLogin = () => {
+  const goToLogin = () => {
     props.history.push("/login")
   }
 
-  const _handleChange = (event) => {
+  const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
 
-  const _handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     props.regAccount(values)
   }
@@ -61,7 +61,7 @@ const Register = (props) => {
     <div className="bg-gray-100" style={{ height: "100%", minHeight: "100vh" }}>
       <Navbar
         goTo="Masuk Disini"
-        goToRedirect={() => _goToLogin()}></Navbar>
+        goToRedirect={() => goToLogin()}></Navbar>
       <div className="flex pt-24">
         <div className="w-full sm:px-16 md:px-32 lg:px-32 xl:px-64 px-8 mt-8">
           <div className="text-2xl font-medium text-black text-center">
@@ -73,7 +73,7 @@ const Register = (props) => {
               :
               "text-base font-medium text-danger text-center"
           }>{message}</p>
-          <form className="items-center" onSubmit={(event) => _handleSubmit(event)}>
+          <form className="items-center" onSubmit={(event) => handleSubmit(event)}>
             <label
               className="block text-md uppercase font-base text-text py-2">
               E-Mail
@@ -83,8 +83,10 @@ const Register = (props) => {
                 id="email"
                 ref={emailRef}
                 value={values.email}
-                onChange={(event) => _handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
+                placeholder="example@example.com"
+                onChange={(event) => handleChange(event)}
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline"
+                required />
             </label>
             <label
               className="block text-md uppercase font-base text-text py-2">
@@ -94,8 +96,10 @@ const Register = (props) => {
                 name="password"
                 id="password"
                 value={values.password}
-                onChange={(event) => _handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
+                placeholder="******"
+                onChange={(event) => handleChange(event)}
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline"
+                required />
             </label>
             <label
               className="block text-md uppercase font-base text-text py-2">
@@ -105,8 +109,10 @@ const Register = (props) => {
                 name="fullName"
                 id="fullName"
                 value={values.fullName}
-                onChange={(event) => _handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
+                placeholder="Michael Jackson"
+                onChange={(event) => handleChange(event)}
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline"
+                required />
             </label>
             <label
               className="block text-md uppercase font-base text-text py-2">
@@ -116,19 +122,24 @@ const Register = (props) => {
                 name="businessName"
                 id="businessName"
                 value={values.businessName}
-                onChange={(event) => _handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
+                placeholder="Print Jackson"
+                onChange={(event) => handleChange(event)}
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline"
+                required />
             </label>
             <label
               className="block text-md uppercase font-base text-text py-2">
               Nomor Telepon
               <input
-                type="number"
+                type="tel"
                 name="phoneNumber"
                 id="phoneNumber"
+                pattern="[0-9]{10,15}"
                 value={values.phoneNumber}
-                onChange={(event) => _handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline" />
+                placeholder="081234567890"
+                onChange={(event) => handleChange(event)}
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline"
+                required />
             </label>
             <label
               className="block text-md uppercase font-base text-text py-2">
@@ -138,8 +149,10 @@ const Register = (props) => {
                 name="address"
                 id="address"
                 value={values.address}
-                onChange={(event) => _handleChange(event)}
-                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline h-32" />
+                onChange={(event) => handleChange(event)}
+                placeholder="Jln. 5225 Figueroa Mountain Road, Los Olivos, California"
+                className="w-full border-primary border-2 rounded-lg py-2 px-3 focus:shadow-outline h-32"
+                required />
             </label>
             <div className="block text-xs font-base text-gray-800 justify-center my-3">
               <label className="flex items-center justify-center text-base">
@@ -153,7 +166,7 @@ const Register = (props) => {
               disabled={!checkBox}
               className={
                 checkBox ?
-                  "bg-primary rounded py-2 px-4 text-white uppercase text-lg text-medium w-full mb-8 focus:shadow-outline cursor-pointer"
+                  "bg-primary rounded py-2 px-4 text-white uppercase text-lg text-medium w-full mb-8 focus:shadow-outline cursor-pointer hover:bg-secondary"
                   :
                   "bg-secondary rounded py-2 px-4 text-white uppercase text-lg text-medium w-full mb-8 focus:shadow-outline cursor-not-allowed"
               } />
