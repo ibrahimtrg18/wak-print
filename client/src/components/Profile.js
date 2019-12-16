@@ -122,7 +122,7 @@ const Profile = (props) => {
                       return (
                         <tbody key={product.id}>
                           <tr className={index % 2 === 1 ? "bg-border" : null}>
-                            <td className="border px-4 py-2 border-text">{index}</td>
+                            <td className="border px-4 py-2 border-text">{index+1}</td>
                             <td className="border px-4 py-2 border-text">{product.name}</td>
                             <td className="border px-4 py-2 border-text">{product.price}</td>
                             <td className="border px-4 py-2 border-text">

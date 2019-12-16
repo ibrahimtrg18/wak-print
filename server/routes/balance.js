@@ -27,6 +27,7 @@ router.post("/deposit", (req, res) => {
 
 router.post("/withdraw", (req, res) => {
     const { partnerId, nominal, bankNumber } = req.body;
+    console.log(req.body)
     connection.query("INSERT INTO withdraws SET ?", {
         partner_id: partnerId,
         nominal: nominal,

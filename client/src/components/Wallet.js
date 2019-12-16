@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import { getProfile, resetProfile, changeStatus } from "../redux/actions/profileActions";
 
 const Wallet = (props) => {
+  const [nominal, setNominal] = useState(0);
 
   useEffect(() => {
     document.title = "Saldo"
@@ -19,11 +20,29 @@ const Wallet = (props) => {
     }
   }, [props.auth.data])
 
-  const handleRemoveProduct = (partnerId, productId) => {
-    fetch(`/api/partner/${partnerId}/product/${productId}`, {
-      method: "DELETE"
+  const handleNominal = (e) => {
+    setNominal(e.target.value)
+    console.log(nominal)
+  }
+  const handleTarik = (e, partnerId, nominal, bankNumber) => {
+    e.preventDefault()
+    fetch(`/api/balance/withdraw`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({
+        partnerId: partnerId,
+        nominal: nominal,
+        bankNumber: bankNumber
+      })
     })
-      .then(res => res.json())
+      .then(res => {
+        if(res.ok){
+          // window.alert("Penarikan ")
+          props.history.push("/")
+        }
+      })
       .then(data => console.log(data))
   }
 
@@ -46,7 +65,8 @@ const Wallet = (props) => {
             </div>
           </div>
           <h1 className="text-black text-base font-semibold border-border border-b-2 mt-2">Penarikan Saldo</h1>
-          <form>
+          <form
+            onSubmit={(e) => handleTarik(e, props.auth.data.id, nominal, props.auth.data.bank_number)}>
             <label
               className="text-sm text-text">
               Input Nominal
@@ -55,7 +75,9 @@ const Wallet = (props) => {
                 name="nominal"
                 id="nominal"
                 min="0"
+                max={props.auth.data.balance && props.auth.data.balance ? props.auth.data.balance : "0"}
                 defaultValue="0"
+                onChange={(e) => handleNominal(e)}
                 className="w-full border-primary border-2 rounded-lg py-1 px-2 focus:shadow-outline placeholder-secondary"
                 required />
             </label>
@@ -69,8 +91,8 @@ const Wallet = (props) => {
             <div className="pt-2 mt-2 border-border border-t-2">
               <input
                 type="submit"
-                value="Tarik"
-                className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer hover:bg-secondary" />
+                className="rounded bg-primary text-white py-2 px-4 uppercase text-lg text-medium w-full focus:shadow-outline cursor-pointer hover:bg-secondary"
+                value="Tarik" />
             </div>
           </form>
         </div>
