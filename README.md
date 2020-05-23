@@ -41,21 +41,17 @@ $ npm start                 // jalankan client localhost:3000
 | PUT       |  U  | /api/user/:userId             | Mengubah Informasi **user** berdasarkan **:userId**         |
 | GET       |  U  | /api/user/:userId/photo       | Memberikan Photo **user** berdasarkan **:userId**           |
 | PUT       |  U  | /api/user/:userId/photo       | Mengubah Photo **user** berdasarkan **:userId**             |
-
 | POST      |  P  | /api/partner/register         | Membuat Account untuk **partner**                           |
 | POST      |  P  | /api/partner/login            | Masuk Account untuk **partner**                             |
 | GET       |  P  | /api/partner/:partnerId       | Memberikan Informasi **partner** berdasarkan **:partnerId** |
 | PUT       |  P  | /api/partner/:partnerId       | Mengubah Informasi **partner** berdasarkan **:partnerId**   |
 | GET       |  P  | /api/partner/:partnerId/photo | Memberikan Photo **partner** berdasarkan **:partnerId**     |
 | PUT       |  P  | /api/partner/:partnerId/photo | Mengubah Photo **partner** berdasarkan **:partnerId**       |
-
 | GET       |  P  | /api/partner/:partnerId/order | Melihat semua orderan berdasarkan **:partnerId**            |
 | POST      |  U  | /api/order/                   | Membuat **order**                                           |
 | GET       | U P | /api/order/:id                | Detail **order**                                            |
 | GET       |  P  | /api/order/:id/download       | Mendownload **order**                                       |
-
 | GET       |  U  |/api/search?s=print trg        | Mencari Nama Toko berdasarkan isi dari **s**                |
-
 | POST      |  U  |/api/balance/deposit           | Untuk membuat permintaan penambahan wallet                  |
 | POST      |  P  |/api/balance/withdraw          | Untuk membuat permintaan pengeluaran wallet                 |
 
