@@ -1,4 +1,4 @@
-# print-online
+# print-online (just for grades)
 clone terlebih dahulu
 ```
 $ git clone "https://github.com/t33rg3/print-online.git"
