@@ -24,3 +24,5 @@ yarn-error.log*
 
 # style
 /public/style.css
+
+package-lock.json
